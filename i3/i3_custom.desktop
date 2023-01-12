@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=i3 custom
+Exec=/home/me/.config/i3/start.sh
+TryExec=/home/me/.config/i3/start.sh
+Type=Application

@@ -1,0 +1,13 @@
+#!/bin/bash
+
+PATH_PROJECTS="/home/me/.config/VSCodium/User/globalStorage/alefragnani.project-manager/projects.json"
+
+selection=$(cat $PATH_PROJECTS | jq -r '.[].name' | rofi -dmenu)
+if [ -z "$selection" ]
+then
+	exit
+fi
+
+directories=$(cat $PATH_PROJECTS | jq -r ".[] | select(.name==\"$selection\").rootPath")
+codium $directories
+

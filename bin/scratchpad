@@ -1,0 +1,20 @@
+#!/bin/sh
+
+session="scratchpad"
+
+if ! tmux has-session -t $session; then
+	tmux new-session -d -s $session -e SESSION=$session
+
+	window=1
+	tmux rename-window -t $window 'lf'
+	tmux send-keys -t $window 'lf' C-m
+
+	window=2
+	tmux new-window -t $window 
+
+	tmux set-option -t $session status-left ""
+	tmux set-option -t $session status-right ""
+
+fi
+
+tmux attach-session -t $session:1

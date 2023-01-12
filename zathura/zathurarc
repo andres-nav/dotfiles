@@ -1,0 +1,10 @@
+map h navigate previous
+map l navigate
+map i toggle_index
+map ; focus_inputbar :
+
+#map d exec "echo $FILE | sed -r 's/\s/\\\ /g' | zathura"
+
+set window-title-basename true
+set statusbar-basename true
+set guioptions ''
