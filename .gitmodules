@@ -1,0 +1,12 @@
+[submodule "dwm"]
+	path = dwm
+	url = https://github.com/andres-nav/dwm
+[submodule "dwmblocks"]
+	path = dwmblocks
+	url = https://github.com/andres-nav/dwmblocks
+[submodule "wallpapers"]
+	path = wallpapers
+	url = https://github.com/andres-nav/wallpapers
+[submodule "nvim"]
+	path = nvim
+	url = https://github.com/andres-nav/nvim
