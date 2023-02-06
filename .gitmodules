@@ -10,3 +10,6 @@
 [submodule "nvim"]
 	path = nvim
 	url = https://github.com/andres-nav/nvim
+[submodule "doom"]
+	path = doom
+	url = https://github.com/doomemacs/doomemacs

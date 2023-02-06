@@ -48,7 +48,7 @@ map <a-d> delete
 map ; read 
 
 map gm cd ~/MEGA
-map gu cd ~/MEGA/Uni/3YEAR/Q1
+map gu cd ~/MEGA/Uni/3YEAR/Q2/
 map gd cd ~/.config
 
 map <enter> shell
