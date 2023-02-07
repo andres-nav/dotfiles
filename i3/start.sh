@@ -12,4 +12,5 @@ xset r rate 220 30
 
 ( killall megasync ; sleep 5 ; megasync) &
 
-exec dbus-launch --autolaunch=$(cat /var/lib/dbus/machine-id) /usr/bin/i3
+# exec dbus-launch --autolaunch=$(cat /var/lib/dbus/machine-id) /usr/bin/i3
+exec /usr/bin/i3

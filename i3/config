@@ -103,7 +103,7 @@ set $ws9 "9"
 set $ws10 "10"
 
 # Set workspaces to right monitor
-set $monitor_primary "eDP-1"
+set $monitor_primary "eDP1"
 set $monitor_right "HDMI-1-0"
 
 workspace $ws1 output $monitor_primary
