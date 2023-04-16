@@ -1,31 +1,18 @@
-# flake.nix --- the heart of my dotfiles
-#
-# Author:  Henrik Lissner <contact@henrik.io>
-# URL:     https://github.com/hlissner/dotfiles
-# License: MIT
-#
-# Welcome to ground zero. Where the whole flake gets set up and all its modules
-# are loaded.
-
 {
-  description = "A grossly incandescent nixos config.";
+  description = "My NixOS config";
 
-  inputs = 
-    {
-      # Core dependencies.
-      nixpkgs.url = "nixpkgs/nixos-unstable";             # primary nixpkgs
-      nixpkgs-unstable.url = "nixpkgs/nixpkgs-unstable";  # for packages on the edge
-      home-manager.url = "github:rycee/home-manager/master";
-      home-manager.inputs.nixpkgs.follows = "nixpkgs";
-      agenix.url = "github:ryantm/agenix";
-      agenix.inputs.nixpkgs.follows = "nixpkgs";
+  inputs = {
+    nixpkgs.url = "nixpkgs/nixos-unstable";
 
-      # Extras
-      emacs-overlay.url  = "github:nix-community/emacs-overlay";
-      nixos-hardware.url = "github:nixos/nixos-hardware";
+    home-manager = {
+      url = "github:rycee/home-manager/master";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
-  outputs = inputs @ { self, nixpkgs, nixpkgs-unstable, ... }:
+    emacs-overlay.url  = "github:nix-community/emacs-overlay";
+  };
+
+  outputs = inputs @ { self, nixpkgs, ... }:
     let
       inherit (lib.my) mapModules mapModulesRec mapHosts;
 
@@ -33,11 +20,10 @@
 
       mkPkgs = pkgs: extraOverlays: import pkgs {
         inherit system;
-        config.allowUnfree = true;  # forgive me Stallman senpai
+        config.allowUnfree = true;
         overlays = extraOverlays ++ (lib.attrValues self.overlays);
       };
       pkgs  = mkPkgs nixpkgs [ self.overlay ];
-      pkgs' = mkPkgs nixpkgs-unstable [];
 
       lib = nixpkgs.lib.extend
         (self: super: { my = import ./lib { inherit pkgs inputs; lib = self; }; });
@@ -65,17 +51,5 @@
       devShell."${system}" =
         import ./shell.nix { inherit pkgs; };
 
-      templates = {
-        full = {
-          path = ./.;
-          description = "A grossly incandescent nixos config";
-        };
-      } // import ./templates;
-      defaultTemplate = self.templates.full;
-
-      defaultApp."${system}" = {
-        type = "app";
-        program = ./bin/hey;
-      };
     };
 }
