@@ -5,7 +5,7 @@
     nixpkgs.url = "nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:rycee/home-manager/master";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -32,7 +32,7 @@
 
       overlay =
         final: prev: {
-          unstable = pkgs';
+          unstable = pkgs;
           my = self.packages."${system}";
         };
 

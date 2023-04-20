@@ -9,13 +9,15 @@ in {
   };
 
   config = mkIf cfg.enable {
+    hardware.nvidia.modesetting.enable = true;
+    
     hardware.opengl = {
       enable = true;
       driSupport = true;
       driSupport32Bit = true;
     };
 
-    services.xserver.videoDrivers = [ "nvidia" ];
+    services.xserver.videoDrivers = [ "intel" "nvidia" ];
 
     environment.systemPackages = with pkgs; [
       # Respect XDG conventions, damn it!
