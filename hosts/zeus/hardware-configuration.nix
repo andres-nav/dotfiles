@@ -30,6 +30,9 @@
     nvidia.enable = true;
 
     laptop.enable = true;
+
+    wifi.enable = true;
+
   };
 
   # CPU

@@ -16,5 +16,16 @@ in {
     longitude = 12.5;
   };
 
+
+  # Keyboard default
   i18n.defaultLocale = mkDefault "en_US.UTF-8";
+  console = {
+    keyMap = mkDefault "us";
+    useXkbConfig = mkDefault true;
+  };
+
+  services.xserver = {
+    layout = mkDefault "us";
+    xkbOptions = "caps:swapescape,ctrl:swap_lalt_lctl";
+  };
 }

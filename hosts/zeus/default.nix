@@ -28,7 +28,7 @@
         st.enable = true;
       };
       vm = {
-        virtualbox.enable = true;
+        #virtualbox.enable = true;
       };
     };
     dev = {
@@ -48,7 +48,7 @@
     };
     services = {
       ssh.enable = true;
-      docker.enable = true;
+      #docker.enable = true;
     };
     theme.active = "alucard";
   };
@@ -57,13 +57,4 @@
   ## Local config
   programs.ssh.startAgent = true;
   services.openssh.startWhenNeeded = true;
-
-  networking.wireless = {
-    enable = true;
-    networks = {
-      "Salon-5G".pskRaw = "73a2d68efe1e1ec55a89c88280b6b01a1edb9e18095629d491082bfeed35a095";
-    };
-  };
-
-  time.timeZone = "Europe/Madrid";
 }

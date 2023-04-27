@@ -2,13 +2,13 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.hardware.sensors;
+let cfg = config.modules.hardware.wifi;
 in {
-  options.modules.hardware.sensors = {
+  options.modules.hardware.wifi = {
     enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable {
-    user.packages = [ pkgs.lm_sensors ];
+    networking.networkmanager.enable = true;
   };
 }
