@@ -2,7 +2,7 @@
 
 {
   imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
+#    (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
   boot = {
@@ -14,6 +14,8 @@
     # Refuse ICMP echo requests on my desktop/laptop; nobody has any business
     # pinging them, unlike my servers.
     kernel.sysctl."net.ipv4.icmp_echo_ignore_broadcasts" = 1;
+
+    initrd.luks.devices."nixenc".device = "/dev/disk/by-partlabel/primary";
   };
 
   # Modules
@@ -33,11 +35,8 @@
   # CPU
   nix.settings.max-jobs = lib.mkDefault 4;
   hardware.cpu.intel.updateMicrocode = config.hardware.enableRedistributableFirmware;
-  # performance gives better battery life/perf than ondemand on sandy bridge and
-  # newer because of intel pstates.
+
   powerManagement.cpuFreqGovernor = "powersave";
-  # Without this wpa_supplicant may fail to auto-discover wireless interfaces at
-  # startup (and must be restarted).
 
   # Storage
   fileSystems = {

@@ -32,7 +32,7 @@
       };
     };
     dev = {
-      python.enable = true;
+      #python.enable = true;
     };
     editors = {
       default = "nvim";
@@ -44,7 +44,7 @@
       git.enable    = true;
       gnupg.enable  = true;
       tmux.enable   = true;
-      zsh.enable    = true;
+      #zsh.enable    = true;
     };
     services = {
       ssh.enable = true;
