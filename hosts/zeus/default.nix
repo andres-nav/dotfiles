@@ -44,7 +44,7 @@
       git.enable    = true;
       gnupg.enable  = true;
       tmux.enable   = true;
-      #zsh.enable    = true;
+      fish.enable    = true;
     };
     services = {
       ssh.enable = true;

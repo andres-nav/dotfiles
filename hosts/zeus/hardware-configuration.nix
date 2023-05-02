@@ -37,9 +37,11 @@
 
   # CPU
   nix.settings.max-jobs = lib.mkDefault 4;
-  hardware.cpu.intel.updateMicrocode = config.hardware.enableRedistributableFirmware;
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   powerManagement.cpuFreqGovernor = "powersave";
+
+  hardware.enableRedistributableFirmware = lib.mkDefault true; # for wifi
 
   # Storage
   fileSystems = {
