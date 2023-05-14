@@ -23,10 +23,6 @@ super + grave
 super + shift + grave
 	emacsclient --eval "(open-scratch-frame)"
 
-# Invoke emacs-everywhere at point.
-super + e
-    emacsclient --eval "(emacs-everywhere)"
-
 super + space
 	$DOTFILES_BIN/rofi/appmenu
 

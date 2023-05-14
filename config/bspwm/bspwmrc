@@ -11,9 +11,9 @@ MONITOR=${MONITOR:-${MONITORS[0]}}
 
 # Only have workspaces for primary monitor
 for monitor in $MONITORS; do
-  bspc monitor $monitor -d 0
+  bspc monitor $monitor -d {8,9,0}
 done
-bspc monitor $MONITOR -d {1,2,3,4,5}
+bspc monitor $MONITOR -d {1,2,3,4,5,6,7}
 
 bspc config remove_disabled_monitors true
 bspc config remove_unplugged_monitors true

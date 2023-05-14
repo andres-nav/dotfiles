@@ -1,4 +1,4 @@
-# Aijiro -- a portable mini-ITX desktop
+# Zeus: my main laptop 
 
 { ... }:
 {
