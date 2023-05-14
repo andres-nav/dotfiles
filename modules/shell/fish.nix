@@ -33,9 +33,9 @@ in {
    #   ZGEN_DIR  = "$XDG_DATA_HOME/zgenom";
    # };
 
-   # home.configFile = {
+    home.configFile = {
    #   # Write it recursively so other modules can write files to it
-   #   "zsh" = { source = "${configDir}/zsh"; recursive = true; };
+      "fish" = { source = "${configDir}/fish"; recursive = true; };
 
    #   # Why am I creating extra.zsh{rc,env} when I could be using extraInit?
    #   # Because extraInit generates those files in /etc/profile, and mine just
@@ -55,7 +55,7 @@ in {
    #     ${concatMapStrings (path: "source '${path}'\n") cfg.envFiles}
    #     ${cfg.envInit}
    #   '';
-   # };
+    };
 
    # system.userActivationScripts.cleanupZgen = ''
    #   rm -rf $ZSH_CACHE

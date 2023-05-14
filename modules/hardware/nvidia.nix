@@ -9,7 +9,9 @@ in {
   };
 
   config = mkIf cfg.enable {
-    hardware.nvidia.modesetting.enable = true;
+    hardware.nvidia = {
+      modesetting.enable = true;
+    };
     
     hardware.opengl = {
       enable = true;
