@@ -19,7 +19,7 @@ in {
     security.rtkit.enable = true;
 
     environment.systemPackages = with pkgs; [
-      easyeffects
+      alsa-utils
     ];
 
     # HACK Prevents ~/.esd_auth files by disabling the esound protocol module

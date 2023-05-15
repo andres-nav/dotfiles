@@ -21,5 +21,9 @@ in {
     services.thermald.enable = true;
 
     hardware.enableRedistributableFirmware = lib.mkDefault true; # add firmware such has wifi
+
+    environment.systemPackages = with pkgs; [
+      brightnessctl 
+    ]; 
   };
 }
