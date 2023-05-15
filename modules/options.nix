@@ -47,7 +47,6 @@ with lib.my;
         isNormalUser = true;
         home = "/home/${name}";
         group = "users";
-        uid = 1000;
       };
 
     # Install user packages to /etc/profiles instead. Necessary for
