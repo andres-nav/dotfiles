@@ -52,7 +52,6 @@ in {
       "sxhkd".source = "${configDir}/sxhkd";
       "bspwm" = {
         source = "${configDir}/bspwm";
-        recursive = true;
       };
     };
   };

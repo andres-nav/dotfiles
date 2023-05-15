@@ -78,26 +78,6 @@ in {
         ];
       };
 
-      # Compositor
-      services.picom = {
-        fade = true;
-        fadeDelta = 1;
-        fadeSteps = [ 0.01 0.012 ];
-        shadow = true;
-        shadowOffsets = [ (-10) (-10) ];
-        shadowOpacity = 0.22;
-        # activeOpacity = "1.00";
-        # inactiveOpacity = "0.92";
-        settings = {
-          shadow-radius = 12;
-          # blur-background = true;
-          # blur-background-frame = true;
-          # blur-background-fixed = true;
-          blur-kern = "7x7box";
-          blur-strength = 320;
-        };
-      };
-
       # Login screen theme
       services.xserver.displayManager.lightdm.greeters.mini.extraConfig = ''
         text-color = "${cfg.colors.magenta}"
@@ -113,14 +93,13 @@ in {
           "xtheme/90-theme".source = ./config/Xresources;
         }
         (mkIf desktop.bspwm.enable {
-          "bspwm/rc.d/00-theme".source = ./config/bspwmrc;
-          "bspwm/rc.d/95-polybar".source = ./config/polybar/run.sh;
+          #"bspwm/rc.d/95-polybar".source = ./config/polybar/run.sh;
         })
         (mkIf desktop.apps.rofi.enable {
           "rofi/theme" = { source = ./config/rofi; recursive = true; };
         })
         (mkIf (desktop.bspwm.enable || desktop.stumpwm.enable) {
-          "polybar" = { source = ./config/polybar; recursive = true; };
+          #"polybar" = { source = ./config/polybar;};
           "dunst/dunstrc".text = import ./config/dunstrc cfg;
           "Dracula-purple-solid-kvantum" = {
             recursive = true;

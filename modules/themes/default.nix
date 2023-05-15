@@ -91,12 +91,6 @@ in {
        modules.theme.onReload.xtheme = xrdb;
      })
 
-    (mkIf config.modules.desktop.bspwm.enable {
-      home.configFile."bspwm/rc.d/05-init" = {
-        text = "$XDG_CONFIG_HOME/xtheme.init";
-        executable = true;
-      };
-    })
 
     {
       home.configFile = {

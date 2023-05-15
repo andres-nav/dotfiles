@@ -19,7 +19,6 @@ in {
     home.configFile = {
       "alacritty" = {
         source = "${configDir}/alacritty";
-        recursive = true;
       };
     };
   };
