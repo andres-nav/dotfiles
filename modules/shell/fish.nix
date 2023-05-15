@@ -35,7 +35,7 @@ in {
 
     home.configFile = {
    #   # Write it recursively so other modules can write files to it
-      "fish" = { source = "${configDir}/fish"; recursive = true; };
+      "fish" = { source = "${configDir}/fish";};
 
    #   # Why am I creating extra.zsh{rc,env} when I could be using extraInit?
    #   # Because extraInit generates those files in /etc/profile, and mine just

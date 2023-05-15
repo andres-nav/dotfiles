@@ -15,11 +15,6 @@ in {
 
     modules.theme.onReload.tmux = "${pkgs.tmux}/bin/tmux source-file $TMUX_HOME/extraInit";
 
-    modules.shell.zsh = {
-      rcInit = "_cache tmuxifier init -";
-      rcFiles = [ "${configDir}/tmux/aliases.zsh" ];
-    };
-
     home.configFile = {
       "tmux" = { source = "${configDir}/tmux"; recursive = true; };
       "tmux/extraInit" = {
