@@ -49,6 +49,7 @@
     };
     services = {
       ssh.enable = true;
+      megacmd.enable = true;
       #docker.enable = true;
     };
     theme.active = "alucard";

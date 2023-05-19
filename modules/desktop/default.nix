@@ -25,6 +25,7 @@ in {
 
     user.packages = with pkgs; [
       feh       # image viewer
+      htop
       xclip
       xdotool
       xorg.xwininfo

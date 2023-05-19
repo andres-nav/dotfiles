@@ -26,9 +26,6 @@ super + shift + grave
 super + space
 	$DOTFILES_BIN/rofi/appmenu
 
-super + Tab
-	$DOTFILES_BIN/rofi/windowmenu
-
 super + p
 	$DOTFILES_BIN/rofi/bwmenu
 
@@ -91,6 +88,9 @@ super + {1-9,0}
 # On shift = move current node to numbered desktop
 super + shift + {1-9,0}
 	bspc node -d {1-9,10};
+
+super + Tab
+	bspc desktop -f last
 
 
 #
