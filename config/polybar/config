@@ -119,60 +119,60 @@ interval = 5
 label = %date%  %time%
 date = %A, %h %d
 date-alt = %Y-%m-%d
-time = %I:%M %p
-time-alt = %H:%M:%S
+time = %H:%M 
+time-alt = %h:%m:%S
 format-prefix = ""
 format-prefix-padding = 1
 ; format-prefix-background = ${colors.bg-alt}
 format-prefix-foreground = ${colors.accent}
 ; format-underline = ${xrdb:color4}
 
-[module/fs]
-type = internal/fs
-mount-0 = /
-mount-1 = /mnt/projects  ; for desktops
-mount-2 = /home          ; for laptop
-interval = 30
+;[module/fs]
+;type = internal/fs
+;mount-0 = /
+;mount-1 = /mnt/projects  ; for desktops
+;mount-2 = /home          ; for laptop
+;interval = 30
+;
+;; Available tags:
+;;   <label-mounted> (default)
+;;   <bar-free>
+;;   <bar-used>
+;;   <ramp-capacity>
+;format-mounted = "<bar-used>"
+;format-mounted-foreground = ${colors.accent}
+;; Available tokens:
+;;   %mountpoint%
+;;   %type%
+;;   %fsname%
+;;   %percentage_free%
+;;   %percentage_used%
+;;   %total%
+;;   %free%
+;;   %used%
+;; Default: %mountpoint% %percentage_free%%
+;
+;; Available tags:
+;;   <label-unmounted> (default)
+;format-unmounted =
+;label-unmounted =
+;label-unmounted-foreground = ${colors.fg-alt}
+;
+;bar-used-indicator =
+;bar-used-width = 8
+;bar-used-foreground-0 = ${colors.fg}
+;bar-used-foreground-1 = ${colors.fg}
+;bar-used-foreground-2 = ${colors.yellow}
+;bar-used-foreground-3 = ${colors.alert}
+;bar-used-foreground-4 = ${colors.alert}
+;bar-used-fill = |
+;bar-used-empty = ¦
+;bar-used-empty-foreground = ${colors.fg-alt}
 
-; Available tags:
-;   <label-mounted> (default)
-;   <bar-free>
-;   <bar-used>
-;   <ramp-capacity>
-format-mounted = "<bar-used>"
-format-mounted-foreground = ${colors.accent}
-; Available tokens:
-;   %mountpoint%
-;   %type%
-;   %fsname%
-;   %percentage_free%
-;   %percentage_used%
-;   %total%
-;   %free%
-;   %used%
-; Default: %mountpoint% %percentage_free%%
-
-; Available tags:
-;   <label-unmounted> (default)
-format-unmounted =
-label-unmounted =
-label-unmounted-foreground = ${colors.fg-alt}
-
-bar-used-indicator =
-bar-used-width = 8
-bar-used-foreground-0 = ${colors.fg}
-bar-used-foreground-1 = ${colors.fg}
-bar-used-foreground-2 = ${colors.yellow}
-bar-used-foreground-3 = ${colors.alert}
-bar-used-foreground-4 = ${colors.alert}
-bar-used-fill = |
-bar-used-empty = ¦
-bar-used-empty-foreground = ${colors.fg-alt}
-
-[module/xwindow]
-type = internal/xwindow
-label = %title:0:80:...%
-label-padding-left = 2
+;[module/xwindow]
+;type = internal/xwindow
+;label = %title:0:80:...%
+;label-padding-left = 2
 
 ; [module/mpd]
 ; type = internal/mpd
@@ -198,52 +198,52 @@ label-padding-left = 2
 ; toggle-on-foreground = ${colors.fg}
 ; toggle-off-foreground = #66
 
-[module/cpu]
-type = internal/cpu
-interval = 2
-format = <bar-load>
-format-prefix = ""
-format-foreground = ${colors.accent}
-; format-underline = #f90000
-; label = %percentage%%
-format-padding = 1
-
-bar-load-indicator =
-bar-load-width = 8
-bar-load-foreground-0 = ${colors.fg}
-bar-load-foreground-1 = ${colors.fg}
-bar-load-foreground-2 = ${colors.yellow}
-bar-load-foreground-3 = ${colors.alert}
-bar-load-foreground-4 = ${colors.alert}
-bar-load-fill = |
-bar-load-empty = ¦
-bar-load-empty-foreground = ${colors.fg-alt}
-
-[module/memory]
-type = internal/memory
-interval = 3
-format = <bar-used>
-format-prefix = ""
-format-prefix-foreground = ${colors.accent}
-; format-underline = #4bffdc
-; label = %percentage_used%%
-format-padding-left = 1
-
-; Only applies if <bar-used> is used
-bar-used-indicator =
-bar-used-width = 8
-bar-used-foreground-0 = ${colors.fg}
-bar-used-foreground-1 = ${colors.fg}
-bar-used-foreground-2 = ${colors.yellow}
-bar-used-foreground-3 = ${colors.alert}
-bar-used-foreground-4 = ${colors.alert}
-bar-used-fill = |
-bar-used-empty = ¦
-bar-used-empty-foreground = ${colors.fg-alt}
+;[module/cpu]
+;type = internal/cpu
+;interval = 10
+;format = <bar-load>
+;format-prefix = ""
+;format-foreground = ${colors.accent}
+;; format-underline = #f90000
+;; label = %percentage%%
+;format-padding = 1
+;
+;bar-load-indicator =
+;bar-load-width = 8
+;bar-load-foreground-0 = ${colors.fg}
+;bar-load-foreground-1 = ${colors.fg}
+;bar-load-foreground-2 = ${colors.yellow}
+;bar-load-foreground-3 = ${colors.alert}
+;bar-load-foreground-4 = ${colors.alert}
+;bar-load-fill = |
+;bar-load-empty = ¦
+;bar-load-empty-foreground = ${colors.fg-alt}
+;
+;[module/memory]
+;type = internal/memory
+;interval = 3
+;format = <bar-used>
+;format-prefix = ""
+;format-prefix-foreground = ${colors.accent}
+;; format-underline = #4bffdc
+;; label = %percentage_used%%
+;format-padding-left = 1
+;
+;; Only applies if <bar-used> is used
+;bar-used-indicator =
+;bar-used-width = 8
+;bar-used-foreground-0 = ${colors.fg}
+;bar-used-foreground-1 = ${colors.fg}
+;bar-used-foreground-2 = ${colors.yellow}
+;bar-used-foreground-3 = ${colors.alert}
+;bar-used-foreground-4 = ${colors.alert}
+;bar-used-fill = |
+;bar-used-empty = ¦
+;bar-used-empty-foreground = ${colors.fg-alt}
 
 [module/wlan]
 type = internal/network
-interface = ${env:WLP:wlp3s0}
+interface = ${env:WLP:wlo1}
 interval = 3.0
 
 format-connected = <ramp-signal>
@@ -264,34 +264,6 @@ ramp-signal-3 = 
 ramp-signal-3-foreground = ${colors.accent}
 ramp-signal-4 = 
 ramp-signal-4-foreground = ${colors.fg}
-
-[module/network-up]
-type = internal/network
-interface = ${env:LAN:eno1}
-interval = 4.0
-label-connected = "%upspeed%"
-format-connected-prefix = " "
-format-connected-prefix-foreground = ${colors.accent}
-format-connected-foreground = ${colors.fg}
-format-connected-background =
-format-connected-underline =
-format-disconnected-prefix = " "
-format-disconnected-prefix-foreground = ${colors.alert}
-format-disconnected-foreground = ${colors.alert}
-
-[module/network-down]
-type = internal/network
-interface = ${env:LAN:eno1}
-interval = 4.0
-label-connected = "%downspeed%"
-format-connected-prefix = " "
-format-connected-prefix-foreground = ${colors.accent}
-format-connected-foreground = ${colors.fg}
-format-connected-background =
-format-connected-underline =
-format-disconnected-prefix = " "
-format-disconnected-prefix-foreground = ${colors.alert}
-format-disconnected-foreground = ${colors.alert}
 
 [module/pulseaudio]
 type = internal/pulseaudio
@@ -367,19 +339,19 @@ type = custom/text
 content = "   "
 content-foreground = ${colors.fg-alt}
 
-[module/redshift]
-type = custom/script
-exec = ~/.config/polybar/modules/redshift
-exec-if = pgrep -x redshift
-interval = 60
-format-padding = 1
-
-[module/syncthing]
-type = custom/script
-exec = echo 1
-exec-if = systemctl is-active syncthing
-format = ""
-format-foreground = ${colors.fg}
-interval = 30
+;[module/redshift]
+;type = custom/script
+;exec = ~/.config/polybar/modules/redshift
+;exec-if = pgrep -x redshift
+;interval = 60
+;format-padding = 1
+;
+;[module/syncthing]
+;type = custom/script
+;exec = echo 1
+;exec-if = systemctl is-active syncthing
+;format = ""
+;format-foreground = ${colors.fg}
+;interval = 30
 
 ; vim:ft=dosini

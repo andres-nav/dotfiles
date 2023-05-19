@@ -47,11 +47,30 @@ in {
         ubuntu_font_family
         dejavu_fonts
         symbola
+        fira-code
+        fira-code-symbols
+        open-sans
+        jetbrains-mono
+        siji
+        font-awesome
       ];
     };
 
     ## Apps/Services
-    services.xserver.displayManager.lightdm.greeters.mini.user = config.user.name;
+    services.xserver.displayManager.lightdm.greeters.mini = {
+      user = config.user.name;
+      # must add color module
+     # extraConfig = ''
+     #   text-color = "${cfg.colors.magenta}"
+     #   password-background-color = "${cfg.colors.black}"
+     #   window-color = "${cfg.colors.types.border}"
+     #   border-color = "${cfg.colors.types.border}"
+     # '';
+    };
+
+    services.unclutter = {
+      enable = true;
+    };
 
     # Try really hard to get QT to respect my GTK theme.
     env.GTK_DATA_PREFIX = [ "${config.system.path}" ];

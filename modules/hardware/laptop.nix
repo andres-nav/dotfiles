@@ -11,7 +11,10 @@ in {
   };
 
   config = mkIf cfg.enable {
-    services.xserver.libinput.enable = true; # trackpad
+    services.xserver.libinput = {
+      enable = true; # trackpad
+      touchpad.disableWhileTyping = true;
+    };
 
     services.tlp.enable = lib.mkDefault ((lib.versionOlder (lib.versions.majorMinor lib.version) "21.05")
                                        || !config.services.power-profiles-daemon.enable); # tlp

@@ -49,3 +49,8 @@ bspc config bottom_padding 0
 bspc config -m primary top_padding 0
 bspc config -m primary bottom_padding 34
 
+POLYBAR_START="$XDG_CONFIG_HOME/polybar/run.sh"
+echo $POLYBAR_START
+if [ -f "$POLYBAR_START" ]; then
+  $POLYBAR_START
+fi
