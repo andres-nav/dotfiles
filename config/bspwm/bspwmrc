@@ -15,7 +15,6 @@ bspc monitor $MONITOR -d {1,2,3,4,5,6,7}
 bspc config remove_disabled_monitors true
 bspc config remove_unplugged_monitors true
 
-
 # Rules
 bspc rule -r '*'
 
@@ -26,7 +25,7 @@ bspc rule -a feh state=fullscreen
 bspc rule -a 'Emacs:org*' state=floating
 bspc rule -a 'Emacs:scratch' state=floating
 bspc rule -a 'Emacs:emacs-everywhere' state=floating sticky=on
-bspc rule -a '*:scratch' state=floating sticky=on border=off rectangle=1000x460+480+620
+bspc rule -a '*:scratch' state=floating sticky=on rectangle=1000x460+480+620
 
 # Theme
 bspc config borderless_monocle true
@@ -47,7 +46,6 @@ bspc config -m primary top_padding 0
 bspc config -m primary bottom_padding 34
 
 POLYBAR_START="$XDG_CONFIG_HOME/polybar/run.sh"
-echo $POLYBAR_START
 if [ -f "$POLYBAR_START" ]; then
   $POLYBAR_START
 fi

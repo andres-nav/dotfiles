@@ -15,12 +15,12 @@ super + ctrl + alt + Return
 	xterm
 
 # Open a disposable, floating terminal window, for quick shell commands.
-super + grave
+super + s
 	scratch
 
 # Open a disposable scratch buffer in a floating Emacs window, to run arbitrary
 # code or quickly note something down.
-super + shift + grave
+super + shift + s
 	emacsclient --eval "(open-scratch-frame)"
 
 super + space

@@ -1,0 +1,61 @@
+cmd open_terminal &{{
+	kitty --detach $F
+}}
+
+cmd open_external_editor &{{
+	kitty --detach $EDITOR $f
+}}
+
+cmd hide_if_file &{{
+	if test -f "$f"; then
+		lf -remote "send $id hide"
+	fi
+}}
+
+cmd hide &{{
+	if [ "$SESSION" == "scratchpad" ] ; then 
+		xdotool key super+s	
+	fi
+}}
+
+cmd open_and_close_scratchpad :hide_if_file; open
+cmd open_codium &{{
+	pwd | sed -r "s/\s/\\\ /g" | codium .
+}}
+
+cmd done ${{
+	if test -f "$f"; then
+		filename=$(basename $f)
+		echo ${filename}
+		mv "${filename}" "(D) ${filename}"
+	fi
+}}
+
+map w :hide; open_terminal
+map E :hide; open_external_editor
+map c
+map U clear
+
+map cc open_codium
+map cd $(pwd | sed -r "s/\s/\\\ /g" | xclip -sel clip)
+map cD $(pwd | xclip -sel clip)
+
+map ad done
+
+map q
+map <a-q> quit
+map <a-d> delete
+map ; read 
+
+map gm cd ~/MEGA
+map gu cd ~/MEGA/Uni/3YEAR/Q2/
+map gd cd ~/.config
+
+map <enter> shell
+
+map O $ echo $f | sed -r "s/\s/\\\ /g" | mimeopen --ask 
+
+set drawbox
+
+# map l open_and_close_scratchpad
+# map <right> open_and_close_scratchpad

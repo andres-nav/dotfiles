@@ -20,6 +20,7 @@
       };
       media = {
         documents.enable = true;
+        lf.enable = true;
         #graphics.enable = true;
         spotify.enable = true;
       };
@@ -49,7 +50,7 @@
     };
     services = {
       ssh.enable = true;
-      megacmd.enable = true;
+      mega.enable = true;
       #docker.enable = true;
     };
     theme.active = "alucard";

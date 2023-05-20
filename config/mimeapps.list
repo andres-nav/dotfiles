@@ -1,0 +1,12 @@
+[Default Applications]
+application/pdf=org.pwmt.zathura-pdf-mupdf.desktop
+x-scheme-handler/msteams=teams.desktop
+
+image/png=feh.desktop
+image/jpeg=feh.desktop
+image/gif=feh.desktop
+image/webp=feh.desktop
+image/svg+xml=feh.desktop
+
+[Added Associations]
+application/pdf=org.pwmt.zathura-pdf-mupdf.desktop;

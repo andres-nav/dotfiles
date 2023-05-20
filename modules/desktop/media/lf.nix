@@ -1,23 +1,23 @@
-# modules/desktop/media/docs.nix
+# modules/desktop/media/lf.nix
 
 { options, config, lib, pkgs, ... }:
 
 with lib;
 with lib.my;
-let cfg = config.modules.desktop.media.documents;
+let cfg = config.modules.desktop.media.lf;
     configDir = config.dotfiles.configDir;
 in {
-  options.modules.desktop.media.documents = {
+  options.modules.desktop.media.lf = {
     enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable {
     user.packages = with pkgs; [
-      zathura
+      lf
     ];
 
     home.configFile = {
-      "zathura".source = "${configDir}/zathura";
+      "lf".source = "${configDir}/lf";
     };
 
   };
