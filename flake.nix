@@ -8,8 +8,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    emacs-overlay.url  = "github:nix-community/emacs-overlay";
   };
 
   outputs = inputs @ { self, nixpkgs, ... }:

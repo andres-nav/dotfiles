@@ -37,9 +37,9 @@
       #python.enable = true;
     };
     editors = {
-      default = "nvim";
+      default = "emacs";
       emacs.enable = true;
-      vim.enable = true;
+      nvim.enable = true;
     };
     shell = {
       direnv.enable = true;

@@ -17,8 +17,6 @@ in {
 
     environment.systemPackages = with pkgs; [
       lightdm
-      dunst
-      libnotify
       (polybar.override {
         pulseSupport = true;
         nlSupport = true;
