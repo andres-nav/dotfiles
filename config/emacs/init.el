@@ -17,7 +17,28 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
+(save-place-mode 1) ;; save cursor place
+(savehist-mode 1) ;; save history of minibuffer
+(global-auto-revert-mode 1) ;; auto refresh buffers that have been changed on disk
+
 (global-display-line-numbers-mode 1)
+
+(setq use-dialog-box nil ;; remove annoying dialog boxes
+      enable-recursive-minibuffers t) ;; enable recursive minibuffers
+
+(auto-save-visited-mode 1) ;; makes autosaves save to current file
+
+(defun save-all ()
+  (interactive)
+  (save-some-buffers t))
+
+(add-hook 'focus-out-hook 'save-all) ;; hook to autosave when loosing focus
+
+(setq backup-directory-alist
+  `(("." . ,(concat user-emacs-directory "backups"))))
+
+(setq custom-file (locate-user-emacs-file "custom-vars.el"))
+(load custom-file 'noerror 'nomessage)
 
 (use-package dracula-theme
   :init
@@ -26,7 +47,8 @@
 (use-package evil
   :ensure t
   :init
-  (setq evil-want-keybinding nil)
+  (setq evil-want-keybinding nil
+	evil-want-C-u-scroll t)
   :config
   (evil-mode 1))
 
@@ -47,4 +69,30 @@
     ("s-p" . projectile-command-map)))
 
 (use-package vterm
-    :ensure t)
+  :ensure t)
+
+(use-package vertico
+  :init
+  (vertico-mode))
+
+(use-package orderless
+  :init
+  (setq completion-styles '(orderless basic) ;; check consult wiki to tweak
+        completion-category-defaults nil
+        completion-category-overrides '((file (styles partial-completion)))))
+
+;; TODO add undo-fu-session
+
+(use-package tree-sitter ;; remove for emacs 29
+  :ensure t
+  :init
+  (global-tree-sitter-mode)
+  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+
+(use-package tree-sitter-langs ;; remove for emacs 29
+  :ensure t)
+
+(use-package nix-mode
+  :mode "\\.nix\\'")
+
+
