@@ -46,15 +46,7 @@ in {
       fontDir.enable = true;
       enableGhostscriptFonts = true;
       fonts = with pkgs; [
-        ubuntu_font_family
-        dejavu_fonts
-        symbola
-        fira-code
-        fira-code-symbols
-        open-sans
-        jetbrains-mono
-        siji
-        font-awesome
+        (nerdfonts.override { fonts = [ "FiraCode" ]; })
       ];
     };
 

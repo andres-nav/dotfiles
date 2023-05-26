@@ -28,7 +28,7 @@
       enable-recursive-minibuffers t ;; enable recursive minibuffers
       initial-major-mode 'org-mode) ;; set the scratch buffer mode to org
 
-(set-frame-font "Fira Code-10" nil t) ;; set default font
+(set-frame-font "FiraCode Nerd Font-10" nil t) ;; set default font
 
 (auto-save-visited-mode 1) ;; makes autosaves save to current file
 
