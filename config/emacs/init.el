@@ -6,6 +6,7 @@
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
+
 (eval-and-compile
   (setq use-package-always-ensure t
         use-package-expand-minimally t))
@@ -24,7 +25,10 @@
 (global-display-line-numbers-mode 1)
 
 (setq use-dialog-box nil ;; remove annoying dialog boxes
-      enable-recursive-minibuffers t) ;; enable recursive minibuffers
+      enable-recursive-minibuffers t ;; enable recursive minibuffers
+      initial-major-mode 'org-mode) ;; set the scratch buffer mode to org
+
+(set-frame-font "Fira Code-10" nil t) ;; set default font
 
 (auto-save-visited-mode 1) ;; makes autosaves save to current file
 
@@ -41,38 +45,35 @@
 (load custom-file 'noerror 'nomessage)
 
 (use-package dracula-theme
-  :init
+  :config
   (load-theme 'dracula t))
 
 (use-package evil
-  :ensure t
   :init
   (setq evil-want-keybinding nil
-	evil-want-C-u-scroll t)
+	evil-want-C-u-scroll t
+	evil-undo-system 'undo-fu)
+
   :config
   (evil-mode 1))
 
 (use-package evil-collection
   :after evil
-  :ensure t
   :config
   (evil-collection-init))
 
-(use-package magit
-  :ensure t)
+(use-package magit) ;; add forge, github-review, magit gitflow, magit todos
 
 (use-package projectile
-  :ensure t
-  :init
+  :config
   (projectile-mode +1)
   :bind (:map projectile-mode-map
     ("s-p" . projectile-command-map)))
 
-(use-package vterm
-  :ensure t)
+(use-package vterm)
 
 (use-package vertico
-  :init
+  :config
   (vertico-mode))
 
 (use-package orderless
@@ -81,18 +82,33 @@
         completion-category-defaults nil
         completion-category-overrides '((file (styles partial-completion)))))
 
-;; TODO add undo-fu-session
-
-(use-package tree-sitter ;; remove for emacs 29
+;; TODO consult, evil-terminal-cursor-changer, clipetty
+(use-package undo-fu
   :ensure t
   :init
+  (setq undo-limit 67108864 ; 64mb
+	undo-strong-limit 100663296 ; 96mb
+        undo-outer-limit 1006632960)) ; 960mb
+
+(use-package undo-fu-session
+  :ensure t
+  :after undo-fu
+  :init
+  (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'"))
+  :config
+  (undo-fu-session-global-mode))
+
+(use-package tree-sitter ;; remove for emacs 29
+  :config
   (global-tree-sitter-mode)
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
 
-(use-package tree-sitter-langs ;; remove for emacs 29
-  :ensure t)
+(use-package tree-sitter-langs) ;; remove for emacs 29
 
 (use-package nix-mode
   :mode "\\.nix\\'")
 
 
+ (use-package ess
+  :ensure t
+  :init (require 'ess-site))

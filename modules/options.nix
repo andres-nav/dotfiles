@@ -23,6 +23,7 @@ with lib.my;
       file       = mkOpt' attrs {} "Files to place directly in $HOME";
       configFile = mkOpt' attrs {} "Files to place in $XDG_CONFIG_HOME";
       dataFile   = mkOpt' attrs {} "Files to place in $XDG_DATA_HOME";
+      programs   = mkOpt' attrs {} "Programs to enable with home-manager";
     };
 
     env = mkOption {
@@ -59,9 +60,9 @@ with lib.my;
       # files easily to my $HOME, but 'home-manager.users.hlissner.home.file.*'
       # is much too long and harder to maintain, so I've made aliases in:
       #
-      #   home.file        ->  home-manager.users.hlissner.home.file
-      #   home.configFile  ->  home-manager.users.hlissner.home.xdg.configFile
-      #   home.dataFile    ->  home-manager.users.hlissner.home.xdg.dataFile
+      #   home.file        ->  home-manager.users.god.home.file
+      #   home.configFile  ->  home-manager.users.god.home.xdg.configFile
+      #   home.dataFile    ->  home-manager.users.god.home.xdg.dataFile
       users.${config.user.name} = {
         home = {
           file = mkAliasDefinitions options.home.file;
@@ -73,6 +74,7 @@ with lib.my;
           configFile = mkAliasDefinitions options.home.configFile;
           dataFile   = mkAliasDefinitions options.home.dataFile;
         };
+        programs = mkAliasDefinitions options.home.programs;
       };
     };
 

@@ -18,7 +18,7 @@ in {
       after = [ "network.target" ];
       description = "Start MEGA";
       serviceConfig = {
-        Type = "forking";
+        Type = "simple";
         ExecStart = ''${pkgs.megasync}/bin/megasync'';         
 	Restart = "always";
       };
