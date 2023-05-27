@@ -10,11 +10,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    # modules.theme.onReload.bspwm = ''
-    #   ${pkgs.bspwm}/bin/bspc wm -r
-    #   source $XDG_CONFIG_HOME/bspwm/bspwmrc
-    # '';
-
     environment.systemPackages = with pkgs; [
       lightdm
     ];
@@ -29,12 +24,19 @@ in {
           lightdm.greeters.mini.enable = true;
         };
         windowManager.i3 = {
-	  enable = true;
-	  # extraSessionCommands = ''
-          #   megasync
-	  # '';
+          enable = true;
+          extraPackages = with pkgs; [
+            i3status
+            xss-lock
+            i3blocks
+          ];
         };
       };
+    };
+
+    programs.i3lock = {
+      enable = true;
+      package = pkgs.i3lock-fancy-rapid;
     };
 
     home.configFile = {

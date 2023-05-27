@@ -9,12 +9,13 @@ let cfg = config.modules.desktop.media.spotify;
 in {
   options.modules.desktop.media.spotify = {
     enable = mkBoolOpt false;
-    tui.enable = mkBoolOpt false;  # TODO
   };
 
   config = mkIf cfg.enable {
     user.packages = with pkgs; [
       spotifywm
+      playerctl
+
       (makeDesktopItem {
         name = "spotify";
         desktopName = "Spotify";
