@@ -1,0 +1,3 @@
+[submodule "wallpapers"]
+	path = modules/themes/wallpapers
+	url = https://github.com/andres-nav/wallpapers.git

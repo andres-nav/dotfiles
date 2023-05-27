@@ -11,7 +11,8 @@ in {
     {
       modules = {
         theme = {
-          wallpaper = mkDefault ./config/wallpaper.png;
+          wallpaper = mkDefault ./../wallpapers/0007.png;
+
           gtk = {
             theme = "Dracula";
             iconTheme = "Paper";
@@ -45,8 +46,6 @@ in {
           };
         };
 
-        shell.zsh.rcFiles  = [ ./config/zsh/prompt.zsh ];
-        shell.tmux.rcFiles = [ ./config/tmux.conf ];
         desktop.browsers = {
           firefox.userChrome = concatMapStringsSep "\n" readFile [
             ./config/firefox/userChrome.css
@@ -71,6 +70,9 @@ in {
       # Other dotfiles
       home.configFile = with config.modules; mkMerge [
         {
+          "wallpapers" = { source = ./../wallpapers; recursive = true; };
+        }
+        {
           # Sourced from sessionCommands in modules/themes/default.nix
           "xtheme/90-theme".source = ./config/Xresources;
         }
@@ -81,8 +83,6 @@ in {
           "rofi/theme" = { source = ./config/rofi; recursive = true; };
         })
         (mkIf (desktop.bspwm.enable || desktop.stumpwm.enable) {
-          #"polybar" = { source = ./config/polybar;};
-          "dunst/dunstrc".text = import ./config/dunstrc cfg;
           "Dracula-purple-solid-kvantum" = {
             recursive = true;
             source = "${pkgs.unstable.dracula-theme}/share/themes/Dracula/kde/kvantum/Dracula-purple-solid";

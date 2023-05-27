@@ -14,10 +14,7 @@ in {
       default = null;
       apply = v: let theme = builtins.getEnv "THEME"; in
                  if theme != "" then theme else v;
-      description = ''
-        Name of the theme to enable. Can be overridden by the THEME environment
-        variable. Themes can also be hot-swapped with 'hey theme $THEME'.
-      '';
+      description = '''';
     };
 
     wallpaper = mkOpt (either path null) null;
@@ -36,7 +33,6 @@ in {
     onReload = mkOpt (attrsOf lines) {};
 
     fonts = {
-      # TODO Use submodules
       mono = {
         name = mkOpt str "Monospace";
         size = mkOpt int 12;

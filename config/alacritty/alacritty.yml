@@ -1,8 +1,10 @@
+env:
+  WINIT_X11_SCALE_FACTOR: "1.5"
 
-
-padding:
-  x: 10
-  y: 10
+window:
+  padding:
+    x: 3
+    y: 2
 
 
 decorations: buttonless
