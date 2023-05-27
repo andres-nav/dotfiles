@@ -46,7 +46,7 @@ in {
       fontDir.enable = true;
       enableGhostscriptFonts = true;
       fonts = with pkgs; [
-        (nerdfonts.override { fonts = [ "FiraCode" ]; })
+        (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
       ];
     };
 

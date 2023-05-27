@@ -11,16 +11,16 @@ font:
   # The normal (roman) font face to use.
   # Style can be specified to pick a specific face.
   normal:
-    family: "FiraCode Nerd Font"
+    family: "CaskaydiaCove Nerd Font Mono"
 
   # The bold font face
   bold:
-    family: "FiraCode Nerd Font"
+    family: "CaskaydiaCove Nerd Font Mono"
 
   # The italic font face
   italic:
     style: "Light Oblique"
-    family: "FiraCode Nerd Font"
+    family: "CaskaydiaCove Nerd Font Mono"
 
   # Point size of the font
   size: 6.5
