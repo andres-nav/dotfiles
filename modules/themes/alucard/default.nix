@@ -11,7 +11,7 @@ in {
     {
       modules = {
         theme = {
-          wallpaper = mkDefault ./../wallpapers/0007.png;
+          wallpaper = mkDefault ./config/wallpaper.png;
 
           gtk = {
             theme = "Dracula";
@@ -69,9 +69,9 @@ in {
 
       # Other dotfiles
       home.configFile = with config.modules; mkMerge [
-        {
-          "wallpapers" = { source = ./../wallpapers; recursive = true; };
-        }
+        # {
+          # "wallpapers" = { source = ./../wallpapers; recursive = true; };
+        # }
         {
           # Sourced from sessionCommands in modules/themes/default.nix
           "xtheme/90-theme".source = ./config/Xresources;
