@@ -66,7 +66,7 @@
 
 (use-package magit ;; add forge, github-review, magit gitflow, magit todos
   :config
-  (add-to-list 'evil-insert-state-modes 'magit-log-edit-mode))
+  (add-hook 'git-commit-mode-hook 'evil-insert-state))
 
 (use-package projectile
   :config
