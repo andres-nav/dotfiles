@@ -8,7 +8,7 @@ font pango:CaskaydiaCove Nerd Font Mono 12
 # Lock screen with i3
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock 5 3 --nofork
 exec --no-startup-id xrandr --output HDMI-1-0 --auto --right-of eDP-1 # add the variables
-exec --no-startup-id feh -z $XDG_CONFIG_HOME/wallpapers --bg-fill
+exec_always --no-startup-id feh -z $XDG_CONFIG_HOME/wallpapers --bg-fill
 
 # Fn keys
 set $refresh_i3status pkill -RTMIN+10 i3blocks
