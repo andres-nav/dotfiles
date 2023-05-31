@@ -30,6 +30,7 @@ focus_follows_mouse no
 
 # Remove title bars
 set $border_size 2
+gaps inner $border_size
 default_border pixel $border_size
 default_floating_border pixel $border_size
 

@@ -17,9 +17,6 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
-;; (add-to-list 'default-frame-alist
-  ;; '(vertical-scroll-bars . nil))
-
 
 (save-place-mode 1) ;; save cursor place
 (savehist-mode 1) ;; save history of minibuffer
@@ -29,8 +26,9 @@
 
 (setq use-dialog-box nil ;; remove annoying dialog boxes
       enable-recursive-minibuffers t ;; enable recursive minibuffers
-      initial-major-mode 'org-mode ;; set the scratch buffer mode to org
-      default-frame-alist '((font . "CaskaydiaCove Nerd Font Mono 10")))
+      initial-major-mode 'org-mode) ;; set the scratch buffer mode to org
+
+(add-to-list 'default-frame-alist '(font . "CaskaydiaCove Nerd Font Mono 10"))
 
 (auto-save-visited-mode 1) ;; makes autosaves save to current file
 
@@ -62,7 +60,8 @@
 (use-package evil-collection
   :after evil
   :config
-  (evil-collection-init))
+  (evil-collection-init)
+  (evil-collection-swap-key nil 'evil-motion-state-map ";" ":"))
 
 (use-package magit ;; add forge, github-review, magit gitflow, magit todos
   :config
@@ -79,6 +78,7 @@
 (use-package vertico
   :config
   (vertico-mode))
+
 
 (use-package orderless
   :init
