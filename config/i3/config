@@ -44,7 +44,7 @@ bindsym $mod+Mod1+q kill
 # Rofi
 bindsym $mod+space exec $DOTFILES_BIN/rofi/appmenu
 
-bindsym $mod+slash exec $DOTFILES_BIN/rofi/filemenu -x
+# bindsym $mod+slash exec $DOTFILES_BIN/rofi/filemenu -x
 
 # change focus
 bindsym $mod+h focus left
@@ -88,14 +88,18 @@ bindsym $mod+o focus child
 # scratchpads
 for_window [class="scratch"] move window to scratchpad, scratchpad show
 
-bindsym $mod+Mod1+s exec "scratch"
+bindsym $mod+Mod1+s exec scratch
 bindsym $mod+s [class="scratch"] scratchpad show
 
 bindsym $mod+d [class="Zathura"] scratchpad show
-bindsym $mod+z [class="Brave-browser"] scratchpad show
-bindsym $mod+a [class="kitty"] scratchpad show
-bindsym $mod+x [class="^(?!scratchpad|Zathura|Brave-browser$)"] scratchpad show
+bindsym $mod+a [class="Brave-browser"] scratchpad show
+bindsym $mod+x [class="^(?!scratch|Zathura|Brave-browser$)"] scratchpad show
 bindsym $mod+Shift+s move scratchpad
+
+# window rules
+for_window [class="spotify"] move container to workspace 10
+for_window [class="Brave-browser"] move container to workspace 8
+for_window [class="emacs"] move container to workspace 1
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
@@ -157,9 +161,6 @@ bindsym $mod+Shift+comma move container to output next
 
 # focus next screen
 bindsym $mod+comma focus output next
-
-# move workspaces between screens
-bindsym $mod+Shift+period move workspace to output next
 
 # reload the configuration file
 bindsym $mod+Shift+r reload
