@@ -31,6 +31,7 @@ focus_follows_mouse no
 # Remove title bars
 set $border_size 2
 gaps inner $border_size
+smart_gaps on
 default_border pixel $border_size
 default_floating_border pixel $border_size
 
@@ -219,6 +220,7 @@ bar {
     status_command i3blocks
     padding $border_size
     workspace_min_width 40
+    separator_symbol " 󰇘 "
 
     colors {
 	background #282A36

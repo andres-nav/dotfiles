@@ -41,6 +41,7 @@ in {
 
     home.configFile = {
       "i3".source = "${configDir}/i3";
+      "i3blocks".source = "${configDir}/i3blocks";
     };
   };
 }

@@ -31,16 +31,15 @@
 # The first parameter sets the step (and units to display)
 # The second parameter overrides the mixer selection
 # See the script for details.
-[nm-vpn]
-separator_block_width=15
-command=/home/me/.config/i3blocks/nm-vpn/nm-vpn
-interval=30
+# [nm-vpn]
+# separator_block_width=15
+# command=/home/me/.config/i3blocks/nm-vpn/nm-vpn
+# interval=30
 
 [volume]
-label=♪ 
 #label=VOL
-separator_block_width=15
-command=/home/me/.config/i3blocks/volume/volume
+separator_block_width=40
+command=./modules/volume
 interval=once
 signal=10
 #STEP=5%
@@ -60,13 +59,13 @@ signal=10
 #
 # If the instance is not specified, use the interface used for default route.
 # The address can be forced to IPv4 or IPv6 with -4 or -6 switches.
-[iface]
+# [iface]
 #IFACE=wlan0
-color=#00FF00
-interval=10
-separator=false
+# color=#00FF00
+# interval=10			#
+# separator=false
 
-[wifi]
+# [wifi]
 #INTERFACE=wlp3s0
 #label=wifi:
 #interval=10
@@ -74,7 +73,7 @@ separator=false
 #
 #[bandwidth]
 #INTERFACE=eth0
-interval=5
+# interval=5
 
 # CPU usage
 #
@@ -94,15 +93,15 @@ interval=5
 #
 # The battery instance defaults to 0.
 [battery]
-separator_block_width=15
-command=/home/me/.config/dwmblocks/scripts/battery.sh
+separator_block_width=40
+command=./modules/battery
 interval=30
 
 # Date Time
 #
 [time]
-separator_block_width=15
-command=date '+%H:%M:%S %d-%m-%Y'
+separator_block_width=40
+command=date +'%A, %h %d (%H:%M)'
 interval=30
 
 # Generic media player support
