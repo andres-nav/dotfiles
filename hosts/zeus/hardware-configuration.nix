@@ -15,7 +15,7 @@
     # pinging them, unlike my servers.
     kernel.sysctl."net.ipv4.icmp_echo_ignore_broadcasts" = 1;
 
-    initrd.luks.devices."nixenc".device = "/dev/disk/by-partlabel/primary";
+    initrd.luks.devices."nixenc".device = "/dev/disk/by-partlabel/nixprimary";
   };
 
   # Modules
@@ -48,13 +48,13 @@
     "/" = { 
       device = "/dev/mapper/vg-root";
       fsType = "btrfs";
-      options = [ "subvol=root" "compress-force=zstd" "noatime" ];
+      options = [ "subvol=root" "compress-force=zstd" ];
     };
 
     "/home" = { 
       device = "/dev/mapper/vg-root";
       fsType = "btrfs";
-      options = [ "subvol=home" "compress-force=zstd" "noatime" ];
+      options = [ "subvol=home" "compress-force=zstd" ];
     };
 
     "/nix" = {
@@ -66,17 +66,17 @@
     "/persist" = {
       device = "/dev/mapper/vg-root";
       fsType = "btrfs";
-      options = [ "subvol=persist" "compress-force=zstd" "noatime" ];
+      options = [ "subvol=persist" "compress-force=zstd" ];
     };
 
     "/var/log" = {
       device = "/dev/mapper/vg-root";
       fsType = "btrfs";
-      options = [ "subvol=log" "compress-force=zstd" "noatime" ];
+      options = [ "subvol=log" "compress-force=zstd" ];
     };
 
     "/boot" = { 
-      device = "/dev/disk/by-label/BOOT";
+      device = "/dev/disk/by-label/NIXBOOT";
       fsType = "vfat";
     };
   };
