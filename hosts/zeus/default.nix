@@ -15,8 +15,9 @@
         rofi.enable = true;
       };
       browsers = {
-        default = "brave";
-        brave.enable = true;
+        default = "firefox";
+        #brave.enable = true; // add chromium instead
+        firefox.enable = true;
       };
       media = {
         documents.enable = true;

@@ -28,15 +28,7 @@ in {
   config = mkIf cfg.enable (mkMerge [
     {
       user.packages = with pkgs; [
-        unstable.firefox-bin
-        (makeDesktopItem {
-          name = "firefox-private";
-          desktopName = "Firefox (Private)";
-          genericName = "Open a private Firefox window";
-          icon = "firefox";
-          exec = "${unstable.firefox-bin}/bin/firefox --private-window";
-          categories = [ "Network" ];
-        })
+        firefox
       ];
 
       # Prevent auto-creation of ~/Desktop. The trailing slash is necessary; see
@@ -71,6 +63,8 @@ in {
         # https://support.mozilla.org/en-US/kb/new-tab-page-show-hide-and-customize-top-sites#w_how-do-i-turn-the-new-tab-page-off
         "browser.newtabpage.enabled" = false;
         "browser.newtab.url" = "about:blank";
+        #Enable control tab
+        "browser.ctrlTab.sortByRecentlyUsed" = true;
         # Disable Activity Stream
         # https://wiki.mozilla.org/Firefox/Activity_Stream
         "browser.newtabpage.activity-stream.enabled" = false;
