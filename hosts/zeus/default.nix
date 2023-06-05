@@ -58,6 +58,9 @@
   };
 
 
+
   ## Local config
-  programs.gnupg.agent.enableSSHSupport = true;
+  #programs.gnupg.agent.enableSSHSupport = true;
+  programs.ssh.startAgent = true;
+  services.openssh.startWhenNeeded = true;
 }

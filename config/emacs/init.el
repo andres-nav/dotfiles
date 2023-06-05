@@ -30,9 +30,12 @@
     (scroll-bar-mode -1))
 
 (save-place-mode 1) ;; save cursor place
+
 (savehist-mode 1) ;; save history of minibuffer
+
 (global-auto-revert-mode 1) ;; auto refresh buffers that have been changed on disk
 (electric-pair-mode 1) ;; auto fill brackets
+(hl-line-mode 1)
 
 (setq inhibit-startup-message t
       visible-bell t
