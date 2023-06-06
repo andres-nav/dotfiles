@@ -46,6 +46,7 @@
       direnv.enable = true;
       git.enable = true;
       gnupg.enable = true;
+      mob.enable = true;
       tmux.enable = true;
       fish.enable = true;
     };

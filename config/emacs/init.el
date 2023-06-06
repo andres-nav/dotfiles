@@ -242,7 +242,6 @@
 ;; add anzu
 ;; add indent guide
 ;; add evil nerd commenter
-;; add format all
 ;; add yasnippets
 
 ;; add dirvish
