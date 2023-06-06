@@ -17,6 +17,7 @@ in {
       emacs
 
       emacsPackages.vterm
+      nil
     ];
     
     services.emacs.enable = true;

@@ -20,14 +20,13 @@ in {
 
     user.extraGroups = [ "docker" ];
 
-    modules.shell.zsh.rcFiles = [ "${configDir}/docker/aliases.zsh" ];
-
     virtualisation = {
       docker = {
         enable = true;
         autoPrune.enable = true;
         enableOnBoot = mkDefault false;
         # listenOptions = [];
+        # enableNvidia = true;
       };
     };
   };

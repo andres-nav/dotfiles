@@ -24,6 +24,7 @@
         lf.enable = true;
         #graphics.enable = true;
         spotify.enable = true;
+        discord.enable = true;
       };
       term = {
         default = "alacritty";
@@ -63,4 +64,6 @@
   #programs.gnupg.agent.enableSSHSupport = true;
   programs.ssh.startAgent = true;
   services.openssh.startWhenNeeded = true;
+
+  # nix.gc.automatic = true;
 }

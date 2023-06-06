@@ -1,3 +1,5 @@
+
+;;; Code:
 (require 'package)
 (add-to-list 'package-archives '("gnu"   . "https://elpa.gnu.org/packages/"))
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
@@ -35,7 +37,7 @@
 
 (global-auto-revert-mode 1) ;; auto refresh buffers that have been changed on disk
 (electric-pair-mode 1) ;; auto fill brackets
-(hl-line-mode 1)
+(global-hl-line-mode 1)
 
 (setq inhibit-startup-message t
       visible-bell t
@@ -168,6 +170,7 @@
 
 (use-package nix-mode
   :ensure t
+  :hook (nix-mode . lsp-deferred)
   :mode "\\.nix\\'")
 
 
@@ -183,10 +186,50 @@
 (use-package avy
   :ensure t)
 
+(use-package telephone-line
+  :ensure t
+  :config
+  (setq telephone-line-lhs
+      '((evil   . (telephone-line-evil-tag-segment))
+        (accent . (telephone-line-vc-segment
+                   telephone-line-erc-modified-channels-segment
+                   telephone-line-process-segment))
+        (nil    . (telephone-line-minor-mode-segment
+                   telephone-line-buffer-segment))))
+  (setq telephone-line-rhs
+      '((nil    . (telephone-line-misc-info-segment))
+        (accent . (telephone-line-major-mode-segment))
+        (evil   . (telephone-line-airline-position-segment))))
+  )
+
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode))
+
+(use-package company
+  :ensure t
+  :config
+  (global-company-mode t)
+  )
+
+(use-package corfu
+  :ensure t
+  :config
+  (global-corfu-mode t)
+  )
+
+(use-package lsp-mode
+  :init
+  (setq lsp-keymap-prefix "C-c l")
+  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+         (prog-mode . lsp)
+         (lsp-mode . lsp-enable-which-key-integration))
+  :commands lsp)
+
+(use-package lsp-ui :commands lsp-ui-mode)
+
 ;; add anzu
-;; add telephone Line
 ;; add indent guide
-;; add flycheck
 ;; add evil nerd commenter
 ;; add format all
 ;; add lsp bridge
@@ -198,3 +241,4 @@
 ;; add org-roam, org-bullets
 
 ;; add acutex
+;; add prespective-el
