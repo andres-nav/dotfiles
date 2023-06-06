@@ -28,7 +28,7 @@ floating_modifier $mod
 
 focus_follows_mouse no
 
-# Remove title bars
+# Remove tite bars
 set $border_size 2
 gaps inner $border_size
 smart_gaps on

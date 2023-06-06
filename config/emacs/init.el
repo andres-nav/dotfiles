@@ -184,7 +184,11 @@
   (which-key-mode 1))
 
 (use-package avy
-  :ensure t)
+  :ensure t
+  :config
+  (evil-define-key nil evil-normal-state-map
+    "s" 'evil-avy-goto-char-2)
+  )
 
 (use-package telephone-line
   :ensure t
@@ -205,7 +209,7 @@
 
 (use-package flycheck
   :ensure t
-  :init (global-flycheck-mode))
+  :hook (prog-mode . flycheck-mode))
 
 (use-package company
   :ensure t
@@ -213,7 +217,7 @@
   (global-company-mode t)
   )
 
-(use-package corfu
+(use-package corfu ;; TODO: check if it really works 
   :ensure t
   :config
   (global-corfu-mode t)
@@ -233,7 +237,6 @@
 ;; add indent guide
 ;; add evil nerd commenter
 ;; add format all
-;; add company and corfu
 ;; add yasnippets
 
 ;; add dirvish
@@ -252,8 +255,5 @@
         (prolog-indent-buffer)
       (format-all-buffer)))
   :config
-  (global-set-key (kbd "M-F") #'ian/format-code)
-
-
-
+  (global-set-key (kbd "M-F") #'format-code)
   (add-hook 'prog-mode-hook #'format-all-ensure-formatter))
