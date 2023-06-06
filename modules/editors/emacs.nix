@@ -17,6 +17,8 @@ in {
       emacs
 
       emacsPackages.vterm
+      emacsPackages.sqlite3
+
       nil
       nixpkgs-fmt
     ];

@@ -112,6 +112,12 @@
   :config
   (add-hook 'git-commit-mode-hook 'evil-insert-state))
 
+(use-package sqlite3
+  :ensure t)
+
+(use-package forge
+  :ensure t)
+
 (use-package projectile
   :ensure t
   :config
