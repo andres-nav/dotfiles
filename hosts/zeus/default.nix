@@ -1,7 +1,5 @@
-# Zeus: my main laptop 
-
-{ ... }:
-{
+# Zeus: my main laptop
+{...}: {
   imports = [
     ../home.nix
     ./hardware-configuration.nix
@@ -59,8 +57,6 @@
 
     theme.active = "alucard";
   };
-
-
 
   ## Local config
   #programs.gnupg.agent.enableSSHSupport = true;

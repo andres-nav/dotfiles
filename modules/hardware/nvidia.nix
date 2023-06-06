@@ -1,8 +1,13 @@
-{ options, config, lib, pkgs, ... }:
-
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.hardware.nvidia;
+with lib.my; let
+  cfg = config.modules.hardware.nvidia;
 in {
   options.modules.hardware.nvidia = {
     enable = mkBoolOpt false;
@@ -19,14 +24,14 @@ in {
         nvidiaBusId = "PCI:1:0:0";
       };
     };
-    
+
     hardware.opengl = {
       enable = true;
       driSupport = true;
       driSupport32Bit = true;
     };
 
-    services.xserver.videoDrivers = [ "nvidia" ];
+    services.xserver.videoDrivers = ["nvidia"];
 
     environment.systemPackages = with pkgs; [
       # Respect XDG conventions, damn it!

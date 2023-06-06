@@ -223,7 +223,7 @@
   (global-company-mode t)
   )
 
-(use-package corfu ;; TODO: check if it really works 
+(use-package corfu ;; TODO: check if it really works
   :ensure t
   :config
   (global-corfu-mode t)
@@ -261,5 +261,8 @@
         (prolog-indent-buffer)
       (format-all-buffer)))
   :config
+  (add-to-list 'format-all-default-formatters '("Nix" alejandra))
   (global-set-key (kbd "M-F") #'format-code)
-  (add-hook 'prog-mode-hook #'format-all-ensure-formatter))
+  (add-hook 'prog-mode-hook #'format-all-ensure-formatter)
+  (add-hook 'prog-mode-hook 'format-all-mode)
+  )

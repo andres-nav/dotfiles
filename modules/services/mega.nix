@@ -1,8 +1,13 @@
-{ config, options, pkgs, lib, ... }:
-
+{
+  config,
+  options,
+  pkgs,
+  lib,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.services.mega;
+with lib.my; let
+  cfg = config.modules.services.mega;
 in {
   options.modules.services.mega = {
     enable = mkBoolOpt false;
@@ -14,13 +19,13 @@ in {
     ];
 
     systemd.user.services.mega = {
-      wantedBy = [ "default.target" ]; 
-      after = [ "network.target" ];
+      wantedBy = ["default.target"];
+      after = ["network.target"];
       description = "Start MEGA";
       serviceConfig = {
         Type = "simple";
-        ExecStart = ''${pkgs.megasync}/bin/megasync'';         
-	Restart = "always";
+        ExecStart = ''${pkgs.megasync}/bin/megasync'';
+        Restart = "always";
       };
     };
   };

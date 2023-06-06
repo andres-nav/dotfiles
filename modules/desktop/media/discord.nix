@@ -1,8 +1,13 @@
-{ config, options, lib, pkgs, ... }:
-
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.desktop.media.discord;
+with lib.my; let
+  cfg = config.modules.desktop.media.discord;
 in {
   options.modules.desktop.media.discord = {
     enable = mkBoolOpt false;

@@ -1,8 +1,13 @@
-{ config, options, lib, pkgs, ... }:
-
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.my;
-let cfg = config.modules.shell.direnv;
+with lib.my; let
+  cfg = config.modules.shell.direnv;
 in {
   options.modules.shell.direnv = {
     enable = mkBoolOpt false;
