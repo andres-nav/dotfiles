@@ -42,7 +42,7 @@ bindsym $mod+Return exec alacritty -e bash -c "(tmux ls | grep -qEv 'attached|sc
 bindsym $mod+Mod1+q kill
 
 # Rofi
-bindsym $mod+space exec $DOTFILES_BIN/rofi/appmenu
+bindsym $mod+p exec $DOTFILES_BIN/rofi/appmenu
 
 # bindsym $mod+slash exec $DOTFILES_BIN/rofi/filemenu -x
 
@@ -77,7 +77,7 @@ bindsym $mod+e layout toggle split
 bindsym $mod+Shift+f floating toggle
 
 # change focus between tiling / floating windows
-#bindsym $mod+space focus mode_toggle
+bindsym $mod+space focus mode_toggle
 
 # focus the parent container
 bindsym $mod+i focus parent

@@ -32,7 +32,7 @@
         alacritty.enable = true;
       };
       vm = {
-        #virtualbox.enable = true;
+        virtualbox.enable = true;
       };
     };
     dev = {
@@ -45,16 +45,17 @@
     };
     shell = {
       direnv.enable = true;
-      git.enable    = true;
-      gnupg.enable  = true;
-      tmux.enable   = true;
-      fish.enable    = true;
+      git.enable = true;
+      gnupg.enable = true;
+      tmux.enable = true;
+      fish.enable = true;
     };
     services = {
       ssh.enable = true;
       mega.enable = true;
-      #docker.enable = true;
+      docker.enable = true;
     };
+
     theme.active = "alucard";
   };
 

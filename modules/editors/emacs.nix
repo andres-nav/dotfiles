@@ -18,6 +18,7 @@ in {
 
       emacsPackages.vterm
       nil
+      nixpkgs-fmt
     ];
     
     services.emacs.enable = true;

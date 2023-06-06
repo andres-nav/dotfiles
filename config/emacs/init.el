@@ -11,7 +11,7 @@
 
 (eval-and-compile
   (setq use-package-always-ensure t
-        use-package-expand-minimally t))
+	use-package-expand-minimally t))
 
 ;; Performance
 (setq gc-cons-threshold 100000000)
@@ -72,14 +72,14 @@
 ;;; Put Emacs auto-save and backup files to /tmp/ or C:/Temp/
 (defconst emacs-tmp-dir (expand-file-name (format "emacs%d" (user-uid)) temporary-file-directory))
 (setq
-   backup-by-copying t                                        ; Avoid symlinks
-   delete-old-versions t
-   kept-new-versions 6
-   kept-old-versions 2
-   version-control t
-   auto-save-list-file-prefix emacs-tmp-dir
-   auto-save-file-name-transforms `((".*" ,emacs-tmp-dir t))  ; Change autosave dir to tmp
-   backup-directory-alist `((".*" . ,emacs-tmp-dir)))
+ backup-by-copying t                                        ; Avoid symlinks
+ delete-old-versions t
+ kept-new-versions 6
+ kept-old-versions 2
+ version-control t
+ auto-save-list-file-prefix emacs-tmp-dir
+ auto-save-file-name-transforms `((".*" ,emacs-tmp-dir t))  ; Change autosave dir to tmp
+ backup-directory-alist `((".*" . ,emacs-tmp-dir)))
 
 ;;; Lockfiles unfortunately cause more pain than benefit
 (setq create-lockfiles nil)
@@ -117,7 +117,7 @@
   :config
   (projectile-mode +1)
   :bind (:map projectile-mode-map
-    ("s-p" . projectile-command-map)))
+	      ("s-p" . projectile-command-map)))
 
 (use-package vterm
   :ensure t)
@@ -138,7 +138,7 @@
 ;; Enable rich annotations using the Marginalia package
 (use-package marginalia
   :bind (:map minibuffer-local-map
-         ("M-A" . marginalia-cycle))
+              ("M-A" . marginalia-cycle))
 
   :init
   (marginalia-mode))
@@ -190,16 +190,17 @@
   :ensure t
   :config
   (setq telephone-line-lhs
-      '((evil   . (telephone-line-evil-tag-segment))
-        (accent . (telephone-line-vc-segment
-                   telephone-line-erc-modified-channels-segment
-                   telephone-line-process-segment))
-        (nil    . (telephone-line-minor-mode-segment
-                   telephone-line-buffer-segment))))
+	'((evil   . (telephone-line-evil-tag-segment))
+          (accent . (telephone-line-vc-segment
+                     telephone-line-erc-modified-channels-segment
+                     telephone-line-process-segment))
+          (nil    . (telephone-line-minor-mode-segment
+                     telephone-line-buffer-segment))))
   (setq telephone-line-rhs
-      '((nil    . (telephone-line-misc-info-segment))
-        (accent . (telephone-line-major-mode-segment))
-        (evil   . (telephone-line-airline-position-segment))))
+	'((nil    . (telephone-line-misc-info-segment))
+          (accent . (telephone-line-major-mode-segment))
+          (evil   . (telephone-line-airline-position-segment))))
+  (telephone-line-mode t)
   )
 
 (use-package flycheck
@@ -232,7 +233,6 @@
 ;; add indent guide
 ;; add evil nerd commenter
 ;; add format all
-;; add lsp bridge
 ;; add company and corfu
 ;; add yasnippets
 
@@ -242,3 +242,18 @@
 
 ;; add acutex
 ;; add prespective-el
+
+(use-package format-all
+  :preface
+  (defun format-code ()
+    "Auto-format whole buffer."
+    (interactive)
+    (if (derived-mode-p 'prolog-mode)
+        (prolog-indent-buffer)
+      (format-all-buffer)))
+  :config
+  (global-set-key (kbd "M-F") #'ian/format-code)
+
+
+
+  (add-hook 'prog-mode-hook #'format-all-ensure-formatter))
