@@ -37,7 +37,7 @@
       #python.enable = true;
     };
     editors = {
-      default = "emacs";
+      default = "emacsclient";
       emacs.enable = true;
       nvim.enable = true;
     };
