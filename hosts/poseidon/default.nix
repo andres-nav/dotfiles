@@ -23,6 +23,7 @@
     };
     services = {
       ssh.enable = true;
+      terraria.enable = true;
     };
 
     theme.active = "alucard";
@@ -31,5 +32,5 @@
   ## Local config
   #programs.gnupg.agent.enableSSHSupport = true;
 
-  # nix.gc.automatic = true;
+  services.logind.lidSwitch = "ignore";
 }
