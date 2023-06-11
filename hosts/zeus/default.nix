@@ -21,6 +21,7 @@
         documents.enable = true;
         lf.enable = true;
         #graphics.enable = true;
+        latex.enable = true;
         spotify.enable = true;
         discord.enable = true;
       };

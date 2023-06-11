@@ -18,6 +18,7 @@ in {
   config = mkIf cfg.enable {
     user.packages = with pkgs; [
       zathura
+      libreoffice
     ];
 
     home.configFile = {
