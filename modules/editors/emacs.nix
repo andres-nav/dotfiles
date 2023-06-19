@@ -20,7 +20,9 @@ in {
 
       emacsPackages.vterm
       emacsPackages.sqlite3
+
       emacsPackages.org-roam
+      sqlite
 
       nil
       alejandra

@@ -179,7 +179,6 @@
   :hook (nix-mode . lsp-deferred)
   :mode "\\.nix\\'")
 
-
 (use-package ess
   :ensure t
   :init (require 'ess-site))
@@ -229,15 +228,15 @@
   (global-corfu-mode t)
   )
 
-(use-package lsp-mode
-  :init
-  (setq lsp-keymap-prefix "C-c l")
-  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-         (prog-mode . lsp)
-         (lsp-mode . lsp-enable-which-key-integration))
-  :commands lsp)
+;; (use-package lsp-mode
+;;   :init
+;;   (setq lsp-keymap-prefix "C-c l")
+;;   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+;;          (prog-mode . lsp)
+;;          (lsp-mode . lsp-enable-which-key-integration))
+;;   :commands lsp)
 
-(use-package lsp-ui :commands lsp-ui-mode)
+;; (use-package lsp-ui :commands lsp-ui-mode)
 
 ;; add anzu
 ;; add indent guide
@@ -248,7 +247,8 @@
 
 ;; add org-roam, org-bullets org-roam-bibtex
 
-;; add acutex
+;; fix line wraping
+
 ;; add prespective-el
 
 ;; add ripgrep (rg.el)
@@ -292,4 +292,15 @@
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
 (use-package acutex
+  :ensure t
+  :mode
+  ("\\.tex\\'" . latex-mode))
+
+(use-package solidity-mode
+  :ensure t)
+
+(use-package solidity-flycheck
+  :ensure t)
+
+(use-package company-solidity
   :ensure t)

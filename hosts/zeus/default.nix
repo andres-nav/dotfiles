@@ -11,6 +11,7 @@
       i3.enable = true;
       apps = {
         rofi.enable = true;
+        ledger-live.enable = true;
       };
       browsers = {
         default = "firefox";
@@ -35,7 +36,8 @@
       };
     };
     dev = {
-      #python.enable = true;
+      node.enable = true;
+      solidity.enable = true;
     };
     editors = {
       default = "emacsclient";
