@@ -20,17 +20,19 @@ in {
   };
 
   config = mkMerge [
-    (let
-      node = pkgs.nodejs_latest;
-    in
+    (
       mkIf cfg.enable {
         user.packages = [
-          node
+          pkgs.nodejs
           pkgs.yarn
+
+          pkgs.nodePackages.prettier
+          pkgs.rome
         ];
 
         # env.PATH = ["$(${pkgs.yarn}/bin/yarn global bin)"];
-      })
+      }
+    )
 
     (mkIf cfg.xdg.enable {
       env.NPM_CONFIG_USERCONFIG = "$XDG_CONFIG_HOME/npm/config";

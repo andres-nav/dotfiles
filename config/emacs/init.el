@@ -172,7 +172,8 @@
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
 
 (use-package tree-sitter-langs
-  :ensure t) ;; remove for emacs 29
+  :ensure t
+  :after tree-sitter) ;; remove for emacs 29
 
 (use-package nix-mode
   :ensure t
@@ -291,11 +292,6 @@
   :config
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
-(use-package acutex
-  :ensure t
-  :mode
-  ("\\.tex\\'" . latex-mode))
-
 (use-package solidity-mode
   :ensure t)
 
@@ -304,3 +300,18 @@
 
 (use-package company-solidity
   :ensure t)
+
+(use-package web-mode
+  :ensure t
+  :config
+
+  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
+  (add-hook 'web-mode-hook
+            (lambda ()
+              (when (string-equal "tsx" (file-name-extension buffer-file-name))
+		(setup-tide-mode))))
+
+  ;; enable typescript - tslint checker
+  ;; fix rome for flycheck
+  (flycheck-add-mode 'rome 'web-mode)
+  )

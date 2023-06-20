@@ -15,7 +15,7 @@
       };
       browsers = {
         default = "firefox";
-        #brave.enable = true; // add chromium instead
+        chromium.enable = true;
         firefox.enable = true;
       };
       media = {
