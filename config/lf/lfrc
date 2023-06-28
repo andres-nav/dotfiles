@@ -30,25 +30,56 @@ cmd open_emacsclient &{{
 # 	fi
 # }}
 
-map w :hide; open_terminal
+cmd fzf_file ${{
+    res="$(fd --type f . | fzf --reverse --header='Jump to location')"
+    if [ -n "$res" ]; then
+        if [ -d "$res" ]; then
+            cmd="cd"
+        else
+            cmd="select"
+        fi
+        res="$(printf '%s' "$res" | sed 's/\\/\\\\/g;s/"/\\"/g')"
+        lf -remote "send $id $cmd \"$res\""
+    fi
+}}
+
+map <c-f> :fzf_file
+
+cmd fzf_directory ${{
+    res="$(fd --type d . | fzf --reverse --header='Jump to location')"
+    if [ -n "$res" ]; then
+        if [ -d "$res" ]; then
+            cmd="cd"
+        else
+            cmd="select"
+        fi
+        res="$(printf '%s' "$res" | sed 's/\\/\\\\/g;s/"/\\"/g')"
+        lf -remote "send $id $cmd \"$res\""
+    fi
+}}
+
+map <c-d> :fzf_directory
+
+map w $tmux neww
+map W :hide; open_terminal
 map E :hide; open_external_editor
+map e
+map e $$EDITOR -nw "$f" 
 map c
 map U clear
 
-map cc open_codium
-map yd $(pwd | sed -r "s/\s/\\\ /g" | xclip -sel clip)
-map yD $(pwd | xclip -sel clip)
-
-# map ad done
-
 map q
 map <a-q> quit
-map <a-d> delete
 map ; read 
+
+$mkdir -p ~/.trash
+cmd trash $IFS="$(printf '\n\t')"; mv $fx ~/.trash
+map D trash
 
 map gm cd ~/MEGA
 map gu cd ~/MEGA/Uni/3YEAR/Q2/
-map gd cd ~/dotfiles
+map gd cd ~/git/dotfiles
+map gg cd ~/git
 map gc cd ~/.config
 
 map <enter> shell

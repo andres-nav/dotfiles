@@ -10,8 +10,8 @@
   (package-install 'use-package))
 
 (eval-and-compile
-  (setq use-package-always-ensure t
-	use-package-expand-minimally t))
+	(setq use-package-always-ensure t
+	      use-package-expand-minimally t))
 
 ;; Performance
 (setq gc-cons-threshold 100000000)
@@ -39,13 +39,14 @@
 (electric-pair-mode 1) ;; auto fill brackets
 (global-hl-line-mode 1)
 
-(setq inhibit-startup-message t
-      visible-bell t
-      use-dialog-box nil ;; remove annoying dialog boxes
-      enable-recursive-minibuffers t ;; enable recursive minibuffers
-      initial-major-mode 'org-mode ;; set the scratch buffer mode to org
-      initial-scratch-message ""
-      )
+(setq
+ inhibit-startup-message t
+ visible-bell t
+ use-dialog-box nil ;; remove annoying dialog boxes
+ enable-recursive-minibuffers t ;; enable recursive minibuffers
+ initial-major-mode 'org-mode ;; set the scratch buffer mode to org
+ initial-scratch-message ""
+ )
 
 (fset 'yes-or-no-p 'y-or-n-p) ;; change yes or no to y or n
 
@@ -84,6 +85,39 @@
 ;;; Lockfiles unfortunately cause more pain than benefit
 (setq create-lockfiles nil)
 
+
+;; Tabs
+(setq custom-tab-width 2)
+
+;; Two callable functions for enabling/disabling tabs in Emacs
+(defun disable-tabs () (setq indent-tabs-mode nil))
+(defun enable-tabs  ()
+  (local-set-key (kbd "TAB") 'tab-to-tab-stop)
+  (setq indent-tabs-mode t)
+  (setq tab-width custom-tab-width)
+  (setq evil-shift-width custom-tab-width))
+
+;; Hooks to Enable Tabs
+(add-hook 'prog-mode-hook 'enable-tabs)
+;; Hooks to Disable Tabs
+(add-hook 'lisp-mode-hook 'disable-tabs)
+(add-hook 'emacs-lisp-mode-hook 'disable-tabs)
+
+;; Language-Specific Tweaks
+(setq-default python-indent-offset custom-tab-width) ;; Python
+(setq-default js-indent-level custom-tab-width)      ;; Javascript
+
+;; Making electric-indent behave sanely
+(setq-default electric-indent-inhibit t)
+
+;; Make the backspace properly erase the tab instead of
+;; removing 1 space at a time.
+(setq backward-delete-char-untabify-method 'hungry)
+
+;; (OPTIONAL) Shift width for evil-mode users
+;; For the vim-like motions of ">>" and "<<".
+(setq-default evil-shift-width custom-tab-width)
+
 (use-package dracula-theme
   :ensure t
   :config
@@ -93,8 +127,8 @@
   :ensure t
   :init
   (setq evil-want-keybinding nil
-	evil-want-C-u-scroll t
-	evil-undo-system 'undo-fu)
+	      evil-want-C-u-scroll t
+	      evil-undo-system 'undo-fu)
 
   :config
   (evil-mode 1))
@@ -123,7 +157,7 @@
   :config
   (projectile-mode +1)
   :bind (:map projectile-mode-map
-	      ("s-p" . projectile-command-map)))
+	            ("s-p" . projectile-command-map)))
 
 (use-package vterm
   :ensure t)
@@ -154,7 +188,7 @@
   :ensure t
   :init
   (setq undo-limit 67108864 ; 64mb
-	undo-strong-limit 100663296 ; 96mb
+	      undo-strong-limit 100663296 ; 96mb
         undo-outer-limit 1006632960)) ; 960mb
 
 (use-package undo-fu-session
@@ -200,14 +234,14 @@
   :ensure t
   :config
   (setq telephone-line-lhs
-	'((evil   . (telephone-line-evil-tag-segment))
+	      '((evil   . (telephone-line-evil-tag-segment))
           (accent . (telephone-line-vc-segment
                      telephone-line-erc-modified-channels-segment
                      telephone-line-process-segment))
           (nil    . (telephone-line-minor-mode-segment
                      telephone-line-buffer-segment))))
   (setq telephone-line-rhs
-	'((nil    . (telephone-line-misc-info-segment))
+	      '((nil    . (telephone-line-misc-info-segment))
           (accent . (telephone-line-major-mode-segment))
           (evil   . (telephone-line-airline-position-segment))))
   (telephone-line-mode t)
@@ -269,6 +303,12 @@
   (add-hook 'prog-mode-hook 'format-all-mode)
   )
 
+(use-package org
+  :config
+  (add-hook 'org-mode-hook 'org-indent-mode)
+  (add-hook 'org-mode-hook 'visual-line-mode)
+  )
+
 (use-package org-roam
   :ensure t
   :custom
@@ -308,8 +348,8 @@
   (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
   (add-hook 'web-mode-hook
             (lambda ()
-              (when (string-equal "tsx" (file-name-extension buffer-file-name))
-		(setup-tide-mode))))
+	            (when (string-equal "tsx" (file-name-extension buffer-file-name))
+		            (setup-tide-mode))))
 
   ;; enable typescript - tslint checker
   ;; fix rome for flycheck

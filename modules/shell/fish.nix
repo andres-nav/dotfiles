@@ -26,10 +26,16 @@ in {
       fzf
       jq
       ripgrep
+
+      fishPlugins.fzf-fish
     ];
 
     home.configFile = {
       "fish" = {source = "${configDir}/fish";};
+    };
+
+    environment.sessionVariables = {
+      FZF_DEFAULT_COMMAND = "fd";
     };
 
     # system.userActivationScripts.cleanupZgen = ''
