@@ -23,10 +23,8 @@
     };
     services = {
       ssh.enable = true;
-      terraria.enable = true;
+      minecraft-server.enable = true;
     };
-
-    theme.active = "alucard";
   };
 
   ## Local config
