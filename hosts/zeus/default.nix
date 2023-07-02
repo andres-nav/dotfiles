@@ -12,6 +12,8 @@
       apps = {
         rofi.enable = true;
         ledger-live.enable = true;
+        minecraft.enable = true;
+        dbeaver.enable = true;
       };
       browsers = {
         default = "firefox";
@@ -28,7 +30,6 @@
       };
       term = {
         default = "alacritty";
-        #st.enable = true;
         alacritty.enable = true;
       };
       vm = {

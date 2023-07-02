@@ -211,7 +211,7 @@
 
 (use-package nix-mode
   :ensure t
-  :hook (nix-mode . lsp-deferred)
+  ;; :hook (nix-mode . lsp-deferred)
   :mode "\\.nix\\'")
 
 (use-package ess
@@ -262,6 +262,9 @@
   :config
   (global-corfu-mode t)
   )
+
+(use-package eglot
+  :ensure t)
 
 ;; (use-package lsp-mode
 ;;   :init
