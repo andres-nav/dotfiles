@@ -10,10 +10,11 @@
     desktop = {
       i3.enable = true;
       apps = {
-        rofi.enable = true;
-        ledger-live.enable = true;
         dbeaver.enable = true;
         insomnia.enable = true;
+        ledger-live.enable = true;
+        minecraft.enable = true;
+        rofi.enable = true;
       };
       browsers = {
         default = "firefox";
@@ -21,12 +22,12 @@
         firefox.enable = true;
       };
       media = {
-        documents.enable = true;
-        lf.enable = true;
         #graphics.enable = true;
-        latex.enable = true;
-        spotify.enable = true;
         discord.enable = true;
+        documents.enable = true;
+        latex.enable = true;
+        lf.enable = true;
+        spotify.enable = true;
       };
       term = {
         default = "alacritty";

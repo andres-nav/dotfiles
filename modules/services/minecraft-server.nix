@@ -25,9 +25,11 @@ in {
       after = ["network.target"];
       description = "Start MC Server";
       serviceConfig = {
-        ExecStart = ''/home/god/mc/run.sh'';
+        ExecStart = ''
+          ${pkgs.jdk17_headless}/bin/java -Xmx7G -Xms1G @libraries/net/minecraftforge/forge/1.18.2-40.2.9/unix_args.txt nogui
+        '';
         Restart = "always";
-        RestartSec = 1;
+        RestartSec = 5;
         WorkingDirectory = "/home/god/mc";
       };
     };
