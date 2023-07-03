@@ -12,8 +12,8 @@
       apps = {
         rofi.enable = true;
         ledger-live.enable = true;
-        minecraft.enable = true;
         dbeaver.enable = true;
+        insomnia.enable = true;
       };
       browsers = {
         default = "firefox";
@@ -38,6 +38,7 @@
     };
     dev = {
       node.enable = true;
+      python.enable = true;
       solidity.enable = true;
     };
     editors = {

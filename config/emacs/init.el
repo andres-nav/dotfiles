@@ -310,6 +310,7 @@
   :config
   (add-hook 'org-mode-hook 'org-indent-mode)
   (add-hook 'org-mode-hook 'visual-line-mode)
+  (setq org-startup-folded t)
   )
 
 (use-package org-roam
