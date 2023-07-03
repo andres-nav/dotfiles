@@ -15,7 +15,7 @@ in {
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
-      zulu
+      jdk17_headless
     ];
 
     networking.firewall.allowedTCPPorts = [25565];
@@ -25,7 +25,7 @@ in {
       after = ["network.target"];
       description = "Start MC Server";
       serviceConfig = {
-        ExecStart = ''${pkgs.zulu}/bin/java -Xmx6G -Xms4G -jar /home/god/mc/forge-1.16.5-36.2.39.jar nogui'';
+        ExecStart = ''/home/god/mc/run.sh'';
         Restart = "always";
         RestartSec = 1;
         WorkingDirectory = "/home/god/mc";
