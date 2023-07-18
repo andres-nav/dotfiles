@@ -281,7 +281,8 @@
 ;; add evil nerd commenter
 ;; add yasnippets
 
-;; add dirvish
+(use-package dirvish
+  :ensure t)
 
 ;; add org-roam, org-bullets org-roam-bibtex
 

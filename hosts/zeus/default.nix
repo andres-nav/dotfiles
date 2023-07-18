@@ -28,6 +28,7 @@
         latex.enable = true;
         lf.enable = true;
         spotify.enable = true;
+        teams.enable = true;
       };
       term = {
         default = "alacritty";
@@ -59,6 +60,7 @@
     };
     services = {
       ssh.enable = true;
+      zerotier.enable = true;
       mega.enable = true;
       docker.enable = true;
     };
