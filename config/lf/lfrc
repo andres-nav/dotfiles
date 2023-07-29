@@ -60,7 +60,7 @@ cmd fzf_directory ${{
 
 map <c-d> :fzf_directory
 
-map w $tmux neww
+map w 
 map W :hide; open_terminal
 map E :hide; open_external_editor
 map e
@@ -77,7 +77,8 @@ cmd trash $IFS="$(printf '\n\t')"; mv $fx ~/.trash
 map D trash
 
 map gm cd ~/MEGA
-map gu cd ~/MEGA/Uni/3YEAR/Q2/
+map gu cd ~/MEGA/Uni/4_YEAR/Q1/
+map gs cd ~/MEGA/Uni/SAETA
 map gd cd ~/git/dotfiles
 map gg cd ~/git
 map gc cd ~/.config

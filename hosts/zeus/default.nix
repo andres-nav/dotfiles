@@ -15,6 +15,8 @@
         ledger-live.enable = true;
         minecraft.enable = true;
         rofi.enable = true;
+        freecad.enable = true;
+        prusaslicer.enable = true;
       };
       browsers = {
         default = "firefox";
