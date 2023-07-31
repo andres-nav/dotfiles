@@ -118,6 +118,10 @@
 ;; For the vim-like motions of ">>" and "<<".
 (setq-default evil-shift-width custom-tab-width)
 
+;; Configuration for ediff
+(setq ediff-window-setup-function 'ediff-setup-windows-plain
+      ediff-split-window-function 'split-window-horizontally)
+
 (use-package dracula-theme
   :ensure t
   :config

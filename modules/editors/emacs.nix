@@ -16,7 +16,7 @@ in {
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
-      emacs
+      emacs29
 
       emacsPackages.vterm
       emacsPackages.sqlite3
