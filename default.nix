@@ -37,9 +37,11 @@ with lib.my; {
     settings = {
       substituters = [
         "https://nix-community.cachix.org"
+        "https://mob.cachix.org"
       ];
       trusted-public-keys = [
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        "mob.cachix.org-1:tSCZwvAK6F/+O4zjGUL6GH9wAFURQfptWUOks7Zu1Z0="
       ];
       auto-optimise-store = true;
     };

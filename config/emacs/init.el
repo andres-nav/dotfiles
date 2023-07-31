@@ -58,7 +58,7 @@
             #'linum-mode))
 
 
-(auto-save-visited-mode 1) ;; makes autosaves save to current file
+(auto-save-visited-mode t) ;; makes autosaves save to current file
 
 (defun save-all ()
   (interactive)
