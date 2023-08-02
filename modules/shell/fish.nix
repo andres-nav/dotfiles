@@ -26,8 +26,10 @@ in {
       fzf
       jq
       ripgrep
+			bat
 
       fishPlugins.fzf-fish
+			fishPlugins.colored-man-pages
     ];
 
     home.configFile = {

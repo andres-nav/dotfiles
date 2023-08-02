@@ -134,6 +134,12 @@
 	      evil-want-C-u-scroll t
 	      evil-undo-system 'undo-fu)
 
+  (defadvice evil-window-split (after move-point-to-new-window activate)
+    (other-window 1))
+
+  (defadvice evil-window-vsplit (after move-point-to-new-window activate)
+    (other-window 1))
+
   :config
   (evil-mode 1))
 
@@ -362,5 +368,4 @@
 
   ;; enable typescript - tslint checker
   ;; fix rome for flycheck
-  (flycheck-add-mode 'rome 'web-mode)
   )
