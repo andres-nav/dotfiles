@@ -11,7 +11,6 @@
       i3.enable = true;
       apps = {
         dbeaver.enable = true;
-        insomnia.enable = true;
         ledger-live.enable = true;
         minecraft.enable = true;
         rofi.enable = true;
@@ -29,8 +28,10 @@
         documents.enable = true;
         latex.enable = true;
         lf.enable = true;
+        ranger.enable = true;
         spotify.enable = true;
         teams.enable = true;
+        zoom.enable = true;
       };
       term = {
         default = "alacritty";
@@ -46,7 +47,7 @@
       solidity.enable = true;
     };
     editors = {
-      default = "emacsclient";
+      default = "emacsclient -n";
       emacs.enable = true;
       nvim.enable = true;
     };

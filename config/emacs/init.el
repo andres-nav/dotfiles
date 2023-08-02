@@ -303,6 +303,7 @@
 ;; add ripgrep (rg.el)
 
 (use-package format-all
+  :ensure t
   :preface
   (defun format-code ()
     "Auto-format whole buffer."
