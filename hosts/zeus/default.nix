@@ -11,6 +11,7 @@
       i3.enable = true;
       apps = {
         dbeaver.enable = true;
+        insomnia.enable = true;
         ledger-live.enable = true;
         minecraft.enable = true;
         rofi.enable = true;
@@ -62,7 +63,6 @@
       fish.enable = true;
     };
     services = {
-      ssh.enable = true;
       zerotier.enable = true;
       mega.enable = true;
       docker.enable = true;
@@ -72,9 +72,13 @@
   };
 
   ## Local config
-  #programs.gnupg.agent.enableSSHSupport = true;
-  programs.ssh.startAgent = true;
-  services.openssh.startWhenNeeded = true;
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+  };
+
+  # programs.ssh.startAgent = true;
+  # services.openssh.startWhenNeeded = true;
 
   # nix.gc.automatic = true;
 }

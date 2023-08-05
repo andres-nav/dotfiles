@@ -160,7 +160,8 @@
   :ensure t)
 
 (use-package forge
-  :ensure t)
+  :ensure t
+  :after magit)
 
 (use-package projectile
   :ensure t
@@ -291,8 +292,8 @@
 ;; add evil nerd commenter
 ;; add yasnippets
 
-(use-package dirvish
-  :ensure t)
+;; (use-package dirvish
+;;   :ensure t)
 
 ;; add org-roam, org-bullets org-roam-bibtex
 
