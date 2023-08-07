@@ -1,9 +1,6 @@
 # Zeus: my main laptop
-{...}: {
-  imports = [
-    ../home.nix
-    ./hardware-configuration.nix
-  ];
+{ ... }: {
+  imports = [ ../home.nix ./hardware-configuration.nix ];
 
   ## Modules
   modules = {
@@ -38,14 +35,14 @@
         default = "alacritty";
         alacritty.enable = true;
       };
-      vm = {
-        virtualbox.enable = true;
-      };
+      vm = { virtualbox.enable = true; };
     };
     dev = {
       node.enable = true;
       python.enable = true;
       solidity.enable = true;
+      nix.enable = true;
+			r.enable = true;
     };
     editors = {
       default = "emacsclient -n";

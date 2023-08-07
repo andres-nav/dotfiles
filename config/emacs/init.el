@@ -122,6 +122,50 @@
 (setq ediff-window-setup-function 'ediff-setup-windows-plain
       ediff-split-window-function 'split-window-horizontally)
 
+;; Config for dired
+(put 'dired-find-alternate-file 'disabled nil)
+(setq dired-listing-switches "-agho --group-directories-first"
+      dired-dwin-target t
+      delete-by-moving-to-trash t)
+
+(eval-after-load "dired"
+  '(progn
+     (defadvice dired-advertised-find-file (around dired-subst-directory activate)
+       "Replace current buffer if file is a directory."
+       (interactive)
+       (let* ((orig (current-buffer))
+              ;; (filename (dired-get-filename))
+              (filename (dired-get-filename t t))
+              (bye-p (file-directory-p filename)))
+         ad-do-it
+         (when (and bye-p (not (string-match "[/\\\\]\\.$" filename)))
+           (kill-buffer orig))))))
+
+(setq dired-guess-shell-alist-user `(("\\.pdf\\'" "zathura")
+                                     ("\\.jpe?g\\'" "gimp")
+                                     ("\\.mp4\\'" "vlc")))
+(use-package dired
+  :after evil
+  :config
+  (evil-define-key 'normal dired-mode-map
+    "h" 'dired-jump)
+  (evil-define-key 'normal dired-mode-map
+    "l" 'dired-find-alternate-file)
+  (evil-define-key 'normal dired-mode-map
+    "l" 'dired-find-alternate-file)
+  )
+
+;; Hide hidden files
+(use-package dired-hide-dotfiles
+  :ensure t
+  :hook
+  (dired-mode . dired-hide-dotfiles-mode)
+  :config
+
+  (evil-define-key 'normal dired-mode-map
+    "." 'dired-hide-dotfiles-mode)
+  )
+
 (use-package dracula-theme
   :ensure t
   :config

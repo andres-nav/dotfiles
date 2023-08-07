@@ -23,9 +23,6 @@ in {
 
       emacsPackages.org-roam
       sqlite
-
-      nil
-      alejandra
     ];
 
     services.emacs = {
