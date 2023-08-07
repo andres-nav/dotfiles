@@ -11,7 +11,8 @@ with lib.my; let
 in {
   options.modules.shell.gnupg = with types; {
     enable = mkBoolOpt false;
-    cacheTTL = mkOpt int 3600; # 1hr
+    ssh = mkBoolOpt true;
+    cacheTTL = mkOpt int 168000;
   };
 
   config = mkIf cfg.enable {
@@ -19,9 +20,8 @@ in {
 
     programs.gnupg.agent = {
       enable = true;
+			enableSSHSupport = cfg.ssh;
     };
-
-    user.packages = [pkgs.tomb];
 
     # HACK Without this config file you get "No pinentry program" on 20.03.
     #      programs.gnupg.agent.pinentryFlavor doesn't appear to work, and this
@@ -30,6 +30,7 @@ in {
       text = ''
         default-cache-ttl ${toString cfg.cacheTTL}
         pinentry-program ${pkgs.pinentry.gtk2}/bin/pinentry
+				allow-preset-passphrase
       '';
     };
   };
