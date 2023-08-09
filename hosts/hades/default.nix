@@ -1,4 +1,4 @@
-# Poseidon: my main server
+# Hades: small server
 {...}: {
   imports = [
     ../home.nix
@@ -12,15 +12,12 @@
       nvim.enable = true;
     };
     shell = {
-      direnv.enable = true;
       git.enable = true;
-      gnupg.enable = true;
       tmux.enable = true;
       fish.enable = true;
     };
     services = {
       ssh.enable = true;
-      minecraft-server.enable = true;
     };
   };
 

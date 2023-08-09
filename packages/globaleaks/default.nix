@@ -65,7 +65,7 @@ in
         chmod +w /tmp/globaleaks
       fi
 
-      PYTHONPATH="$out/usr/lib/python3/dist-packages" $out/usr/bin/globaleaks --working-path=/tmp/globaleaks -n --ip=localhost:8000
+      PYTHONPATH="$out/usr/lib/python3/dist-packages" $out/usr/bin/globaleaks --working-path=/tmp/globaleaks -n --ip=http://localhost
       EOF
 
       chmod +x $out/bin/globaleaks

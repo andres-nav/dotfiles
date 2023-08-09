@@ -1,3 +1,8 @@
+* Hades
+
+- ASUS laptop (not that powerfull)
+- Intel i5 with 12GB of ram
+
 * Installation (BTRF)
 
 ! NOTE: Disable Secure Boot in the BIOS as it does not work properly in NixOS (Currently)
