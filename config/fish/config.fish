@@ -2,7 +2,9 @@ set fish_greeting
 
 fish_config theme choose "dracula"
 
-direnv hook fish | source
+if type -q direnv
+  direnv hook fish | source
+end
 
 fzf_configure_bindings --directory=\cd 
 
