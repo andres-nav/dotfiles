@@ -1,6 +1,6 @@
 # Zeus: my main laptop
-{ ... }: {
-  imports = [ ../home.nix ./hardware-configuration.nix ];
+{...}: {
+  imports = [../home.nix ./hardware-configuration.nix];
 
   ## Modules
   modules = {
@@ -35,14 +35,14 @@
         default = "alacritty";
         alacritty.enable = true;
       };
-      vm = { virtualbox.enable = true; };
+      vm = {virtualbox.enable = true;};
     };
     dev = {
       node.enable = true;
       python.enable = true;
       solidity.enable = true;
       nix.enable = true;
-			r.enable = true;
+      r.enable = true;
     };
     editors = {
       default = "emacsclient -n";
@@ -60,9 +60,12 @@
       fish.enable = true;
     };
     services = {
-      zerotier.enable = true;
       mega.enable = true;
       docker.enable = true;
+      zerotier = {
+        enable = true;
+        joinNetworks = ["1d71939404843223" "a0cbf4b62ac2045f"];
+      };
     };
 
     theme.active = "alucard";

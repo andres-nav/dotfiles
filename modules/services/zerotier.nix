@@ -8,14 +8,16 @@ with lib;
 with lib.my; let
   cfg = config.modules.services.zerotier;
 in {
-  options.modules.services.zerotier = {
+  options.modules.services.zerotier = with types; {
     enable = mkBoolOpt false;
+    joinNetworks = mkOpt (listOf str) [];
   };
 
+  # TODO: make joinNetworks a secret
   config = mkIf cfg.enable {
     services.zerotierone = {
       enable = true;
-      joinNetworks = ["1d71939404843223" "a0cbf4b62ac2045f"];
+      joinNetworks = cfg.joinNetworks;
     };
   };
 }
