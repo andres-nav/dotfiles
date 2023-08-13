@@ -20,7 +20,7 @@ in {
 
     programs.gnupg.agent = {
       enable = true;
-			enableSSHSupport = cfg.ssh;
+      enableSSHSupport = cfg.ssh;
     };
 
     # HACK Without this config file you get "No pinentry program" on 20.03.
@@ -29,8 +29,11 @@ in {
     home.configFile."gnupg/gpg-agent.conf" = {
       text = ''
         default-cache-ttl ${toString cfg.cacheTTL}
+        default-cache-ttl-ssh ${toString cfg.cacheTTL}
+        max-cache-ttl ${toString cfg.cacheTTL}
+        max-cache-ttl-ssh ${toString cfg.cacheTTL}
         pinentry-program ${pkgs.pinentry.gtk2}/bin/pinentry
-				allow-preset-passphrase
+        allow-preset-passphrase
       '';
     };
   };

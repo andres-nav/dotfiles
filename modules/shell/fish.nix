@@ -26,10 +26,12 @@ in {
       fzf
       jq
       ripgrep
-			bat
+      bat
+      grc
 
       fishPlugins.fzf-fish
-			fishPlugins.colored-man-pages
+      fishPlugins.colored-man-pages
+      fishPlugins.grc
     ];
 
     home.configFile = {
