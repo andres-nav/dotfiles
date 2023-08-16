@@ -54,40 +54,12 @@ Otherwise the startup will be very slow."
 ;; TODO: add yasnippets
 (require 'init-projectile)
 (require 'init-vcs)
+(require 'init-dired)
 
 ;; Progamming
 (require 'init-flycheck)
 (require 'init-treesitter)
 
-;; (global-hl-line-mode 1)
-
-
-;; (auto-save-visited-mode t) ;; makes autosaves save to current file
-
-;; (defun save-all ()
-;;   (interactive)
-;;   (save-some-buffers t))
-
-;; (add-hook 'focus-out-hook 'save-all) ;; hook to autosave when loosing focus
-
-;; ;; Separate custom vars into another file
-;; (setq custom-file (locate-user-emacs-file "custom-vars.el"))
-;; (load custom-file 'noerror 'nomessage)
-
-;; ;;; Put Emacs auto-save and backup files to /tmp/ or C:/Temp/
-;; (defconst emacs-tmp-dir (expand-file-name (format "emacs%d" (user-uid)) temporary-file-directory))
-;; (setq
-;;  backup-by-copying t                                        ; Avoid symlinks
-;;  delete-old-versions t
-;;  kept-new-versions 6
-;;  kept-old-versions 2
-;;  version-control t
-;;  auto-save-list-file-prefix emacs-tmp-dir
-;;  auto-save-file-name-transforms `((".*" ,emacs-tmp-dir t))  ; Change autosave dir to tmp
-;;  backup-directory-alist `((".*" . ,emacs-tmp-dir)))
-
-;; ;;; Lockfiles unfortunately cause more pain than benefit
-;; (setq create-lockfiles nil)
 
 
 ;; ;; Tabs
@@ -141,27 +113,6 @@ Otherwise the startup will be very slow."
 ;; (setq dired-guess-shell-alist-user `(("\\.pdf\\'" "zathura")
 ;;                                      ("\\.jpe?g\\'" "gimp")
 ;;                                      ("\\.mp4\\'" "vlc")))
-;; (use-package dired
-;;   :after evil
-;;   :config
-;;   (evil-define-key 'normal dired-mode-map
-;;     "h" 'dired-jump)
-;;   (evil-define-key 'normal dired-mode-map
-;;     "l" 'dired-find-alternate-file)
-;;   (evil-define-key 'normal dired-mode-map
-;;     "l" 'dired-find-alternate-file)
-;;   )
-
-;; ;; Hide hidden files
-;; (use-package dired-hide-dotfiles
-;;   :ensure t
-;;   :hook
-;;   (dired-mode . dired-hide-dotfiles-mode)
-;;   :config
-
-;;   (evil-define-key 'normal dired-mode-map
-;;     "." 'dired-hide-dotfiles-mode)
-;;   )
 
 ;; ;; TODO consult, evil-terminal-cursor-changer, clipetty
 
@@ -186,10 +137,8 @@ Otherwise the startup will be very slow."
 ;;   :ensure t)
 
 
-;; ;; add anzu
 ;; ;; add indent guide
 ;; ;; add evil nerd commenter
-;; ;; add yasnippets
 
 ;; ;; add org-roam, org-bullets org-roam-bibtex
 

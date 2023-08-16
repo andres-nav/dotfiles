@@ -66,6 +66,27 @@
                                               extended-command-history)
               savehist-autosave-interval 300))
 
+(use-package hl-line
+  :hook (after-init . global-hl-line-mode))
+
+;; Enable autosave
+(use-package files
+  :ensure nil
+  :hook
+  (after-init-hook . auto-save-visited-mode)
+  :init
+  (setq auto-save-no-message t
+        auto-save-default t
+        auto-save-visited-file-name t
+        save-abbrevs 'silently
+        )
+
+  (defun save-all ()
+    (interactive)
+    (save-some-buffers t))
+  (setq after-focus-change-function 'save-all)
+  )
+
 ;; TODO: see <https://github.com/seagle0128/.emacs.d/blob/master/lisp/init-base.el#L142C3-L142C3>
 
 ;; Misc
@@ -81,6 +102,8 @@
 
       initial-major-mode 'org-mode      ; Set scratch buffer mode to org
 
+      create-lockfiles nil              ; Lockfiles create more pain than benefit
+
       uniquify-buffer-name-style 'post-forward-angle-brackets ; Show path if names are same
       adaptive-fill-regexp "[ t]+|[ t]*([0-9]+.|*+)[ t]*"
       adaptive-fill-first-line-regexp "^* *$"
@@ -88,6 +111,18 @@
       sentence-end-double-space nil
       word-wrap-by-category t
       )
+
+
+;;; Put Emacs auto-save and backup files to /tmp/ or C:/Temp/
+(defconst emacs-tmp-dir (expand-file-name (format "emacs%d" (user-uid)) temporary-file-directory))
+(setq backup-by-copying t        ; Avoid symlinks
+      delete-old-versions t
+      kept-new-versions 6
+      kept-old-versions 2
+      version-control t
+      auto-save-list-file-prefix emacs-tmp-dir
+      auto-save-file-name-transforms `((".*" ,emacs-tmp-dir t))  ; Change autosave dir to tmp
+      backup-directory-alist `((".*" . ,emacs-tmp-dir)))
 
 ;; (setq-default major-mode 'text-mode
 ;;               fill-column 80

@@ -29,6 +29,10 @@
  scroll-bar-mode nil
  )
 
+;; Custom var file
+(setq custom-file (locate-user-emacs-file "custom-vars.el"))
+(load custom-file 'noerror 'nomessage)
+
 ;; Prevent flashing of unstyled modeline at startup
 (setq-default mode-line-format nil)
 
