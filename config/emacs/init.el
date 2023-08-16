@@ -48,15 +48,16 @@ Otherwise the startup will be very slow."
 
 (require 'init-ui)
 (require 'init-edit)
+(require 'init-evil)
 (require 'init-completion)
 ;; TODO: add corfu
 ;; TODO: add yasnippets
 (require 'init-projectile)
 (require 'init-vcs)
-(require 'init-evil)
 
 ;; Progamming
 (require 'init-flycheck)
+(require 'init-treesitter)
 
 ;; (global-hl-line-mode 1)
 
@@ -162,55 +163,7 @@ Otherwise the startup will be very slow."
 ;;     "." 'dired-hide-dotfiles-mode)
 ;;   )
 
-;; (use-package evil
-;;   :ensure t
-;;   :init
-;;   (setq evil-want-keybinding nil
-;; 	      evil-want-C-u-scroll t
-;; 	      evil-undo-system 'undo-fu)
-
-;;   (defadvice evil-window-split (after move-point-to-new-window activate)
-;;     (other-window 1))
-
-;;   (defadvice evil-window-vsplit (after move-point-to-new-window activate)
-;;     (other-window 1))
-
-;;   :config
-;;   (evil-mode 1))
-
-;; (use-package evil-collection
-;;   :ensure t
-;;   :after evil
-;;   :config
-;;   (evil-collection-init)
-;;   (evil-collection-swap-key nil 'evil-motion-state-map ";" ":")
-;;   )
-
-;; (use-package evil-surround
-;;   :ensure t
-;;   :after evil-collection
-;;   :config
-;;   (global-evil-surround-mode 1))
-
-
-;; (use-package sqlite3
-;;   :ensure t)
-
-;; (use-package vterm
-;;   :ensure t)
-
-
 ;; ;; TODO consult, evil-terminal-cursor-changer, clipetty
-
-;; (use-package tree-sitter ;; remove for emacs 29
-;;   :ensure t
-;;   :config
-;;   (global-tree-sitter-mode)
-;;   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
-
-;; (use-package tree-sitter-langs
-;;   :ensure t
-;;   :after tree-sitter) ;; remove for emacs 29
 
 ;; (use-package nix-mode
 ;;   :ensure t
@@ -229,32 +182,14 @@ Otherwise the startup will be very slow."
 ;;   (global-company-mode t)
 ;;   )
 
-;; (use-package corfu ;; TODO: check if it really works
-;;   :ensure t
-;;   :config
-;;   (global-corfu-mode t)
-;;   )
-
 ;; (use-package eglot
 ;;   :ensure t)
 
-;; ;; (use-package lsp-mode
-;; ;;   :init
-;; ;;   (setq lsp-keymap-prefix "C-c l")
-;; ;;   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-;; ;;          (prog-mode . lsp)
-;; ;;          (lsp-mode . lsp-enable-which-key-integration))
-;; ;;   :commands lsp)
-
-;; ;; (use-package lsp-ui :commands lsp-ui-mode)
 
 ;; ;; add anzu
 ;; ;; add indent guide
 ;; ;; add evil nerd commenter
 ;; ;; add yasnippets
-
-;; ;; (use-package dirvish
-;; ;;   :ensure t)
 
 ;; ;; add org-roam, org-bullets org-roam-bibtex
 
@@ -327,7 +262,7 @@ Otherwise the startup will be very slow."
 ;;   (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
 ;;   (add-hook 'web-mode-hook
 ;;             (lambda ()
-;;               (when (string-equal "tsx" (file-name-extension buffer-file-name))
+;;               (when (string-equal "tsx" (file-name-extension uffer-file-name))
 ;;                 (setup-tide-mode))))
 
 ;;   ;; enable typescript - tslint checker
