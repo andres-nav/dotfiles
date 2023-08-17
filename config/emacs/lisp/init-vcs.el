@@ -7,7 +7,9 @@
 ;; Git
 (use-package magit
   :diminish
-  :hook (git-commit-mode-hook . evil-insert-state)
+  :hook
+  (git-commit-mode . evil-insert-state)
+  (after-save . magit-after-save-refresh-status)
   :config
   )
 

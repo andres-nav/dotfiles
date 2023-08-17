@@ -24,13 +24,6 @@
 ;;    "pd" '(consult-projectile-find-dir :wk "Find directory")
 ;;    "pf" '(consult-projectile-find-file :wk "Find file")))
 
-;; TODO; configure treemacs-proejctile
-;; (use-package treemacs-projectile
-;;   :straight t
-;;   :after projectile treemacs
-;;   :demand t)
-
-
 (provide 'init-projectile)
 
 ;;; me-projectile.el ends here

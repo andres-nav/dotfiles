@@ -19,34 +19,33 @@
 
 ;; Theme
 (use-package dracula-theme
-  :ensure t
   :init
   (load-theme 'dracula t))
 
 ;; Mode-line
 (use-package telephone-line
-  :ensure t
   :hook (after-init . telephone-line-mode)
   :config
-  (setq telephone-line-lhs
-	      '((evil   . (telephone-line-evil-tag-segment))
-          (accent . (telephone-line-vc-segment
-                     telephone-line-erc-modified-channels-segment
-                     telephone-line-process-segment))
-          (nil    . (telephone-line-minor-mode-segment
-                     telephone-line-buffer-segment))))
-  (setq telephone-line-rhs
-	      '((nil    . (telephone-line-misc-info-segment))
-          (accent . (telephone-line-major-mode-segment))
-          (evil   . (telephone-line-airline-position-segment))))
-  )
+  (setq telephone-line-primary-left-separator 'telephone-line-gradient
+	telephone-line-secondary-left-separator 'telephone-line-nil
+	telephone-line-primary-right-separator 'telephone-line-gradient
+	telephone-line-secondary-right-separator 'telephone-line-nil)
+  (setq telephone-line-height 12
+	telephone-line-evil-use-short-tag t)
+)
 
-;; TODO: hide mode line on modes <https://github.com/seagle0128/.emacs.d/blob/master/lisp/init-ui.el#L268C1-L273C29>
+(use-package hide-mode-line
+  :diminish
+  :hook ((help-mode
+	  treemacs-mode
+	  eshell-mode shell-mode
+	  term-mode vterm-mode) . hide-mode-line-mode)
+  )
 
 ;; Show line numbers
 (use-package display-line-numbers
   :ensure nil
-  :hook ((prog-mode yaml-mode conf-mode) . display-line-numbers-mode)
+  :hook ((prog-mode yaml-mode conf-mode markdown-mode) . display-line-numbers-mode)
   :init (setq display-line-numbers-width-start t))
 
 ;; Suppress GUI features

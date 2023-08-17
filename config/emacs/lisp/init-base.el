@@ -72,18 +72,19 @@
 ;; Enable autosave
 (use-package files
   :ensure nil
+  :preface
+  (defun save-all ()
+    (interactive)
+    (save-some-buffers t))
   :hook
-  (after-init-hook . auto-save-visited-mode)
-  :init
+  (after-init . auto-save-visited-mode)
+  :config
   (setq auto-save-no-message t
         auto-save-default t
         auto-save-visited-file-name t
         save-abbrevs 'silently
         )
 
-  (defun save-all ()
-    (interactive)
-    (save-some-buffers t))
   (setq after-focus-change-function 'save-all)
   )
 
@@ -95,14 +96,18 @@
 (setq use-short-answers t)
 
 (setq visible-bell t
-      enable-recursive-minibuffers t    ; Enable recursive minibuffers
-      inhibit-compacting-font-caches t  ; Don’t compact font caches during GC
-      delete-by-moving-to-trash t       ; Deleting files go to OS's trash folder
-      make-backup-files nil             ; Forbide to make backup files
+      enable-recursive-minibuffers t   ; Enable recursive minibuffers
+      inhibit-compacting-font-caches t ; Don’t compact font caches during GC
+      delete-by-moving-to-trash t      ; Deleting files go to OS's trash folder
+      make-backup-files nil            ; Forbide to make backup files
 
-      initial-major-mode 'org-mode      ; Set scratch buffer mode to org
+      initial-major-mode 'org-mode     ; Set scratch buffer mode to org
 
-      create-lockfiles nil              ; Lockfiles create more pain than benefit
+      create-lockfiles nil             ; Lockfiles create more pain than benefit
+
+      tab-width 2
+      custom-tab-width 2
+      indent-tabs-mode nil             ; Only use spaces
 
       uniquify-buffer-name-style 'post-forward-angle-brackets ; Show path if names are same
       adaptive-fill-regexp "[ t]+|[ t]*([0-9]+.|*+)[ t]*"

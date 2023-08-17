@@ -31,7 +31,6 @@
 
   ;; Hide hidden files
   (use-package dired-hide-dotfiles
-    :ensure t
     :hook
     (dired-mode . dired-hide-dotfiles-mode)
     :config

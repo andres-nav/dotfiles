@@ -55,12 +55,17 @@ Otherwise the startup will be very slow."
 (require 'init-projectile)
 (require 'init-vcs)
 (require 'init-dired)
+(require 'init-treemacs)
+(require 'init-yasnippet)
 
 ;; Progamming
+(require 'init-prog)
 (require 'init-flycheck)
 (require 'init-treesitter)
-
-
+(require 'init-format-all)
+(require 'init-elisp)
+(require 'init-org)
+(require 'init-latex)
 
 ;; ;; Tabs
 ;; (setq custom-tab-width 2)
@@ -117,12 +122,10 @@ Otherwise the startup will be very slow."
 ;; ;; TODO consult, evil-terminal-cursor-changer, clipetty
 
 ;; (use-package nix-mode
-;;   :ensure t
 ;;   ;; :hook (nix-mode . lsp-deferred)
 ;;   :mode "\\.nix\\'")
 
 ;; (use-package ess
-;;   :ensure t
 ;;   :init (require 'ess-site))
 
 
@@ -148,30 +151,6 @@ Otherwise the startup will be very slow."
 
 ;; ;; add ripgrep (rg.el)
 
-;; (use-package format-all
-;;   :ensure t
-;;   :preface
-;;   (defun format-code ()
-;;     "Auto-format whole buffer."
-;;     (interactive)
-;;     (if (derived-mode-p 'prolog-mode)
-;;         (prolog-indent-buffer)
-;;       (format-all-buffer)))
-;;   :config
-;;   (setq format-all-show-errors 'never)
-;;   (add-to-list 'format-all-default-formatters '("Nix" alejandra))
-;;   (global-set-key (kbd "M-F") #'format-code)
-;;   (add-hook 'prog-mode-hook #'format-all-ensure-formatter)
-;;   (add-hook 'prog-mode-hook 'format-all-mode)
-;;   )
-
-;; (use-package org
-;;   :config
-;;   (add-hook 'org-mode-hook 'org-indent-mode)
-;;   (add-hook 'org-mode-hook 'visual-line-mode)
-;;   (setq org-startup-folded t)
-;;   )
-
 ;; (use-package org-roam
 ;;   :ensure t
 ;;   :custom
@@ -189,11 +168,6 @@ Otherwise the startup will be very slow."
 ;;   (org-roam-db-autosync-mode)
 ;;   ;; If using org-roam-protocol
 ;;   (require 'org-roam-protocol))
-
-;; (use-package org-bullets
-;;   :ensure t
-;;   :config
-;;   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
 ;; (use-package solidity-mode
 ;;   :ensure t)

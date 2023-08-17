@@ -4,11 +4,6 @@
 
 ;;; Code:
 
-;; Delete selection if you insert
-(use-package delsel
-  :ensure nil
-  :hook (after-init . delete-selection-mode))
-
 ;; Automatically reload files was modified by external program
 (use-package autorevert
   :ensure nil
@@ -41,23 +36,22 @@
 ;;                                          (thing-at-point 'line))))))
 
 ;; TODO: configure avy
-;; ;; Jump to things in Emacs tree-style
-;; (use-package avy
-;;   :bind (("C-:"   . avy-goto-char)
-;;          ("C-'"   . avy-goto-char-2)
-;;          ("M-g f" . avy-goto-line)
-;;          ("M-g w" . avy-goto-word-1)
-;;          ("M-g e" . avy-goto-word-0))
-;;   :hook (after-init . avy-setup-default)
-;;   :config (setq avy-all-windows nil
-;;                 avy-all-windows-alt t
-;;                 avy-background t
-;;                 avy-style 'pre))
+;; Jump to things in Emacs tree-style
+(use-package avy			;
+  :after evil
+  :hook (after-init . avy-setup-default)
+  :config (setq avy-all-windows nil
+                avy-all-windows-alt t
+                avy-background t
+                avy-timeout-seconds 0.3 ;; TODO: check if useful
+                avy-style 'pre)
+  (evil-define-key 'normal 'global (kbd "s") 'avy-goto-char-timer)
+  )
 
-;; ;; Kill text between the point and the character CHAR
-;; (use-package avy-zap
-;;   :bind (("M-z" . avy-zap-to-char-dwim)
-;;          ("M-Z" . avy-zap-up-to-char-dwim)))
+;; Kill text between the point and the character CHAR
+(use-package avy-zap
+  :after avy
+  )
 
 ;; Show number of matches in mode-line while searching
 (use-package anzu
