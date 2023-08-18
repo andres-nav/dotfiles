@@ -23,17 +23,34 @@
   (load-theme 'dracula t))
 
 ;; Mode-line
-(use-package telephone-line
-  :hook (after-init . telephone-line-mode)
-  :config
-  (setq telephone-line-primary-left-separator 'telephone-line-gradient
-	telephone-line-secondary-left-separator 'telephone-line-nil
-	telephone-line-primary-right-separator 'telephone-line-gradient
-	telephone-line-secondary-right-separator 'telephone-line-nil)
-  (setq telephone-line-height 12
-	telephone-line-evil-use-short-tag t)
-)
+;; (use-package telephone-line
+;;   :hook (after-init . telephone-line-mode)
+;;   :config
+;;   (setq telephone-line-primary-left-separator 'telephone-line-gradient
+;; 	telephone-line-secondary-left-separator 'telephone-line-nil
+;; 	telephone-line-primary-right-separator 'telephone-line-gradient
+;; 	telephone-line-secondary-right-separator 'telephone-line-nil)
+;;   (setq telephone-line-height 12
+;; 	telephone-line-evil-use-short-tag t)
+;;   (defface telephone-line-evil-char
+;; 	'((t (:background "forest green" :inherit telephone-line-evil)))
+;; 	"Face used in evil color-coded segments when in Char state."
+;; 	:group 'telephone-line-evil)
+;;   (defface telephone-line-evil-word
+;; 	'((t (:background "#5E81AC" :inherit telephone-line-evil)))
+;; 	"Face used in evil color-cioded segments when in Normal state."
+;; 	:group 'telephone-line-evil)
+;;   (add-to-list 'telephone-line-faces
+;; 		'(evil . (telephone-line-evil-word . telephone-line-evil-char)))
+;; )
 
+(use-package doom-modeline
+  :hook (after-init . doom-modeline-mode)
+  :init
+  (setq doom-modeline-minor-modes t)
+  )
+
+;; Hide mode line for some modes
 (use-package hide-mode-line
   :diminish
   :hook ((help-mode

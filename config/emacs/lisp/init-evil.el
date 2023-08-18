@@ -22,7 +22,6 @@
 
   (defadvice evil-window-vsplit (after move-point-to-new-window activate)
     (other-window 1))
-
   )
 
 (use-package evil-collection
@@ -37,6 +36,10 @@
   :diminish
   :after evil-collection
   :hook (evil-mode . global-evil-surround-mode))
+
+;; TODO: install evil-indent-plus
+
+;; TODO: install evil-easymotion
 
 (use-package evil-commentary
   :diminish

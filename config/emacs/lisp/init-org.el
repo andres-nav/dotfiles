@@ -22,6 +22,9 @@
   :hook
   (org-mode . org-bullets-mode))
 
+(use-package gnuplot
+  :after org)
+
 ;; Roam
 ;; (use-package org-roam
 ;;   :diminish

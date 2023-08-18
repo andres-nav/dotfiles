@@ -23,6 +23,8 @@ in {
 
       emacsPackages.org-roam
       sqlite
+
+      gnuplot
     ];
 
     services.emacs = {
