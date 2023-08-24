@@ -1,23 +1,41 @@
 {
+  lib,
   fetchFromGitHub,
-  python3Packages,
+  fetchPypi,
+  python3,
+  nodejs,
 }: let
-  pname = "globaleaks";
-  version = "4.12.6";
-
-  repo = fetchFromGitHub {
-    owner = pname;
-    repo = "GlobaLeaks";
-    rev = "v${version}";
-    hash = "sha256-DwVZ7ssDmguyTadXoTxmZypdf1kWL0Gb4kVBeW9yTC0=";
+  python = python3.override {
+    packageOverrides = self: super: {
+      sqlalchemy = super.sqlalchemy.overridePythonAttrs rec {
+        version = "1.4.46";
+        src = fetchPypi {
+          pname = "SQLAlchemy";
+          inherit version;
+          hash = "sha256-aRO4JH2KKS74MVFipRkx4rQM6RaB8bbxj2lwRSAMSjA=";
+        };
+      };
+    };
   };
 in
-  python3Packages.buildPythonPackage {
-    inherit pname version;
+  python.pkgs.buildPythonPackage rec {
+    pname = "globaleaks";
+    version = "4.12.6";
 
-    src = "${repo}";
+    src = fetchFromGitHub {
+      owner = pname;
+      repo = "GlobaLeaks";
+      rev = "v${version}";
+      hash = "sha256-DwVZ7ssDmguyTadXoTxmZypdf1kWL0Gb4kVBeW9yTC0=";
+    };
 
-    propagatedBuildInputs = with python3Packages; [
+    sourceRoot = "${src.name}/backend";
+
+    nativeBuildInputs = [
+      nodejs
+    ];
+
+    propagatedBuildInputs = with python.pkgs; [
       twisted
       h2
       priority
@@ -32,17 +50,18 @@ in
       txtorcon
     ];
 
-    postUnpack = ''
-      echo hello
-      echo $out
-      cat > $out/setup.py <<EOF
-      from setuptools import setup, find_packages
+    doCheck = false;
 
-      setup(
-        name="foo",
-        version="1.0",
-        packages=find_packages('./backend'),
-      )
-      EOF
+    installPhase = ''
+      cp -r $src/client $out/lib/python3.10 # FIXME: don't use python3.10 directory hardcoded
+
+      cd $out/lib/python3.10/client && npm install -d && ./node_modules/grunt/bin/grunt build
     '';
+
+    meta = with lib; {
+      description = "";
+      license = licenses.gpl3;
+      platforms = platforms.linux;
+      maintainers = with maintainers; [];
+    };
   }

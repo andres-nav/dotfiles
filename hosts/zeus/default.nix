@@ -57,6 +57,7 @@
       gnupg.enable = true;
       mob.enable = true;
       starship.enable = true;
+      nom.enable = true;
       tmux.enable = true;
       fish.enable = true;
     };

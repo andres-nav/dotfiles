@@ -30,7 +30,6 @@
   };
 
   # CPU
-  nix.settings.max-jobs = lib.mkDefault 4;
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   hardware.enableRedistributableFirmware = lib.mkDefault true; # for wifi

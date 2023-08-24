@@ -34,7 +34,6 @@
   };
 
   # CPU
-  nix.settings.max-jobs = lib.mkDefault 16;
   powerManagement.cpuFreqGovernor = "performance";
   # Comment out as appropriate
   hardware.cpu.amd.updateMicrocode = true;

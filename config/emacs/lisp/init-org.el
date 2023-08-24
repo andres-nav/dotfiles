@@ -6,11 +6,21 @@
 
 (use-package org
   :hook
-  (org-mode . org-indent-mode)
   (org-mode . visual-line-mode)
   :config
   (setq org-startup-folded t)
   )
+
+(use-package org-indent
+  :ensure nil
+  :diminish
+  :after org
+  :hook (org-mode . org-indent-mode))
+
+(use-package visual-line
+  :ensure nil
+  :diminish visual-line-mode
+  :hook (org-mode . visual-line-mode))
 
 ;; Table of contents
 (use-package toc-org
