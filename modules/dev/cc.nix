@@ -23,12 +23,7 @@ in {
   config = mkMerge [
     (mkIf cfg.enable {
       user.packages = with pkgs; [
-        clang
         gcc
-        bear
-        gdb
-        cmake
-        llvmPackages.libcxx
       ];
     })
 

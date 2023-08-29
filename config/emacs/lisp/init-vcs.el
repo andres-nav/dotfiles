@@ -21,6 +21,22 @@
 (use-package git-modes
   :diminish)
 
+;; Git gutter
+;; (use-package git-gutter
+;;   :diminish
+;;   :after evil
+;;   :hook
+;;   (prog-mode . git-gutter-mode)
+;;   :custom
+;;   (git-gutter:verbosity 0) ;; Remove log messages
+;;   (git-gutter:update-timer 2) 
+;;   :init
+;;   ;; FIXME: make proper use of hooks
+;;   (add-to-list 'git-gutter:update-hooks 'evil-normal-state-entry-hook)
+;;   )
+
+;; TODO: add git-time-machine
+
 (provide 'init-vcs)
 
 ;;; init-vcs.el ends here

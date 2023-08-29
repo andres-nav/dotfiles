@@ -42,6 +42,7 @@
       node.enable = true;
       python.enable = true;
       solidity.enable = true;
+      cc.enable = true;
       nix.enable = true;
       r.enable = true;
     };

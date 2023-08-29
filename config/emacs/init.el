@@ -61,11 +61,12 @@ Otherwise the startup will be very slow."
 ;; Progamming
 (require 'init-prog)
 (require 'init-flycheck)
-(require 'init-treesitter)
+(require 'init-treesit)
 (require 'init-format-all)
 (require 'init-elisp)
 (require 'init-org)
 (require 'init-latex)
+(require 'init-nix)
 
 ;; ;; Tabs
 ;; (setq custom-tab-width 2)

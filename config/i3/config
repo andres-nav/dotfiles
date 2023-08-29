@@ -163,6 +163,7 @@ bindsym $mod+Shift+s move scratchpad
 
 # window rules
 for_window [class="spotify"] move container to workspace 10
+for_window [class="zoom"] move container to workspace 10
 for_window [class="Brave-browser"] move container to workspace 8
 for_window [class="emacs"] move container to workspace 1
 

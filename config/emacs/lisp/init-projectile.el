@@ -11,7 +11,7 @@
 
 ;; TODO: configure consult with projectile
 ;; (use-package consult-projectile
-;;   :straight t
+;;   :ensure t
 ;;   :init
 ;;   (+map!
 ;;    ":"  '(consult-projectile-find-file :wk "Find file in project")
