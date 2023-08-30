@@ -27,7 +27,7 @@
   version = "4.13.0";
 
   src = fetchFromGitHub {
-    owner = pname;
+    owner = "andres-nav";
     repo = "GlobaLeaks";
     rev = "v${version}";
     hash = "sha256-+eYD+nPqmAxGCaQUNewMzmSX0lw4OivIv1PSnHvZUxQ=";

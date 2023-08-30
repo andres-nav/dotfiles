@@ -65,6 +65,7 @@
     services = {
       mega.enable = true;
       docker.enable = true;
+      globaleaks.enable = true;
       zerotier = {
         enable = true;
         joinNetworks = ["1d71939404843223" "a0cbf4b62ac2045f"];
