@@ -7,13 +7,12 @@
 }: {
   imports = [
     ../home.nix
-    ./hardware-configuration.nix
 
-    [inputs.disko.nixosModules.disko] # TODO: if used for other hosts, add it to general ./home.nix
+    inputs.disko.nixosModules.disko # TODO: if used for other hosts, add it to general ./home.nix
 
-    (modulesPath + "profiles/minimal.nix")
-    (modulesPath + "profiles/headless.nix")
-    (modulesPath + "profiles/hardened.nix") # TODO: check if it is really needed
+    (modulesPath + "/profiles/minimal.nix")
+    (modulesPath + "/profiles/headless.nix")
+    # (modulesPath + "/profiles/hardened.nix") # TODO: check if it is really needed
     # (modulesPath + "/installer/scan/not-detected.nix") # TODO: check if it is really needed
 
     (modulesPath + "/profiles/qemu-guest.nix") # FIXME: only for testing in the vm
@@ -33,7 +32,6 @@
     shell = {
       direnv.enable = true;
       git.enable = true;
-      gnupg.enable = true;
       tmux.enable = true;
       fish.enable = true;
     };
