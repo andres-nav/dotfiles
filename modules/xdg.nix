@@ -10,6 +10,19 @@
   ### A tidy $HOME is a tidy mind
   home-manager.users.${config.user.name}.xdg.enable = true;
 
+  # TODO: check and add
+  # xdg = {
+  #   enable = true;
+  #   mime.enable = true;
+  #   mimeApps.enable = true;
+  #   userDirs.enable = true;
+  # };
+
+  # TODO: add to zathura
+  # xd.mimeApps.defaultApplications = {
+  #     "application/pdf" = ["org.pwmt.zathura.desktop"];
+  #   };
+
   environment = {
     sessionVariables = {
       # These are the defaults, and xdg.enable does set them, but due to load

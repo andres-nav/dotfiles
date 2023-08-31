@@ -7,7 +7,7 @@ with builtins;
 with lib; let
   #blocklist = fetchurl https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts;
 in {
-  #networking.extraHosts = ''
+  #networking.extraHosts = '' # TODO: populate extra hosts in each config (probably option in zerotier module)
 
   # Block garbage
   # ${optionalString config.services.xserver.enable (readFile blocklist)}

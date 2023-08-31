@@ -71,10 +71,8 @@ with lib.my; {
 
   # Just the bear necessities...
   environment.systemPackages = with pkgs; [
-    bind
+    bind # TODO: check what is it
     cached-nix-shell
-    git
-    neovim
     wget
     gnumake
     unzip

@@ -13,7 +13,8 @@ in {
     joinNetworks = mkOpt (listOf str) [];
   };
 
-  # TODO: make joinNetworks a secret
+  # TODO: investigate cloudflared
+  # FIXME: make joinNetworks a secret
   config = mkIf cfg.enable {
     services.zerotierone = {
       enable = true;

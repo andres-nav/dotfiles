@@ -14,6 +14,7 @@ in {
     enable = mkBoolOpt false;
   };
 
+  # TODO: make fish default shell in home.nix
   config = mkIf cfg.enable {
     users.defaultUserShell = pkgs.fish;
 
@@ -21,18 +22,27 @@ in {
       enable = true;
     };
 
-    user.packages = with pkgs; [
+    environment.systemPackages = with pkgs; [
       fd
       fzf
-      jq
-      ripgrep
-      bat
-      grc
-
       fishPlugins.fzf-fish
-      fishPlugins.colored-man-pages
+
+      jq # TODO: change to somewhere general
+      ripgrep
+
+      bat
+      exa
+
+      grc
       fishPlugins.grc
+
+      fishPlugins.colored-man-pages
     ];
+
+    environment.shellAliases = {
+      cat = "bat";
+      ls = "exa -l";
+    };
 
     home.configFile = {
       "fish" = {source = "${configDir}/fish";};
