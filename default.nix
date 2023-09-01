@@ -64,7 +64,7 @@ with lib.my; {
     kernelPackages = mkDefault pkgs.linuxPackages_latest;
     loader = {
       efi.canTouchEfiVariables = mkDefault true;
-      systemd-boot.configurationLimit = 10;
+      systemd-boot.configurationLimit = mkDefault 10;
       systemd-boot.enable = mkDefault true;
     };
   };

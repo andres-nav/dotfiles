@@ -8,69 +8,21 @@
 }: {
   imports = [
     #    (modulesPath + "/installer/scan/not-detected.nix")
+    (modulesPath + "/profiles/qemu-guest.nix")
   ];
 
   boot = {
-    initrd.availableKernelModules = ["ehci_pci" "ahci" "usb_storage" "xhci_pci" "sd_mod"];
-    initrd.kernelModules = ["dm-snapshot"];
-    kernelModules = ["kvm-intel"];
-    extraModulePackages = [];
-  };
-
-  # Modules
-  modules.hardware = {
-    fs = {
-      enable = true;
-      ssd.enable = true;
+    loader = {
+      systemd-boot.enable = false;
+      grub.device = "/dev/vda";
     };
-
-    laptop.enable = true;
-
-    wifi.enable = true;
+    initrd.availableKernelModules = ["ata_piix" "uhci_hcd" "xen_blkfront" "vmw_pvscsi"];
+    initrd.kernelModules = ["nvme"];
   };
-
-  # CPU
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-
-  hardware.enableRedistributableFirmware = lib.mkDefault true; # for wifi
 
   # Storage
-  fileSystems = {
-    "/" = {
-      device = "/dev/mapper/vg-root";
-      fsType = "btrfs";
-      options = ["subvol=root" "compress-force=zstd"];
-    };
-
-    "/home" = {
-      device = "/dev/mapper/vg-root";
-      fsType = "btrfs";
-      options = ["subvol=home" "compress-force=zstd"];
-    };
-
-    "/nix" = {
-      device = "/dev/mapper/vg-root";
-      fsType = "btrfs";
-      options = ["subvol=nix" "compress-force=zstd" "noatime"];
-    };
-
-    "/persist" = {
-      device = "/dev/mapper/vg-root";
-      fsType = "btrfs";
-      options = ["subvol=persist" "compress-force=zstd"];
-    };
-
-    "/var/log" = {
-      device = "/dev/mapper/vg-root";
-      fsType = "btrfs";
-      options = ["subvol=log" "compress-force=zstd"];
-    };
-
-    "/boot" = {
-      device = "/dev/disk/by-label/BOOT";
-      fsType = "vfat";
-    };
+  fileSystems."/" = {
+    device = "/dev/vda1";
+    fsType = "ext4";
   };
-
-  swapDevices = [{device = "/dev/mapper/vg-swap";}];
 }
