@@ -8,17 +8,26 @@
 }: {
   imports = [
     #    (modulesPath + "/installer/scan/not-detected.nix")
-    (modulesPath + "/profiles/qemu-guest.nix")
   ];
 
   boot = {
     loader = {
       systemd-boot.enable = false;
+      grub.enable = true;
       grub.device = "/dev/vda";
     };
-    initrd.availableKernelModules = ["ata_piix" "uhci_hcd" "xen_blkfront" "vmw_pvscsi"];
-    initrd.kernelModules = ["nvme"];
+    initrd.availableKernelModules = ["ata_piix" "uhci_hcd" "virtio_pci" "virtio_blk"];
+    initrd.kernelModules = [];
+    kernelModules = ["kvm-intel"];
+    extraModulePackages = [];
   };
+
+  swapDevices = [];
+
+  networking.useDHCP = true;
+  nixpkgs.hostPlatform = "x86_64-linux";
+
+  virtualisation.hypervGuest.enable = true;
 
   # Storage
   fileSystems."/" = {

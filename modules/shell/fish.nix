@@ -20,6 +20,7 @@ in {
 
     programs.fish = {
       enable = true;
+      useBabelfish = true;
     };
 
     environment.systemPackages = with pkgs; [

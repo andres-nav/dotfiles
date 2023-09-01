@@ -23,6 +23,8 @@
 
   zramSwap.enable = true;
 
+  security.sudo.wheelNeedsPassword = false;
+
   ## Modules
   modules = {
     editors = {
