@@ -23,54 +23,47 @@ in {
       default = pkgs.my.globaleaks;
     };
 
-    user = mkOption {
-      type = str;
-      description = "Username of the system user that should own files and services related to globaleaks.";
-      default = "globaleaks";
-    };
-
-    group = mkOption {
-      type = str;
-      description = "Group that contains the system user that executes globaleaks.";
-      default = "globaleaks";
-    };
-
     workingPath = mkOption {
       type = path;
       description = "Path for the backend working directory.";
       default = "/var/lib/globaleaks";
     };
+
+    openFirewall = mkOption {
+      type = types.bool;
+      default = true;
+      description = "Open ports in the firewall for the web server.";
+    };
   };
 
   config = mkIf cfg.enable {
-    users.users."${cfg.user}" = {
-      isNormalUser = true;
-      createHome = true;
-      home = cfg.workingPath;
-      group = cfg.group;
+    networking.firewall = mkIf cfg.openFirewall {
+      allowedTCPPorts = [80 443];
     };
 
-    users.groups."${cfg.group}" = {};
+    systemd.services = {
+      globaleaks = {
+        wantedBy = ["multi-user.target"];
+        after = ["network.target"];
+        wants = ["network-online.target"];
 
-    systemd.services.globaleaks = {
-      wantedBy = ["multi-user.target"];
-      after = ["network.target"];
-      wants = ["network-online.target"];
-
-      description = "Start GlobaLeaks service.";
-      path = [cfg.package]; # add package to the PATH
-
-      serviceConfig = {
-        User = cfg.user;
-        Group = cfg.group;
-        ExecStart = ''
-          ${pkgs.my.globaleaks}/bin/globaleaks --working-path=${cfg.workingPath}
+        description = "Start GlobaLeaks service.";
+        path = [cfg.package]; # add package to the PATH
+        preStart = ''
+          mkdir -p ${cfg.workingPath}
+          chmod 700 ${cfg.workingPath}
+          chown -R root:root ${cfg.workingPath}
         '';
-        Type = "forking";
-        PIDFile = "${cfg.workingPath}/globaleaks.pid";
-        Restart = "always";
-        RestartSec = 5;
-        WorkingDirectory = cfg.workingPath;
+
+        serviceConfig = {
+          ExecStart = ''
+            ${cfg.package}/bin/globaleaks --working-path=${cfg.workingPath}
+          '';
+          Type = "forking";
+          PIDFile = "${cfg.workingPath}/globaleaks.pid";
+          Restart = "always";
+          RestartSec = 5;
+        };
       };
     };
   };

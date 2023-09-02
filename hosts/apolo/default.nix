@@ -1,4 +1,6 @@
 # Apolo: Hostinger
+# Command to remote build
+# nixos-rebuild switch -j auto --use-remote-sudo --target-host root@212.227.144.87 --flake ~/git/dotfiles/#apolo
 {
   inputs,
   lib,
@@ -23,7 +25,7 @@
 
   zramSwap.enable = true;
 
-  security.sudo.wheelNeedsPassword = false;
+  security.sudo.wheelNeedsPassword = false; # TODO: see if it is really necesary to build
 
   ## Modules
   modules = {
