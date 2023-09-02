@@ -61,9 +61,11 @@
     "net.ipv4.tcp_congestion_control" = "bbr";
     "net.core.default_qdisc" = "cake";
   };
+
   boot.kernelModules = ["tcp_bbr"];
 
   # Change me later!
+  # TODO: convert to secret
   user.initialPassword = "nixos";
   users.users.root.initialPassword = "nixos";
 

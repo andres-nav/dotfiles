@@ -81,7 +81,3 @@ boot.initrd.luks.devices."nixenc".device = "/dev/disk/by-uuid/<UUID>";
 
 change grub to systemd-boot to configure.nix
 
-#+begin_src
-boot.loader.systemd-boot.enable = true;
-boot.loader.efi.canTouchEfiVariables = true;
-#+end_src

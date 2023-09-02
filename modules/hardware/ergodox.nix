@@ -14,7 +14,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    user.packages = [pkgs.unstable.wally-cli];
+    environment.systemPackages = [pkgs.wally-cli];
 
     hardware.keyboard.zsa.enable = true;
 

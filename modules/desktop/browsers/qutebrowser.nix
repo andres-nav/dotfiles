@@ -12,7 +12,7 @@
 with lib;
 with lib.my; let
   cfg = config.modules.desktop.browsers.qutebrowser;
-  pkg = pkgs.unstable.qutebrowser;
+  pkg = pkgs.qutebrowser;
   configDir = config.dotfiles.configDir;
 in {
   options.modules.desktop.browsers.qutebrowser = with types; {
@@ -23,7 +23,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    user.packages = with pkgs; [
+    environment.systemPackages = with pkgs; [
       pkg
       (makeDesktopItem {
         name = "qutebrowser-private";

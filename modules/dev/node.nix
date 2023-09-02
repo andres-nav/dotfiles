@@ -22,7 +22,7 @@ in {
   config = mkMerge [
     (
       mkIf cfg.enable {
-        user.packages = [
+        environment.systemPackages = [
           pkgs.nodejs
           pkgs.yarn
 

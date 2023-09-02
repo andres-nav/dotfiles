@@ -75,9 +75,3 @@ mount "$DISK"p1 /mnt/boot
 nixos-generate-config --root /mnt
 #+end_src
 
-change grub to systemd-boot to configure.nix
-
-#+begin_src
-boot.loader.systemd-boot.enable = true;
-boot.loader.efi.canTouchEfiVariables = true;
-#+end_src

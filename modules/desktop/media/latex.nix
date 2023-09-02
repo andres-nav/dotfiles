@@ -15,7 +15,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    user.packages = with pkgs; [
+    environment.systemPackages = with pkgs; [
       buildPackages.texlive.combined.scheme-full
     ];
   };

@@ -31,7 +31,7 @@ in {
       }
     ];
 
-    user.packages = with pkgs; [
+    environment.systemPackages = with pkgs; [
       feh # image viewer
       htop
       xclip
@@ -52,7 +52,7 @@ in {
     fonts = {
       fontDir.enable = true;
       enableGhostscriptFonts = true;
-      fonts = with pkgs; [
+      packages = with pkgs; [
         (nerdfonts.override {fonts = ["CascadiaCode"];})
       ];
     };

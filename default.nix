@@ -71,10 +71,10 @@ with lib.my; {
 
   # Just the bear necessities...
   environment.systemPackages = with pkgs; [
-    bind # TODO: check what is it
-    cached-nix-shell
-    wget
-    gnumake
-    unzip
+    # bind # TODO: check what is it
+    # cached-nix-shell # TODO: move them to a separate module useful.nix
+    # wget
+    # gnumake
+    # unzip
   ];
 }

@@ -26,7 +26,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    user.packages = with pkgs;
+    environment.systemPackages = with pkgs;
       (
         if cfg.tools.enable
         then [
@@ -40,7 +40,7 @@ in {
       (
         if cfg.vector.enable
         then [
-          unstable.inkscape
+          inkscape
         ]
         else []
       )

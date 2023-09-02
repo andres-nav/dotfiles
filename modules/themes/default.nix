@@ -221,7 +221,7 @@ in {
               cfg.onReload)}
         '');
       in {
-        user.packages = [reloadTheme];
+        environment.systemPackages = [reloadTheme];
         system.userActivationScripts.reloadTheme = ''
           [ -z "$NORELOAD" ] && ${reloadTheme}/bin/reloadTheme
         '';

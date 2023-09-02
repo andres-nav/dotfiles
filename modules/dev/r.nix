@@ -12,7 +12,7 @@ in {
   options.modules.dev.r = {enable = mkBoolOpt false;};
 
   config = mkIf cfg.enable {
-    user.packages = with pkgs; let
+    environment.systemPackages = with pkgs; let
       R-with-my-packages = rWrapper.override {packages = with rPackages; [styler languageserver];};
     in [
       R-with-my-packages
