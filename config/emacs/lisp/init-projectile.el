@@ -7,7 +7,7 @@
   :diminish
   :hook (after-init . projectile-mode)
   :bind (:map projectile-mode-map
-	            ("s-p" . projectile-command-map)))
+	      ("C-c p" . projectile-command-map)))
 
 ;; TODO: configure consult with projectile
 ;; (use-package consult-projectile

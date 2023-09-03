@@ -18,12 +18,6 @@ in {
     environment.systemPackages = with pkgs; [
       emacs29
 
-      emacsPackages.vterm
-      emacsPackages.sqlite3
-
-      emacsPackages.org-roam
-      sqlite
-
       gnuplot
     ];
 
