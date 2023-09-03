@@ -17,12 +17,6 @@
     # (modulesPath + "/installer/scan/not-detected.nix") # TODO: check if it is really needed
   ];
 
-  # boot.loader.grub = {
-  #   devices = ["/dev/sda"];
-  #   efiSupport = true;
-  #   efiInstallAsRemovable = true;
-  # };
-
   zramSwap.enable = true;
   boot.tmp.useTmpfs = false;
 

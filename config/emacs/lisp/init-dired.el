@@ -39,6 +39,8 @@
       "." 'dired-hide-dotfiles-mode)
     )
 
+  ;; TODO: add dired-ranger
+
   ;; Extra Dired functionality
   (use-package dired-aux :ensure nil)
   )
