@@ -6,6 +6,7 @@ window:
     x: 3
     y: 2
 
+# TODO: change with <https://github.com/dadada/nix-config/blob/main/home/modules/alacritty/default.nix>
 
 decorations: buttonless
 

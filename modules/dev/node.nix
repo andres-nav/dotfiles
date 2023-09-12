@@ -28,6 +28,7 @@ in {
 
           pkgs.nodePackages.prettier
           pkgs.rome
+          pkgs.nodePackages.eslint
         ];
 
         # env.PATH = ["$(${pkgs.yarn}/bin/yarn global bin)"];

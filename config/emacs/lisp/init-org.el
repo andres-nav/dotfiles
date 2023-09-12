@@ -8,7 +8,8 @@
   :hook
   (org-mode . visual-line-mode)
   :config
-  (setq org-startup-folded t)
+  (setq org-startup-folded t
+	org-confirm-babel-evaluate nil)
   )
 
 (use-package org-indent

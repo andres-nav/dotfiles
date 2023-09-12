@@ -30,13 +30,14 @@
         ranger.enable = true;
         spotify.enable = true;
         teams.enable = true;
+        skype.enable = true;
         zoom.enable = true;
       };
       term = {
         default = "alacritty";
         alacritty.enable = true;
       };
-      vm = {virtualbox.enable = true;};
+      vm = {qemu.enable = true;};
     };
     dev = {
       node.enable = true;
