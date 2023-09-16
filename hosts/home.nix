@@ -30,4 +30,6 @@ in {
     layout = mkDefault "us";
     xkbOptions = mkDefault "caps:swapescape,ctrl:swap_lalt_lctl";
   };
+
+  security.sudo.wheelNeedsPassword = false;
 }

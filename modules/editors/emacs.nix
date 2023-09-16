@@ -16,13 +16,12 @@ in {
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
-      emacs29
-
       gnuplot
     ];
 
     services.emacs = {
       enable = true;
+      package = pkgs.emacs29;
       defaultEditor = true;
     };
 

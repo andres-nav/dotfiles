@@ -7,12 +7,11 @@
 (provide 'init-package)
 
 (require 'package)
-
-;; TODO: make this a function
-(add-to-list 'package-archives '("gnu"   . "https://elpa.gnu.org/packages/"))
-(add-to-list 'package-archives '("gnu-devel"   . "https://elpa.gnu.org/devel/"))
-(add-to-list 'package-archives '("nongnu" . "https://elpa.nongnu.org/nongnu/"))
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(setq package-archives
+      '(("melpa"  . "https://melpa.org/packages/")
+        ("gnu"    . "https://elpa.gnu.org/packages/")
+	("gnu-devel"   . "https://elpa.gnu.org/devel/")
+	("nongnu" . "https://elpa.nongnu.org/nongnu/")))
 
 ;; Initialize packages
 (unless (bound-and-true-p package--initialized) ; To avoid warnings in 27
@@ -25,10 +24,14 @@
   (package-install 'use-package))
 
 ;; Should set before loading `use-package'
-(setq use-package-always-ensure t
-      use-package-always-defer t
-      use-package-expand-minimally t
-      )
+(eval-and-compile
+  (setq use-package-always-ensure t
+	use-package-always-defer t
+	use-package-expand-minimally t
+	))
+
+(eval-when-compile
+  (require 'use-package))
 
 ;; Required by `use-package'
 (use-package diminish)

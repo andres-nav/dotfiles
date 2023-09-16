@@ -23,12 +23,11 @@
 (use-package gcmh
   :diminish
   :hook (emacs-startup . gcmh-mode)
-  :init
-  (setq gcmh-idle-delay 'auto
-        gcmh-auto-idle-delay-factor 10
-        gcmh-high-cons-threshold #x1000000
-        )
-  ) ; 16MB
+  :custom
+  (gcmh-idle-delay 'auto)
+  (gcmh-auto-idle-delay-factor 10)
+  (gcmh-high-cons-threshold #x6400000) ;; 100 MB
+  )
 
 ;; Set UTF-8 as the default coding system
 (when (fboundp 'set-charset-priority)
@@ -44,27 +43,29 @@
 (use-package recentf
   :bind (("C-x C-r" . recentf-open-files))
   :hook (after-init . recentf-mode)
-  :init (setq recentf-max-saved-items 300
-              recentf-exclude
-              '("\\.?cache" ".cask" "url" "COMMIT_EDITMSG\\'" "bookmarks"
-                "\\.\\(?:gz\\|gif\\|svg\\|png\\|jpe?g\\|bmp\\|xpm\\)$"
-                "\\.?ido\\.last$" "\\.revive$" "/G?TAGS$" "/.elfeed/"
-                "^/tmp/" "^/var/folders/.+$" "^/ssh:" "/persp-confs/"
-                (lambda (file) (file-in-directory-p file package-user-dir))))
+  :custom
+  (recentf-max-saved-items 300)
+  (recentf-exnoninteractivelude
+   '("\\.?cache" ".cask" "url" "COMMIT_EDITMSG\\'" "bookmarks"
+     "\\.\\(?:gz\\|gif\\|svg\\|png\\|jpe?g\\|bmp\\|xpm\\)$"
+     "\\.?ido\\.last$" "\\.revive$" "/G?TAGS$" "/.elfeed/"
+     "^/tmp/" "^/var/folders/.+$" "^/ssh:" "/persp-confs/"
+     (lambda (file) (file-in-directory-p file package-user-dir))))
   :config
   (push (expand-file-name recentf-save-file) recentf-exclude)
   (add-to-list 'recentf-filename-handlers #'abbreviate-file-name))
 
 (use-package savehist
   :hook (after-init . savehist-mode)
-  :init (setq enable-recursive-minibuffers t ; Allow commands in minibuffers
-              history-length 1000
-              savehist-additional-variables '(mark-ring
-                                              global-mark-ring
-                                              search-ring
-                                              regexp-search-ring
-                                              extended-command-history)
-              savehist-autosave-interval 300))
+  :custom (enable-recursive-minibuffers t) ; Allow commands in minibuffers
+  (history-length 1000)
+  (savehist-additional-variables '(mark-ring
+                                   global-mark-ring
+                                   search-ring
+                                   regexp-search-ring
+                                   extended-command-history))
+  (savehist-autosave-interval 300)
+  )
 
 (use-package hl-line
   :hook (after-init . global-hl-line-mode))
@@ -94,8 +95,13 @@
 ;; Change to y-or-n
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq use-short-answers t)
+;; Inhibit switching out from `y-or-n-p' and `read-char-choice'
+(setq y-or-n-p-use-read-key t
+      read-char-choice-use-read-key t)
 
-(setq visible-bell t
+(setq default-input-method "spanish-prefix")
+
+(setq visible-bell nil
       enable-recursive-minibuffers t   ; Enable recursive minibuffers
       inhibit-compacting-font-caches t ; Don’t compact font caches during GC
       delete-by-moving-to-trash t      ; Deleting files go to OS's trash folder
@@ -105,9 +111,14 @@
 
       create-lockfiles nil             ; Lockfiles create more pain than benefit
 
-      tab-width 2
-      custom-tab-width 2
+      tab-width 4
       indent-tabs-mode nil             ; Only use spaces
+
+      select-enable-primary t          ; Cutting and pasting use primary/clipboard
+      select-enable-clipboard t
+
+      display-raw-bytes-as-hex t       ; Improve display
+      redisplay-skip-fontification-on-input t
 
       uniquify-buffer-name-style 'post-forward-angle-brackets ; Show path if names are same
       adaptive-fill-regexp "[ t]+|[ t]*([0-9]+.|*+)[ t]*"
@@ -117,6 +128,22 @@
       word-wrap-by-category t
       )
 
+;; Smooth scroll & friends
+(setq scroll-step 2
+      scroll-margin 2
+      hscroll-step 2
+      hscroll-margin 2
+      scroll-conservatively 101
+      scroll-preserve-screen-position 'always)
+
+;; The nano style for truncated long lines.
+(setq auto-hscroll-mode 'current-line)
+
+;; Disable auto vertical scroll for tall lines
+(setq auto-window-vscroll nil)
+
+;; Dont move points out of eyes
+(setq mouse-yank-at-point t)
 
 ;;; Put Emacs auto-save and backup files to /tmp/ or C:/Temp/
 (defconst emacs-tmp-dir (expand-file-name (format "emacs%d" (user-uid)) temporary-file-directory))
@@ -135,6 +162,43 @@
 ;;               indent-tabs-mode nil)     ; Permanently indent with spaces, never with TABs
 
 
+;; Show line/column number and more
+(use-package simple
+  :ensure nil
+  :custom
+  ;; show line/column/filesize in modeline
+  (line-number-mode t)
+  (column-number-mode t)
+  (size-indication-mode t)
+  ;; No visual feedback on copy/delete.
+  (copy-region-blink-delay 0)
+  (delete-pair-blink-delay 0)
+  ;; confusing if no fringes (GUI only).
+  (visual-line-fringe-indicators '(nil right-curly-arrow))
+  ;; eliminate duplicates
+  (kill-do-not-save-duplicates t)
+  ;; include '\n' when point starts at the beginning-of-line
+  (kill-whole-line t)
+  ;; show cwd when `shell-command' and `async-shell-command'
+  (shell-command-prompt-show-cwd t)
+  ;; show the name of character in `what-cursor-position'
+  (what-cursor-show-names t)
+  ;; List only applicable commands.
+  ;;
+  ;; ``` elisp
+  ;; (defun foo ()
+  ;;   (interactive nil org-mode)
+  ;;   (message "foo"))
+  ;; ```
+  ;;
+  ;; M-x foo should only be available in `org-mode` or modes derived from `org-mode`.
+  (read-extended-command-predicate #'command-completion-default-include-p))
+
+;; Server mode.
+;; Use emacsclient to connect
+(use-package server
+  :ensure nil
+  :hook (after-init . server-mode))
 
 ;; TODO: set up trash-directory
 

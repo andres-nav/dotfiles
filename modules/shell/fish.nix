@@ -32,7 +32,7 @@ in {
       ripgrep
 
       bat
-      exa
+      eza
 
       grc
       fishPlugins.grc
@@ -42,7 +42,7 @@ in {
 
     environment.shellAliases = {
       cat = "bat";
-      ls = "exa -l";
+      ls = "eza -l";
     };
 
     home.configFile = {

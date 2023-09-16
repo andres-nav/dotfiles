@@ -20,8 +20,6 @@
   zramSwap.enable = true;
   boot.tmp.useTmpfs = false;
 
-  security.sudo.wheelNeedsPassword = false; # TODO: see if it is really necesary to build
-
   ## Modules
   modules = {
     editors = {

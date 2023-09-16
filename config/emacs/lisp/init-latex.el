@@ -12,6 +12,7 @@
   (TeX-parse-self t)
   (TeX-master nil)
   (Tex-engine "luatex")
+  (compilation-ask-about-save nil)
   ;; :hook
   ;; (LaTeX-mode . (lambda ()
   ;;                 (turn-on-reftex)

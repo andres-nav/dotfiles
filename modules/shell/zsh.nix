@@ -45,7 +45,7 @@ in {
       zsh
       nix-zsh-completions
       bat
-      exa
+      eza
       fasd
       fd
       fzf

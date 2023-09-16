@@ -10,7 +10,6 @@
         dbeaver.enable = true;
         insomnia.enable = true;
         ledger-live.enable = true;
-        minecraft.enable = true;
         rofi.enable = true;
         freecad.enable = true;
         prusaslicer.enable = true;
@@ -51,6 +50,7 @@
       default = "emacsclient -n";
       emacs.enable = true;
       nvim.enable = true;
+      vscodium.enable = true;
     };
     shell = {
       cachix.enable = true;

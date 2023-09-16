@@ -27,7 +27,6 @@ in {
           pkgs.yarn
 
           pkgs.nodePackages.prettier
-          pkgs.rome
           pkgs.nodePackages.eslint
         ];
 

@@ -4,24 +4,41 @@
 
 ;;; Code:
 
+;; good docs <https://github.com/condy0919/.emacs.d/blob/336f30dccd03f3e7b6c07d22c71d61aa26d61351/lisp/init-evil.el#L20>
+
 (use-package evil
   :diminish
   :hook (after-init . evil-mode)
   (after-save . evil-normal-state)
-  :init
-  (setq evil-want-keybinding nil
-	evil-want-C-u-scroll t
-	evil-want-Y-yank-to-eol t
-	evil-shift-width 2
-	evil-esc-delay 0
-	evil-echo-state nil
-	evil-undo-system 'undo-fu)
+  :custom
+  (evil-want-keybinding nil)
+  (evil-want-C-u-scroll t)
+  (evil-want-Y-yank-to-eol t)
+  (evil-shift-width 2)
+  (evil-esc-delay 0)
+  (evil-echo-state nil)
+  (evil-undo-system 'undo-fu)
 
+  ;; Rebind `f'/`s' to mimic `evil-snipe'.
+  :bind (
+         :map evil-motion-state-map
+         ("f" . evil-avy-goto-char-in-line)
+         :map evil-motion-state-map
+         ("t" . evil-avy-goto-char-in-line)
+         :map evil-normal-state-map
+         ("s" . evil-avy-goto-char-timer))
+
+  :config
   (defadvice evil-window-split (after move-point-to-new-window activate)
     (other-window 1))
-
   (defadvice evil-window-vsplit (after move-point-to-new-window activate)
     (other-window 1))
+
+
+  (global-set-key [remap evil-quit] 'kill-current-buffer)
+  ;; (defun save-and-kill-this-buffer()(interactive)(save-buffer)(kill-current-buffer))
+  ;; (evil-ex-define-cmd "wq" 'save-and-kill-this-buffer)
+
   )
 
 (use-package evil-collection
