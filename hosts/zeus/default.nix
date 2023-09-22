@@ -47,7 +47,7 @@
       r.enable = true;
     };
     editors = {
-      default = "emacsclient -n";
+      default = "emacsclient -nw";
       emacs.enable = true;
       nvim.enable = true;
       vscodium.enable = true;

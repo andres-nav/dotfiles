@@ -18,9 +18,12 @@ in {
   config = mkIf cfg.enable {
     environment.variables.GNUPGHOME = "$XDG_CONFIG_HOME/gnupg";
 
-    programs.gnupg.agent = {
-      enable = true;
-      enableSSHSupport = cfg.ssh;
+    programs.gnupg = {
+      agent = {
+        enable = true;
+        enableSSHSupport = cfg.ssh;
+      };
+      package = pkgs.gnupg24;
     };
 
     # HACK Without this config file you get "No pinentry program" on 20.03.

@@ -31,15 +31,15 @@
 
 ;; Highlight uncommitted changes using VC
 (use-package diff-hl
-  :ensure t
-  :hook ((after-init         . global-diff-hl-mode)
+  :hook (
          (dired-mode         . diff-hl-dired-mode-unless-remote)
          (magit-pre-refresh  . diff-hl-magit-pre-refresh)
          (magit-post-refresh . diff-hl-magit-post-refresh))
   :config
   ;; When Emacs runs in terminal, show the indicators in margin instead.
-  (unless (display-graphic-p)
-    (diff-hl-margin-mode)))
+  ;; (unless (display-graphic-p)
+  ;;   (diff-hl-margin-mode))
+  )
 
 ;; Git configuration modes
 (use-package git-modes

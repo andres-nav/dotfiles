@@ -34,6 +34,9 @@ in {
       bat
       eza
 
+      zip
+      unzip
+
       grc
       fishPlugins.grc
 

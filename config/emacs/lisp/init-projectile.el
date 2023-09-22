@@ -10,6 +10,7 @@
 	      ("C-c p" . projectile-command-map))
   :custom
   (projectile-use-git-grep t)
+  (projectile-sort-order 'recentf)
   (projectile-globally-ignored-files '("TAGS" "tags" ".DS_Store"))
   (projectile-globally-ignored-file-suffixes '(".elc" ".pyc" ".o" ".swp" ".so" ".a"))
   )

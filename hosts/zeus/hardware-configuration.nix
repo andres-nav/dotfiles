@@ -37,6 +37,8 @@
     laptop.enable = true;
 
     wifi.enable = true;
+
+    bluetooth.enable = true;
   };
 
   # CPU

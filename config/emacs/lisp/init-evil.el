@@ -14,7 +14,7 @@
   (evil-want-keybinding nil)
   (evil-want-C-u-scroll t)
   (evil-want-Y-yank-to-eol t)
-  (evil-shift-width 2)
+  (evil-shift-width 4)
   (evil-esc-delay 0)
   (evil-echo-state nil)
   (evil-undo-system 'undo-fu)
@@ -33,7 +33,6 @@
     (other-window 1))
   (defadvice evil-window-vsplit (after move-point-to-new-window activate)
     (other-window 1))
-
 
   (global-set-key [remap evil-quit] 'kill-current-buffer)
   ;; (defun save-and-kill-this-buffer()(interactive)(save-buffer)(kill-current-buffer))
@@ -68,6 +67,12 @@
   :diminish
   :after evil-collection
   :hook (evil-mode . evil-lion-mode))
+
+;; Extend matching corresponding elements
+(use-package evil-matchit
+  :diminish
+  :after evil
+  :hook (evil-mode . global-evil-matchit-mode))
 
 (provide 'init-evil)
 

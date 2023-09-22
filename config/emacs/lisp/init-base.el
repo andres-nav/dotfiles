@@ -101,7 +101,7 @@
 
 (setq default-input-method "spanish-prefix")
 
-(setq visible-bell nil
+(setq visible-bell t
       enable-recursive-minibuffers t   ; Enable recursive minibuffers
       inhibit-compacting-font-caches t ; Don’t compact font caches during GC
       delete-by-moving-to-trash t      ; Deleting files go to OS's trash folder
@@ -111,11 +111,8 @@
 
       create-lockfiles nil             ; Lockfiles create more pain than benefit
 
-      tab-width 4
+      tab-width 2
       indent-tabs-mode nil             ; Only use spaces
-
-      select-enable-primary t          ; Cutting and pasting use primary/clipboard
-      select-enable-clipboard t
 
       display-raw-bytes-as-hex t       ; Improve display
       redisplay-skip-fontification-on-input t
@@ -141,9 +138,6 @@
 
 ;; Disable auto vertical scroll for tall lines
 (setq auto-window-vscroll nil)
-
-;; Dont move points out of eyes
-(setq mouse-yank-at-point t)
 
 ;;; Put Emacs auto-save and backup files to /tmp/ or C:/Temp/
 (defconst emacs-tmp-dir (expand-file-name (format "emacs%d" (user-uid)) temporary-file-directory))

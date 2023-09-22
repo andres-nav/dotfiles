@@ -63,7 +63,9 @@
 (use-package display-line-numbers
   :ensure nil
   :hook ((prog-mode yaml-mode conf-mode markdown-mode) . display-line-numbers-mode)
-  :init (setq display-line-numbers-width-start t))
+  :custom
+  (display-line-numbers-width-start t)
+  (display-line-numbers-width 0))
 
 ;; Suppress GUI features
 (setq use-file-dialog nil

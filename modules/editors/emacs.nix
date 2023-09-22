@@ -25,7 +25,10 @@ in {
       defaultEditor = true;
     };
 
-    environment.shellAliases = {};
+    environment.shellAliases = {
+      e = "emacsclient";
+      E = "emacsclient -nw";
+    };
 
     home.configFile = {
       "emacs" = {
