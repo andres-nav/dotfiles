@@ -1,4 +1,4 @@
-;; init-elisp.el --- Initialize format-all configurations
+;; init-elisp.el ---
 
 ;;; Commentary:
 

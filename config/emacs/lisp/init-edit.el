@@ -28,7 +28,7 @@
 ;;   ;; Disable in some commands
 ;;   (add-to-list 'aggressive-indent-protected-commands #'delete-trailing-whitespace t)
 
-;;   ;; Be slightly less aggressive in C/C++/C#/Java/Go/Swift
+;;   Be slightly less aggressive in C/C++/C#/Java/Go/Swift
 ;;   (add-to-list 'aggressive-indent-dont-indent-if
 ;;                '(and (derived-mode-p 'c-mode 'c++-mode 'csharp-mode
 ;;                                      'java-mode 'go-mode 'swift-mode)
@@ -46,7 +46,7 @@
   (avy-background t)
   (avy-timeout-seconds 0.5)
   (avy-style 'pre)
-  (avy-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l ?q ?w ?e ?r ?u ?i ?o ?p))
+  (avy-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l ?q ?w ?e ?r ?t ?u ?m ?i ?o ?p))
   )
 
 ;; Show number of matches in mode-line while searching
@@ -85,7 +85,9 @@
 ;; Automatic parenthesis pairing
 (use-package elec-pair
   :ensure nil
-  :hook (after-init . electric-pair-mode)
+  :hook
+  (after-init . electric-pair-mode)
+  (minibuffer-setup . (lambda () (electric-pair-local-mode 0)))
   :custom
   (electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit)
   (electric-pair-open-newline-between-pairs-psif t)
@@ -236,9 +238,10 @@
   (which-key-idle-delay 0.5)
   )
 
-;; FIXME: does not work with fish shell
 (use-package rg
   :ensure t
+  :custom
+  (rg-show-header nil)
   )
 
 ;; Writable grep buffer

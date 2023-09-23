@@ -5,8 +5,7 @@
 ;;; Code:
 
 (use-package org
-  :hook
-  (org-mode . visual-line-mode)
+  :diminish org-indent-mode
   :custom
   ;; pretify
   (org-startup-folded t)

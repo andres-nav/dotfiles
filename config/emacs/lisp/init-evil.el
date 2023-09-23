@@ -9,7 +9,6 @@
 (use-package evil
   :diminish
   :hook (after-init . evil-mode)
-  (after-save . evil-normal-state)
   :custom
   (evil-want-keybinding nil)
   (evil-want-C-u-scroll t)
@@ -26,7 +25,14 @@
          :map evil-motion-state-map
          ("t" . evil-avy-goto-char-in-line)
          :map evil-normal-state-map
-         ("s" . evil-avy-goto-char-timer))
+         ("r" . evil-avy-goto-char-timer )
+         :map evil-motion-state-map
+         ("r" . evil-avy-goto-char-timer )
+         :map evil-normal-state-map
+         ("R" . evil-avy-goto-line)
+         :map evil-motion-state-map
+         ("R" . evil-avy-goto-line)
+	 )
 
   :config
   (defadvice evil-window-split (after move-point-to-new-window activate)
@@ -38,6 +44,15 @@
   ;; (defun save-and-kill-this-buffer()(interactive)(save-buffer)(kill-current-buffer))
   ;; (evil-ex-define-cmd "wq" 'save-and-kill-this-buffer)
 
+  ;; esc quits
+  ;; TODO: check if it works
+  ;; (define-key evil-normal-state-map [escape] 'keyboard-quit)
+  ;; (define-key evil-visual-state-map [escape] 'keyboard-quit)
+  ;; (define-key minibuffer-local-map [escape] 'minibuffer-keyboard-quit)
+  ;; (define-key minibuffer-local-ns-map [escape] 'minibuffer-keyboard-quit)
+  ;; (define-key minibuffer-local-completion-map [escape] 'minibuffer-keyboard-quit)
+  ;; (define-key minibuffer-local-must-match-map [escape] 'minibuffer-keyboard-quit)
+  ;; (define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
   )
 
 (use-package evil-collection
@@ -47,6 +62,26 @@
   (evil-collection-swap-key nil 'evil-motion-state-map ";" ":")
   :init (evil-collection-init)
   )
+
+(use-package evil-leader
+  :diminish
+  :after evil-collection
+  :hook (after-init . global-evil-leader-mode)
+  :config
+  (evil-leader/set-leader "<SPC>")
+  (evil-leader/set-key
+    "b" 'ido-switch-buffer
+    "f" 'projectile-find-file
+    "D" 'projectile-find-dir
+    "d" 'projectile-dired
+    "p" 'projectile-switch-project
+    "g" 'projectile-ripgrep
+    "G" 'rg-menu
+    "v" 'projectile-vc
+    "w" 'evil-window-map
+    )
+  )
+
 
 (use-package evil-surround
   :diminish

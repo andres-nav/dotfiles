@@ -10,9 +10,29 @@
 	      ("C-c p" . projectile-command-map))
   :custom
   (projectile-use-git-grep t)
+  (projectile-enable-caching t)
   (projectile-sort-order 'recentf)
+  (projectile-switch-project-action 'projectile-commander)
   (projectile-globally-ignored-files '("TAGS" "tags" ".DS_Store"))
   (projectile-globally-ignored-file-suffixes '(".elc" ".pyc" ".o" ".swp" ".so" ".a"))
+  (projectile-globally-ignored-directories
+   '("^\\.idea"
+     "^\\.vscode"
+     "^\\.ensime_cache"
+     "^\\.eunit"
+     "^\\.git"
+     "^\\.hg"
+     "^\\.fslckout"
+     "^_FOSSIL_"
+     "^\\.bzr"
+     "^_darcs"
+     "^\\.pijul"
+     "^\\.tox"
+     "^\\.svn"
+     "^\\.stack-work"
+     "^\\.ccls-cache"
+     "^\\.cache"
+     "^\\.clangd"))
   )
 
 ;; TODO: configure consult with projectile

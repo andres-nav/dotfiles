@@ -67,8 +67,27 @@
   (savehist-autosave-interval 300)
   )
 
+;;; Current Line
 (use-package hl-line
-  :hook (after-init . global-hl-line-mode))
+  :ensure nil
+  :hook
+  (dired-mode . hl-line-mode)
+  (fundamental-mode . hl-line-mode)
+  (prog-mode . hl-line-mode)
+  (text-mode . hl-line-mode)
+  :custom
+  (hl-line-sticky-flag nil)
+  )
+
+;;; Indent Guides
+(use-package highlight-indent-guides
+  :diminish
+  :custom
+  (highlight-indent-guides-method 'bitmap)
+  :hook
+  ((python-ts-mode js-ts-mode)
+   . highlight-indent-guides-mode)
+  )
 
 ;; Enable autosave
 (use-package files
@@ -121,8 +140,6 @@
       adaptive-fill-regexp "[ t]+|[ t]*([0-9]+.|*+)[ t]*"
       adaptive-fill-first-line-regexp "^* *$"
       sentence-end "\\([。！？]\\|……\\|[.?!][]\"')}]*\\($\\|[ \t]\\)\\)[ \t\n]*"
-      sentence-end-double-space nil
-      word-wrap-by-category t
       )
 
 ;; Smooth scroll & friends
@@ -187,12 +204,6 @@
   ;;
   ;; M-x foo should only be available in `org-mode` or modes derived from `org-mode`.
   (read-extended-command-predicate #'command-completion-default-include-p))
-
-;; Server mode.
-;; Use emacsclient to connect
-(use-package server
-  :ensure nil
-  :hook (after-init . server-mode))
 
 ;; TODO: set up trash-directory
 

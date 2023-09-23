@@ -18,11 +18,23 @@
       frame-resize-pixelwise t)
 
 ;; Theme
-(use-package dracula-theme
+(use-package doom-themes
+  :custom
+  (doom-themes-enable-bold t)    ; if nil, bold is universally disabled
+  (doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  (doom-themes-treemacs-theme "doom-dracula") ; use "doom-colors" for less minimal icon theme
   :init
-  (load-theme 'dracula t))
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
+  ;; or treemacs users
+  (doom-themes-treemacs-config)
+  ;; Corrects (and improves) org-mode's native fontification.
+  (doom-themes-org-config);; Mode-line
 
-;; Mode-line
+  (load-theme 'doom-dracula t)
+  )
+
+
 ;; (use-package telephone-line
 ;;   :hook (after-init . telephone-line-mode)
 ;;   :config
@@ -46,9 +58,12 @@
 
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode)
-  :init
-  (setq doom-modeline-minor-modes t)
+  :custom
+  (doom-modeline-minor-modes t)
+  (doom-modeline-hud t)
   )
+
+;; TODO: add popper <https://github.com/karthink/popper> or popwin or shackle
 
 ;; Hide mode line for some modes
 (use-package hide-mode-line
@@ -62,10 +77,10 @@
 ;; Show line numbers
 (use-package display-line-numbers
   :ensure nil
-  :hook ((prog-mode yaml-mode conf-mode markdown-mode) . display-line-numbers-mode)
+  :hook ((prog-mode yaml-mode conf-mode markdown-mode text-mode) . display-line-numbers-mode)
   :custom
   (display-line-numbers-width-start t)
-  (display-line-numbers-width 0))
+  (display-line-numbers-width 1))
 
 ;; Suppress GUI features
 (setq use-file-dialog nil

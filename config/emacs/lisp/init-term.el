@@ -1,4 +1,4 @@
-;; init-term.el --- Initialize format-all configurations
+;; init-term.el ---
 
 ;;; Commentary:
 

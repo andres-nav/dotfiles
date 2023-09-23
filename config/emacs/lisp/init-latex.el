@@ -1,4 +1,4 @@
-;; init-latex.el --- Initialize format-all configurations
+;; init-latex.el ---
 
 ;;; Commentary:
 

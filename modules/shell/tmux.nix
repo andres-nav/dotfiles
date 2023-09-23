@@ -16,7 +16,9 @@ in {
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [tmux];
+    programs.tmux = {
+      enable = true;
+    };
 
     modules.theme.onReload.tmux = "${pkgs.tmux}/bin/tmux source-file $TMUX_HOME/extraInit";
 

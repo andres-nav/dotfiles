@@ -19,6 +19,8 @@
   (dired-clean-confirm-killing-deleted-buffers nil)
   (dired-auto-revert-buffer #'dired-directory-changed-p)
   (dired-hide-details-hide-symlink-targets nil)
+  ;; Hide free space
+  (dired-free-space nil)
 
   :config
   ;; Don't complain about this command being disabled when we use it
