@@ -14,6 +14,7 @@
         freecad.enable = true;
         prusaslicer.enable = true;
         kicad.enable = true;
+	anytype.enable = true;
       };
       browsers = {
         default = "firefox";
