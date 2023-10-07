@@ -10,11 +10,11 @@
         dbeaver.enable = true;
         insomnia.enable = true;
         ledger-live.enable = true;
-        minecraft.enable = true;
         rofi.enable = true;
         freecad.enable = true;
         prusaslicer.enable = true;
         kicad.enable = true;
+        notion.enable = true;
       };
       browsers = {
         default = "firefox";
@@ -30,13 +30,14 @@
         ranger.enable = true;
         spotify.enable = true;
         teams.enable = true;
+        skype.enable = true;
         zoom.enable = true;
       };
       term = {
         default = "alacritty";
         alacritty.enable = true;
       };
-      vm = {virtualbox.enable = true;};
+      vm = {qemu.enable = true;};
     };
     dev = {
       node.enable = true;
@@ -47,9 +48,10 @@
       r.enable = true;
     };
     editors = {
-      default = "emacsclient -n";
+      default = "emacsclient -nw";
       emacs.enable = true;
       nvim.enable = true;
+      vscodium.enable = true;
     };
     shell = {
       cachix.enable = true;
@@ -69,8 +71,6 @@
         enable = true;
         joinNetworks = ["1d71939404843223" "a0cbf4b62ac2045f"];
       };
-
-      globaleaks.enable = true;
     };
 
     theme.active = "alucard";

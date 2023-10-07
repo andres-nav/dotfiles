@@ -28,6 +28,8 @@ in {
 
   services.xserver = {
     layout = mkDefault "us";
-    xkbOptions = "caps:swapescape,ctrl:swap_lalt_lctl";
+    xkbOptions = mkDefault "caps:swapescape,ctrl:swap_lalt_lctl";
   };
+
+  security.sudo.wheelNeedsPassword = false;
 }

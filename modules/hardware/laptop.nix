@@ -28,11 +28,14 @@ in {
 
     services.thermald.enable = true;
 
+    services.acpid.enable = true;
+
     hardware.enableRedistributableFirmware = lib.mkDefault true; # add firmware such has wifi
 
     environment.systemPackages = with pkgs; [
-      brightnessctl
       acpi
+      brightnessctl
+      # TODO: hardware.acpilight.enable
     ];
   };
 }

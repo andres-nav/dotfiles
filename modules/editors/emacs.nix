@@ -16,23 +16,19 @@ in {
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
-      emacs29
-
-      emacsPackages.vterm
-      emacsPackages.sqlite3
-
-      emacsPackages.org-roam
-      sqlite
-
       gnuplot
     ];
 
     services.emacs = {
       enable = true;
+      package = pkgs.emacs29;
       defaultEditor = true;
     };
 
-    environment.shellAliases = {};
+    environment.shellAliases = {
+      e = "emacsclient";
+      E = "emacsclient -nw";
+    };
 
     home.configFile = {
       "emacs" = {

@@ -23,7 +23,7 @@ in {
   config = mkMerge [
     (mkIf cfg.enable {
       environment.systemPackages = with pkgs; [
-        gcc
+        libgccjit
       ];
     })
 

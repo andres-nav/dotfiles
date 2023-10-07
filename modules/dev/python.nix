@@ -29,6 +29,7 @@ in {
         python311Packages.black
         python311Packages.pylint
         python311Packages.poetry-core
+        python311Packages.ipykernel
       ];
     })
 

@@ -28,7 +28,7 @@
 ;;   ;; Disable in some commands
 ;;   (add-to-list 'aggressive-indent-protected-commands #'delete-trailing-whitespace t)
 
-;;   ;; Be slightly less aggressive in C/C++/C#/Java/Go/Swift
+;;   Be slightly less aggressive in C/C++/C#/Java/Go/Swift
 ;;   (add-to-list 'aggressive-indent-dont-indent-if
 ;;                '(and (derived-mode-p 'c-mode 'c++-mode 'csharp-mode
 ;;                                      'java-mode 'go-mode 'swift-mode)
@@ -40,17 +40,13 @@
 (use-package avy			;
   :after evil
   :hook (after-init . avy-setup-default)
-  :config (setq avy-all-windows nil
-                avy-all-windows-alt t
-                avy-background t
-                avy-timeout-seconds 0.3 ;; TODO: check if useful
-                avy-style 'pre)
-  (evil-define-key 'normal 'global (kbd "s") 'avy-goto-char-timer)
-  )
-
-;; Kill text between the point and the character CHAR
-(use-package avy-zap
-  :after avy
+  :custom
+  (avy-all-windows nil)
+  (avy-all-windows-alt t)
+  (avy-background t)
+  (avy-timeout-seconds 0.5)
+  (avy-style 'pre)
+  (avy-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l ?q ?w ?e ?r ?t ?u ?m ?i ?o ?p))
   )
 
 ;; Show number of matches in mode-line while searching
@@ -80,16 +76,22 @@
         (ediff-prepare-buffer . outline-show-all)
         ;; restore window layout when done
         (ediff-quit . winner-undo))
-  :config
-  (setq ediff-window-setup-function 'ediff-setup-windows-plain
-        ediff-split-window-function 'split-window-horizontally
-        ediff-merge-split-window-function 'split-window-horizontally))
+  :custom
+  (ediff-window-setup-function 'ediff-setup-windows-plain)
+  (ediff-split-window-function 'split-window-horizontally)
+  (ediff-merge-split-window-function 'split-window-horizontally)
+  )
 
 ;; Automatic parenthesis pairing
 (use-package elec-pair
   :ensure nil
-  :hook (after-init . electric-pair-mode)
-  :init (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit))
+  :hook
+  (after-init . electric-pair-mode)
+  (minibuffer-setup . (lambda () (electric-pair-local-mode 0)))
+  :custom
+  (electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit)
+  (electric-pair-open-newline-between-pairs-psif t)
+  )
 
 ;; TODO: look and configure align
 ;; ;; Visual `align-regexp'
@@ -208,27 +210,47 @@
 ;; Undo history handler
 (use-package undo-fu
   :diminish
-  :init
-  (setq undo-limit 67108864 ; 64mb
-	      undo-strong-limit 100663296 ; 96mb
-        undo-outer-limit 1006632960)) ; 960mb
+  :custom
+  (undo-limit 67108864) ; 64mb
+  (undo-strong-limit 100663296) ; 96mb
+  (undo-outer-limit 1006632960) ; 960mb
+  )
 
 (use-package undo-fu-session
   :diminish
   :after undo-fu
   :hook (after-init . undo-fu-session-global-mode)
-  :init
-  (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'")))
+  :custom
+  (undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'"))
+  )
 
 ;; TODO: add code folding <https://github.com/seagle0128/.emacs.d/blob/master/lisp/init-edit.el#L363>
 
 ;; Hanlde minified code
 (use-package so-long
-  :hook (after-init . global-so-long-mode))
+  :hook (after-init . global-so-long-mode)
+  )
 
 (use-package which-key
   :diminish
-  :hook (after-init . which-key-mode))
+  :hook (after-init . which-key-mode)
+  :custom
+  (which-key-idle-delay 0.5)
+  )
+
+(use-package rg
+  :ensure t
+  :custom
+  (rg-show-header nil)
+  )
+
+;; Writable grep buffer
+(use-package wgrep
+  :ensure t
+  :hook (grep-setup . wgrep-setup)
+  :custom
+  (wgrep-change-readonly-file t)
+  )
 
 
 (provide 'init-edit)

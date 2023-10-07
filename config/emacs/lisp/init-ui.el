@@ -18,11 +18,23 @@
       frame-resize-pixelwise t)
 
 ;; Theme
-(use-package dracula-theme
+(use-package doom-themes
+  :custom
+  (doom-themes-enable-bold t)    ; if nil, bold is universally disabled
+  (doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  (doom-themes-treemacs-theme "doom-dracula") ; use "doom-colors" for less minimal icon theme
   :init
-  (load-theme 'dracula t))
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
+  ;; or treemacs users
+  (doom-themes-treemacs-config)
+  ;; Corrects (and improves) org-mode's native fontification.
+  (doom-themes-org-config);; Mode-line
 
-;; Mode-line
+  (load-theme 'doom-dracula t)
+  )
+
+
 ;; (use-package telephone-line
 ;;   :hook (after-init . telephone-line-mode)
 ;;   :config
@@ -46,9 +58,12 @@
 
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode)
-  :init
-  (setq doom-modeline-minor-modes t)
+  :custom
+  (doom-modeline-minor-modes t)
+  (doom-modeline-hud t)
   )
+
+;; TODO: add popper <https://github.com/karthink/popper> or popwin or shackle
 
 ;; Hide mode line for some modes
 (use-package hide-mode-line
@@ -62,16 +77,38 @@
 ;; Show line numbers
 (use-package display-line-numbers
   :ensure nil
-  :hook ((prog-mode yaml-mode conf-mode markdown-mode) . display-line-numbers-mode)
-  :init (setq display-line-numbers-width-start t))
+  :hook ((prog-mode yaml-mode conf-mode markdown-mode text-mode) . display-line-numbers-mode)
+  :custom
+  (display-line-numbers-width-start t)
+  (display-line-numbers-width 1))
 
 ;; Suppress GUI features
 (setq use-file-dialog nil
       use-dialog-box nil
+      inhibit-x-resources t
       inhibit-startup-screen t
+      inhibit-startup-message t
+      inhibit-startup-buffer-menu t
       inhibit-startup-echo-area-message user-login-name
       inhibit-default-init t
       initial-scratch-message nil)
+
+;; Pixelwise resize
+(setq window-resize-pixelwise t
+      frame-resize-pixelwise t)
+
+;; Linux specific
+(setq x-gtk-use-system-tooltips nil
+      x-gtk-use-native-input t
+      x-underline-at-descent-line t)
+
+;; With GPG 2.1+, this forces gpg-agent to use the Emacs minibuffer to prompt
+;; for the key passphrase.
+(setq epg-pinentry-mode 'loopback)
+
+;; Optimize for very long lines
+(setq-default bidi-paragraph-direction 'left-to-right)
+(setq bidi-inhibit-bpa t)
 
 ;; Display dividers between windows
 (setq window-divider-default-places t
@@ -81,6 +118,25 @@
 
 ;; Font
 (add-to-list 'default-frame-alist '(font . "CaskaydiaCove Nerd Font Mono 10"))
+
+;; Highlight parenthesises
+(use-package paren
+  :ensure nil
+  :hook (after-init . show-paren-mode)
+  :custom
+  (show-paren-when-point-inside-paren t)
+  (show-paren-when-point-in-periphery t)
+  (show-paren-context-when-offscreen t)
+  )
+
+;; Type text
+(use-package text-mode
+  :ensure nil
+  :custom
+  ;; better word wrapping for CJK characters
+  (word-wrap-by-category t)
+  ;; paragraphs
+  (sentence-end-double-space nil))
 
 (provide 'init-ui)
 

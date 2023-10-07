@@ -11,12 +11,17 @@ with lib.my; let
 in {
   options.modules.desktop.vm.qemu = {
     enable = mkBoolOpt false;
+    windowsEnabled = mkBoolOpt true;
   };
 
   config = mkIf cfg.enable {
+    virtualisation.libvirtd.enable = true;
+
     environment.systemPackages = with pkgs; [
-      qemu
+      quickemu
+      quickgui
     ];
+    # ++ lib.optional cfg.windowsEnabled win-virtio;
   };
 }
 # Creating an image:
