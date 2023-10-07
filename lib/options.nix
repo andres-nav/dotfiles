@@ -13,4 +13,11 @@ in rec {
       type = types.bool;
       example = true;
     };
+
+  mkPathOpt = default:
+    mkOption {
+      inherit default;
+      type = types.path;
+      example = "./example";
+    };
 }

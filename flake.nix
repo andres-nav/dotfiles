@@ -18,6 +18,7 @@
   outputs = inputs @ {
     self,
     nixpkgs,
+    sops-nix,
     ...
   }: let
     inherit (lib.my) mapModules mapModulesRec mapHosts;

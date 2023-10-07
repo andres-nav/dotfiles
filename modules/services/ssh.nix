@@ -10,14 +10,33 @@ with lib.my; let
 in {
   options.modules.services.ssh = {
     enable = mkBoolOpt false;
+    addSSHKey = mkBoolOpt false;
+    sshPath = mkPathOpt "./";
   };
 
   config = mkIf cfg.enable {
     services.openssh = {
       enable = true;
+      startWhenNeeded = true;
+
       settings = {
         KbdInteractiveAuthentication = false;
         PasswordAuthentication = false;
+        PermitRootLogin = "no";
+      };
+
+      hostKeys = mkIf cfg.addSSHKey [
+        {
+          path = "/etc/ssh/ssh_host_ed25519_key";
+          type = "ed25519";
+        }
+      ];
+    };
+
+    sops = mkIf cfg.addSSHKey {
+      age.sshKeyPaths = map (x: x.path) config.services.openssh.hostKeys;
+      secrets = {
+        "ssh/key".sopsFile = cfg.sshPath;
       };
     };
 

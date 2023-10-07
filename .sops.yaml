@@ -1,7 +1,16 @@
 keys:
-  - &god age12qdlu87t3sh0m02eh5n3kx75d98h2evgme4uue2ucl4e4acg8ffszzlkss
+  - &admin_god     age12qdlu87t3sh0m02eh5n3kx75d98h2evgme4uue2ucl4e4acg8ffszzlkss
+  - &admin_god_ssh age1y0cgf85gxj8zj9v52kdvjlne225rlcysygspvjk4r0m3hq7nzvpqn3w9m3
+  - &host_poseidon age1qtlnlxr2z875me4fjcvfln99vp4acztkw35e5vqkvpua7hzczg0qk2mcun
 creation_rules:
-  - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
+  - path_regex: hosts/secrets/[^/]+\.(yaml|json|env|ini|bin)$
     key_groups:
       - age:
-        - *god
+        - *admin_god
+        - *admin_god_ssh
+  - path_regex: hosts/poseidon/secrets/[^/]+\.(yaml|json|env|ini|bin)$
+    key_groups:
+      - age:
+        - *admin_god
+        - *admin_god_ssh
+        - *host_poseidon

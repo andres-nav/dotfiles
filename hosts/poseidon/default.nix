@@ -14,13 +14,15 @@
     shell = {
       direnv.enable = true;
       git.enable = true;
-      gnupg.enable = true;
       tmux.enable = true;
       fish.enable = true;
     };
     services = {
-      ssh.enable = true;
-      minecraft-server.enable = true;
+      ssh = {
+        enable = true;
+        addSSHKey = true;
+        sshPath = ./secrets/ssh.yaml;
+      };
       docker.enable = true;
       zerotier = {
         enable = true;

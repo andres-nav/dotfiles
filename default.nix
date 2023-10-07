@@ -10,8 +10,12 @@ with lib.my; {
   imports =
     # I use home-manager to deploy files to $HOME; little else
     [inputs.home-manager.nixosModules.home-manager]
+    ++ [inputs.sops-nix.nixosModules.sops]
     # All my personal modules
     ++ (mapModulesRec' (toString ./modules) import);
+
+  # Set up sops file
+  sops.defaultSopsFile = ./secrets.yaml;
 
   # Common config for all nixos machines; and to ensure the flake operates
   # soundly
