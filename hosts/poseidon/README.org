@@ -1,3 +1,5 @@
+# nixos-rebuild switch -j auto --use-remote-sudo --target-host god@192.168.1.122 --flake ~/git/dotfiles/#poseidon
+
 * Installation (BTRF)
 
 ! NOTE: Disable Secure Boot in the BIOS as it does not work properly in NixOS (Currently)

@@ -14,9 +14,6 @@ with lib.my; {
     # All my personal modules
     ++ (mapModulesRec' (toString ./modules) import);
 
-  # Set up sops file
-  sops.defaultSopsFile = ./secrets.yaml;
-
   # Common config for all nixos machines; and to ensure the flake operates
   # soundly
   environment.variables.DOTFILES = config.dotfiles.dir;
