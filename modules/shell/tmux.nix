@@ -18,6 +18,9 @@ in {
   config = mkIf cfg.enable {
     programs.tmux = {
       enable = true;
+      plugins = with pkgs.tmuxPlugins; [
+        dracula
+      ];
     };
 
     modules.theme.onReload.tmux = "${pkgs.tmux}/bin/tmux source-file $TMUX_HOME/extraInit";

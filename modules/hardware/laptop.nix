@@ -20,13 +20,9 @@ in {
       touchpad.disableWhileTyping = true;
     };
 
-    services.tlp.enable =
-      lib.mkDefault ((lib.versionOlder (lib.versions.majorMinor lib.version) "21.05")
-        || !config.services.power-profiles-daemon.enable); # tlp
+    services.tlp.enable = true;
 
     services.fwupd.enable = true;
-
-    services.thermald.enable = true;
 
     services.acpid.enable = true;
 

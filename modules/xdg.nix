@@ -11,17 +11,22 @@
   home-manager.users.${config.user.name}.xdg.enable = true;
 
   # TODO: check and add
-  # xdg = {
-  #   enable = true;
-  #   mime.enable = true;
-  #   mimeApps.enable = true;
-  #   userDirs.enable = true;
-  # };
+  xdg = {
+    mime = {
+      enable = true;
+      defaultApplications = {
+        "application/pdf" = ["org.pwmt.zathura.desktop"];
+        "x-scheme-handler/http" = ["firefox.desktop"];
+        "x-scheme-handler/https" = ["firefox.desktop"];
+        "x-scheme-handler/msteams" = ["teams.desktop"];
+        "x-scheme-handler/spotify" = ["spotify.desktop"];
+        "text/*" = ["emacsclient.desktop"];
+        "image/*" = ["feh.desktop"];
+      };
+    };
+  };
 
   # TODO: add to zathura
-  # xd.mimeApps.defaultApplications = {
-  #     "application/pdf" = ["org.pwmt.zathura.desktop"];
-  #   };
 
   environment = {
     sessionVariables = {

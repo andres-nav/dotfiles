@@ -2,10 +2,6 @@ cmd open_terminal &{{
 	alacritty --hold $F
 }}
 
-cmd open_external_editor &{{
-	$EDITOR $f
-}}
-
 cmd hide_if_file &{{
     if test -f "$f"; then
 	lf -remote "send $id hide"
@@ -62,7 +58,6 @@ map <c-d> :fzf_directory
 
 map w 
 map W :hide; open_terminal
-map E :hide; open_external_editor
 map e
 map e $$EDITOR -nw "$f" 
 map c
@@ -77,8 +72,10 @@ cmd trash $IFS="$(printf '\n\t')"; mv $fx ~/.trash
 map D trash
 
 map gm cd ~/MEGA
-map gu cd ~/MEGA/Uni/4_YEAR/Q1/
-map gs cd ~/MEGA/Uni/SAETA
+map gi cd ~/MEGA/0_Inbox
+map gp cd ~/MEGA/1_Projects
+map ga cd ~/MEGA/2_Areas
+map gr cd ~/MEGA/3_Resources
 map gd cd ~/git/dotfiles
 map gg cd ~/git
 map gc cd ~/.config
@@ -88,6 +85,7 @@ map <enter> shell
 map O $ echo $f | sed -r "s/\s/\\\ /g" | mimeopen --ask 
 
 set drawbox
+ratios 1:2:1
 
 map l open_and_close_scratchpad
 map <right> open_and_close_scratchpad

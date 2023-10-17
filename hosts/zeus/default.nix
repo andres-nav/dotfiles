@@ -13,12 +13,12 @@
         rofi.enable = true;
         freecad.enable = true;
         prusaslicer.enable = true;
-        kicad.enable = true;
         notion.enable = true;
       };
       browsers = {
         default = "firefox";
         chromium.enable = true;
+        brave.enable = true;
         firefox.enable = true;
       };
       media = {
@@ -27,11 +27,9 @@
         documents.enable = true;
         latex.enable = true;
         lf.enable = true;
-        ranger.enable = true;
         spotify.enable = true;
         teams.enable = true;
         skype.enable = true;
-        zoom.enable = true;
       };
       term = {
         default = "alacritty";
@@ -48,7 +46,7 @@
       r.enable = true;
     };
     editors = {
-      default = "emacsclient -nw";
+      default = "emacsclient -n";
       emacs.enable = true;
       nvim.enable = true;
       vscodium.enable = true;
@@ -58,7 +56,6 @@
       direnv.enable = true;
       git.enable = true;
       gnupg.enable = true;
-      mob.enable = true;
       starship.enable = true;
       nom.enable = true;
       tmux.enable = true;

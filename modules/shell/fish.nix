@@ -40,6 +40,8 @@ in {
       grc
       fishPlugins.grc
 
+      fishPlugins.z
+
       fishPlugins.colored-man-pages
     ];
 

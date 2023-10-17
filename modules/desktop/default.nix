@@ -73,10 +73,6 @@ in {
       enable = true;
     };
 
-    home.configFile = {
-      "mimeapps.list".source = "${configDir}/mimeapps.list";
-    };
-
     # Try really hard to get QT to respect my GTK theme.
     env.GTK_DATA_PREFIX = ["${config.system.path}"];
     #env.QT_QPA_PLATFORMTHEME = "gnome";
