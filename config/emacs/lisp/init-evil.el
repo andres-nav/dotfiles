@@ -25,13 +25,9 @@
          :map evil-motion-state-map
          ("t" . evil-avy-goto-char-in-line)
          :map evil-normal-state-map
-         ("r" . evil-avy-goto-char-timer )
-         :map evil-motion-state-map
-         ("r" . evil-avy-goto-char-timer )
+         ("R" . evil-avy-goto-char-timer )
          :map evil-normal-state-map
-         ("R" . evil-avy-goto-line)
-         :map evil-motion-state-map
-         ("R" . evil-avy-goto-line)
+         ("r" . evil-avy-goto-line)
 	 )
 
   :config
@@ -74,11 +70,12 @@
     "f" 'projectile-find-file
     "D" 'projectile-find-dir
     "d" 'projectile-dired
-    "p" 'projectile-switch-project
+    "p" 'projectile-command-map
     "g" 'projectile-ripgrep
     "G" 'rg-menu
     "v" 'projectile-vc
     "w" 'evil-window-map
+    "n" 'org-roam-node-find
     )
   )
 

@@ -22,6 +22,11 @@
   (org-use-sub-superscripts '{})
   (org-yank-adjusted-subtrees t)
   (org-ctrl-k-protect-subtree 'error)
+  :config
+  (add-to-list 'org-emphasis-alist
+               '("*" (:foreground "red"))
+	       '("_" (:foreground "green"))
+	       )
   )
 
 (use-package visual-line
@@ -72,6 +77,7 @@
   :hook (org-mode . org-roam-db-autosync-mode)
   :custom
   (org-roam-directory (file-truename "~/MEGA"))
+  (org-roam-database-connector 'sqlite-builtin)
   :bind (("C-c n l" . org-roam-buffer-toggle)
          ("C-c n f" . org-roam-node-find)
          ("C-c n g" . org-roam-graph)

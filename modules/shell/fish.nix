@@ -20,7 +20,6 @@ in {
 
     programs.fish = {
       enable = true;
-      useBabelfish = true;
     };
 
     environment.systemPackages = with pkgs; [
@@ -51,7 +50,10 @@ in {
     };
 
     home.configFile = {
-      "fish" = {source = "${configDir}/fish";};
+      "fish" = {
+        source = "${configDir}/fish";
+        recursive = true;
+      };
     };
 
     environment.sessionVariables = {

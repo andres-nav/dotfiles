@@ -6,8 +6,6 @@
 (use-package projectile
   :diminish
   :hook (after-init . projectile-mode)
-  :bind (:map projectile-mode-map
-	      ("C-c p" . projectile-command-map))
   :custom
   (projectile-use-git-grep t)
   (projectile-enable-caching t)

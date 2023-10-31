@@ -8,11 +8,9 @@
   ...
 }: {
   ### A tidy $HOME is a tidy mind
-  home-manager.users.${config.user.name}.xdg.enable = true;
-
-  # TODO: check and add
-  xdg = {
-    mime = {
+  home-manager.users.${config.user.name}.xdg = {
+    enable = true;
+    mimeApps = {
       enable = true;
       defaultApplications = {
         "application/pdf" = ["org.pwmt.zathura.desktop"];
@@ -20,8 +18,11 @@
         "x-scheme-handler/https" = ["firefox.desktop"];
         "x-scheme-handler/msteams" = ["teams.desktop"];
         "x-scheme-handler/spotify" = ["spotify.desktop"];
-        "text/*" = ["emacsclient.desktop"];
-        "image/*" = ["feh.desktop"];
+        "image/jpg" = ["feh.desktop"];
+        "image/jpeg" = ["feh.desktop"];
+        "image/png" = ["feh.desktop"];
+        "image/webp" = ["feh.desktop"];
+        "text/plain" = ["emacsclient.desktop"];
       };
     };
   };
