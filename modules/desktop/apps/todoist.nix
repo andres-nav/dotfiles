@@ -7,15 +7,15 @@
 }:
 with lib;
 with lib.my; let
-  cfg = config.modules.desktop.apps.anytype;
+  cfg = config.modules.desktop.apps.todoist;
 in {
-  options.modules.desktop.apps.anytype = {
+  options.modules.desktop.apps.todoist = {
     enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
-      anytype
+      todoist-electron
     ];
   };
 }

@@ -23,6 +23,7 @@
         "image/png" = ["feh.desktop"];
         "image/webp" = ["feh.desktop"];
         "text/plain" = ["emacsclient.desktop"];
+        "text/html" = ["firefox.desktop"];
       };
     };
   };

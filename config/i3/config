@@ -157,7 +157,7 @@ bindsym $mod+Mod1+s exec scratch
 bindsym $mod+s [class="scratch"] scratchpad show
 
 bindsym $mod+d [class="Zathura"] scratchpad show
-bindsym $mod+a [class="firefox"] scratchpad show
+bindsym $mod+a [class="emacs"] scratchpad show
 bindsym $mod+x [class="^(?!scratch|Zathura|firefox$)"] scratchpad show
 bindsym $mod+Shift+s move scratchpad
 

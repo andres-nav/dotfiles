@@ -13,7 +13,7 @@
         rofi.enable = true;
         freecad.enable = true;
         prusaslicer.enable = true;
-        notion.enable = true;
+        todoist.enable = true;
       };
       browsers = {
         default = "firefox";
@@ -46,7 +46,7 @@
       r.enable = true;
     };
     editors = {
-      default = "emacsclient -n";
+      default = "emacsclient -cn";
       emacs.enable = true;
       nvim.enable = true;
       vscodium.enable = true;

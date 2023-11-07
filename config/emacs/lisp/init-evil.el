@@ -76,6 +76,7 @@
     "v" 'projectile-vc
     "w" 'evil-window-map
     "n" 'org-roam-node-find
+    "s" 'scratch-buffer
     )
   )
 
