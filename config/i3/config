@@ -155,17 +155,13 @@ for_window [class="scratch"] move window to scratchpad, scratchpad show
 
 bindsym $mod+Mod1+s exec scratch
 bindsym $mod+s [class="scratch"] scratchpad show
-
 bindsym $mod+d [class="Zathura"] scratchpad show
-bindsym $mod+a [class="emacs"] scratchpad show
-bindsym $mod+x [class="^(?!scratch|Zathura|firefox$)"] scratchpad show
+bindsym $mod+a [class="Emacs"] scratchpad show
+bindsym $mod+x [class="^(?!scratch|Zathura|Emacs)"] scratchpad show
 bindsym $mod+Shift+s move scratchpad
 
 # window rules
-for_window [class="spotify"] move container to workspace 10
 for_window [class="zoom"] move container to workspace 10
-for_window [class="Brave-browser"] move container to workspace 8
-for_window [class="emacs"] move container to workspace 1
 
 # reload the configuration file
 bindsym $mod+Shift+r reload
