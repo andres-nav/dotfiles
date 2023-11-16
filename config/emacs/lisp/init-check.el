@@ -21,6 +21,13 @@
 
 ;; (use-package sideline-flycheck :hook (flycheck-mode . sideline-flycheck-setup))
 
-(provide 'init-flycheck)
+(use-package jinx
+  :ensure nil
+  :diminish
+  :hook (after-init . global-jinx-mode)
+  :bind (("C-," . jinx-correct)
+         ("C-M-," . jinx-languages)))
+
+(provide 'init-check)
 
 ;;; init-flycheck.el ends here

@@ -51,6 +51,11 @@
   (eglot-ignored-server-capabilities '(:documentLinkProvider
                                        :documentOnTypeFormattingProvider)))
 
+(use-package emacs
+  :custom
+  (js-indent-level 2)
+  )
+
 (provide 'init-prog)
 
 ;;; init-prog.el ends here

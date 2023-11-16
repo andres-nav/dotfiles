@@ -17,6 +17,12 @@ in {
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       gnuplot
+
+      # Grammar checker
+      emacsPackages.jinx
+      nuspell # for language checker jinx
+      hunspellDicts.en_US # install hunspell dicts
+      hunspellDicts.es_ES
     ];
 
     services.emacs = {
@@ -26,7 +32,7 @@ in {
     };
 
     environment.shellAliases = {
-      e = "emacsclient";
+      e = "emacsclient -n -r";
       E = "emacsclient -nw";
     };
 

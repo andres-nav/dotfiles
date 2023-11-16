@@ -4,21 +4,10 @@
 
 ;;; Code:
 
-(use-package orderless
-  :custom
-  (completion-styles '(orderless basic))
-  (completion-category-overrides '((file (styles basic partial-completion)))))
-
-(use-package vertico
-  :hook (after-init . vertico-mode))
-
-(use-package marginalia
-  :hook (after-init . marginalia-mode))
-
 (use-package corfu
   :diminish
-  :hook (after-init . global-corfu-mode)
   :custom
+  (global-corfu-mode t)
   (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
   (corfu-auto t)                 ;; Enable auto completion
   (corfu-separator ?\s)          ;; Orderless field separator
@@ -30,6 +19,35 @@
   ;; (corfu-on-exact-match nil)     ;; Configure handling of exact matches
   ;; (corfu-scroll-margin 5)        ;; Use scroll margin
   )
+
+;; Use Dabbrev with Corfu!
+(use-package dabbrev
+  ;; Swap M-/ and C-M-/
+  :bind (("M-<SPC>" . dabbrev-completion)
+         ("C-M-<SPC>" . dabbrev-expand))
+  ;; Other useful Dabbrev configurations.
+  :custom
+  (dabbrev-ignored-buffer-regexps '("\\.\\(?:pdf\\|jpe?g\\|png\\)\\'")))
+
+(use-package cape
+  :ensure t
+  :init
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-elisp-block)
+  (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster))
+
+
+(use-package orderless
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles basic partial-completion)))))
+
+(use-package vertico
+  :hook (after-init . vertico-mode))
+
+(use-package marginalia
+  :hook (after-init . marginalia-mode))
 
 ;; A few more useful configurations...
 (use-package emacs
