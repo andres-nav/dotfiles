@@ -56,6 +56,20 @@
   (js-indent-level 2)
   )
 
+
+;; GitHub Copilot
+(use-package copilot
+  :straight (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))
+  :ensure t
+  :hook
+  (prog-mode . copilot-mode)
+  :bind (:map copilot-completion-map
+              ("C-<SPC>" . copilot-accept-completion)
+              ("C-n" . copilot-next-completion)
+              ("C-p" . copilot-previous-completion)
+              ("C-S-<SPC>" . copilot-accept-completion-by-word))
+  )
+
 (provide 'init-prog)
 
 ;;; init-prog.el ends here

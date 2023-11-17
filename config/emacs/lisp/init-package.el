@@ -19,9 +19,10 @@
   (package-initialize))
 
 ;; Setup `use-package'
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+;; (unless (package-installed-p 'use-package)
+;;   (package-refresh-contents)
+;;   (package-install 'use-package))
+(straight-use-package 'use-package)
 
 ;; Should set before loading `use-package'
 (eval-and-compile

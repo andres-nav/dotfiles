@@ -6,8 +6,11 @@
 
 (use-package corfu
   :diminish
+  :hook
+  (after-init . global-corfu-mode)
+  (after-init . corfu-popupinfo-mode)
+  (after-init . corfu-echo-mode)
   :custom
-  (global-corfu-mode t)
   (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
   (corfu-auto t)                 ;; Enable auto completion
   (corfu-separator ?\s)          ;; Orderless field separator
@@ -22,9 +25,6 @@
 
 ;; Use Dabbrev with Corfu!
 (use-package dabbrev
-  ;; Swap M-/ and C-M-/
-  :bind (("M-<SPC>" . dabbrev-completion)
-         ("C-M-<SPC>" . dabbrev-expand))
   ;; Other useful Dabbrev configurations.
   :custom
   (dabbrev-ignored-buffer-regexps '("\\.\\(?:pdf\\|jpe?g\\|png\\)\\'")))

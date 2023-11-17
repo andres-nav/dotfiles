@@ -118,6 +118,8 @@
 (setq y-or-n-p-use-read-key t
       read-char-choice-use-read-key t)
 
+(global-unset-key (kbd "C-<SPC>"))
+
 (setq default-input-method "spanish-prefix")
 
 (setq visible-bell t

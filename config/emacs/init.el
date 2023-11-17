@@ -25,6 +25,20 @@
                       (delete-dups (append file-name-handler-alist old-value))))
               101)))
 
+;; Install straight.el
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 6))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+	(url-retrieve-synchronously
+	 "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+	 'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
 ;; Load path
 ;; Optimize: Force "lisp"" and "site-lisp" at the head to reduce the startup time.
 (defun update-load-path (&rest _)
@@ -66,7 +80,7 @@ Otherwise the startup will be very slow."
 
 ;; Progamming
 (require 'init-prog)
-(require 'init-flycheck)
+(require 'init-check)
 (require 'init-treesit)
 (require 'init-format-all)
 (require 'init-elisp)

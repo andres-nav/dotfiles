@@ -23,6 +23,10 @@ in {
       nuspell # for language checker jinx
       hunspellDicts.en_US # install hunspell dicts
       hunspellDicts.es_ES
+
+      # Github Copilot
+      emacsPackages.editorconfig
+      nodejs
     ];
 
     services.emacs = {
