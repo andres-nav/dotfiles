@@ -24,6 +24,8 @@
         "image/webp" = ["feh.desktop"];
         "text/plain" = ["emacsclient.desktop"];
         "text/html" = ["firefox.desktop"];
+        "application/x-ipynb+json" = ["codium.desktop"];
+        "inode/directory" = ["lf.desktop"];
       };
     };
   };

@@ -65,10 +65,13 @@
   (prog-mode . copilot-mode)
   :bind (:map copilot-completion-map
               ("C-<SPC>" . copilot-accept-completion)
-              ("C-n" . copilot-next-completion)
-              ("C-p" . copilot-previous-completion)
+              ("C-S-n" . copilot-next-completion)
+              ("C-S-p" . copilot-previous-completion)
               ("C-S-<SPC>" . copilot-accept-completion-by-word))
   )
+
+(use-package direnv
+ :hook (after-init .  direnv-mode))
 
 (provide 'init-prog)
 

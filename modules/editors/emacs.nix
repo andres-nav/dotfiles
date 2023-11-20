@@ -24,6 +24,9 @@ in {
       hunspellDicts.en_US # install hunspell dicts
       hunspellDicts.es_ES
 
+      # NixOS
+      emacsPackages.direnv
+
       # Github Copilot
       emacsPackages.editorconfig
       nodejs

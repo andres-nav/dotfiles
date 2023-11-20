@@ -77,6 +77,7 @@
     "w" 'evil-window-map
     "n" 'org-roam-node-find
     "s" 'scratch-buffer
+    "<SPC>" 'format-all-buffer
     )
   )
 
