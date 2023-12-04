@@ -12,21 +12,18 @@
 ;;   :custom
 ;;   (treesit-auto-install 'prompt)
 ;;   :config
-;;   (setq my-nix-tsauto-config
-;; 	(make-treesit-auto-recipe
-;; 	 :lang 'nix
-;; 	 :ts-mode 'nix-ts-mode
-;; 	 :remap 'nix-mode
-;; 	 :url "https://github.com/nix-community/tree-sitter-nix"
-;; 	 :revision "master"
-;; 	 :source-dir "src"))
-
-;;   (add-to-list 'treesit-auto-recipe-list my-nix-tsauto-config)
+;;   (add-to-list 'treesit-auto-recipe-list
+;; 	       (make-treesit-auto-recipe
+;; 		:lang 'nix
+;; 		:ts-mode 'nix-ts-mode
+;; 		:remap 'nix-mode
+;; 		:url "https://github.com/nix-community/tree-sitter-nix"
+;; 		:revision "master"
+;; 		:source-dir "src"))
 ;;   )
 
 ;; (use-package treesit
 ;;   :ensure nil
-;;   :after nix-mode
 ;;   :custom
 ;;   (treesit-language-source-alist
 ;;    '((bash "https://github.com/tree-sitter/tree-sitter-bash")
@@ -50,6 +47,10 @@
 ;;    '((nix-mode . nix-ts-mode))
 ;;    )
 ;;   :config
+;;   (dolist (lang treesit-language-source-alist)
+;;     (unless (treesit-language-available-p (car lang))
+;;       (treesit-install-language-grammar (car lang))))
+
 ;;   (cl-loop for (old-mode . new-mode) in major-mode-remap-alist
 ;;            do (set (intern (concat (symbol-name new-mode) "-hook"))
 ;;                    (list

@@ -71,7 +71,10 @@
   )
 
 (use-package direnv
- :hook (after-init .  direnv-mode))
+  :hook (after-init .  direnv-mode)
+  :custom
+  (direnv-show-paths-in-summary nil)
+  )
 
 (provide 'init-prog)
 

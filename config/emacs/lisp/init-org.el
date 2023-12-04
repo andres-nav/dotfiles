@@ -78,6 +78,8 @@
   :custom
   (org-roam-directory (file-truename "~/MEGA"))
   (org-roam-database-connector 'sqlite-builtin)
+  (org-roam-file-exclude-regexp '(".git/"))
+  (org-roam-list-files-commands '(fd fdfind rg find))
   :bind (("C-c n l" . org-roam-buffer-toggle)
          ("C-c n f" . org-roam-node-find)
          ("C-c n g" . org-roam-graph)

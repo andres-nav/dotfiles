@@ -193,6 +193,9 @@ in {
         "extensions.formautofill.creditCards.available" = false;
         "extensions.formautofill.creditCards.enabled" = false;
         "extensions.formautofill.heuristics.enabled" = false;
+
+        # Disable fullscreen autohide
+        "browser.fullscreen.autohide" = false;
       };
 
       # Use a stable profile name so we can target it in themes

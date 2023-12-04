@@ -23,6 +23,7 @@
   (doom-themes-enable-bold t)    ; if nil, bold is universally disabled
   (doom-themes-enable-italic t) ; if nil, italics is universally disabled
   (doom-themes-treemacs-theme "doom-dracula") ; use "doom-colors" for less minimal icon theme
+  (doom-dracula-brighter-modeline t)
   :init
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
@@ -32,6 +33,18 @@
   (doom-themes-org-config);; Mode-line
 
   (load-theme 'doom-dracula t)
+
+  ;; Widnow divider
+  (custom-theme-set-variables
+   'doom-dracula
+   '(window-divider-default-bottom-width 3)
+   '(window-divider-default-right-width 3)
+   )
+
+  (custom-theme-set-faces
+   'doom-dracula
+   '(window-divider ((t (:foreground "yellow")))))
+
   )
 
 
