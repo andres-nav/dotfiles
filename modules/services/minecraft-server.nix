@@ -26,9 +26,9 @@ in {
       description = "Start MC Server";
       serviceConfig = {
         ExecStart = ''
-          ${pkgs.jdk17_headless}/bin/java -Xmx7G -Xms1G @libraries/net/minecraftforge/forge/1.18.2-40.2.9/unix_args.txt nogui
+          ${pkgs.jdk17_headless}/bin/java -Xmx7G -Xms1G @libraries/net/minecraftforge/forge/1.18.2-40.2.0/unix_args.txt nogui
         '';
-        Restart = "always";
+        Restart = "on-failure";
         RestartSec = 5;
         WorkingDirectory = "/home/god/mc";
       };

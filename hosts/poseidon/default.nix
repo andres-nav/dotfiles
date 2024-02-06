@@ -20,8 +20,7 @@
     };
     services = {
       ssh.enable = true;
-      docker.enable = true;
-      wordpress.enable = true;
+      minecraft-server.enable = true;
       zerotier = {
         enable = true;
         joinNetworks = ["1d71939404843223"];

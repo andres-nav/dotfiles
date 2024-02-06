@@ -66,7 +66,7 @@
       docker.enable = true;
       zerotier = {
         enable = true;
-        joinNetworks = ["1d71939404843223" "a0cbf4b62ac2045f"];
+        joinNetworks = ["9bee8941b5092092"];
       };
     };
 

@@ -88,8 +88,8 @@ in {
         # shortcuts and suggestions will still work, but Firefox won't clutter
         # its UI with reminders that they exist.
         "browser.urlbar.suggest.searches" = false;
-        "browser.urlbar.shortcuts.bookmarks" = false;
-        "browser.urlbar.shortcuts.history" = false;
+        "browser.urlbar.shortcuts.bookmarks" = true;
+        "browser.urlbar.shortcuts.history" = true;
         "browser.urlbar.shortcuts.tabs" = false;
         "browser.urlbar.showSearchSuggestionsFirst" = false;
         "browser.urlbar.speculativeConnect.enabled" = false;
@@ -105,7 +105,7 @@ in {
         "browser.onboarding.enabled" = false; # "New to Firefox? Let's get started!" tour
         "browser.aboutConfig.showWarning" = false; # Warning when opening about:config
         "media.videocontrols.picture-in-picture.video-toggle.enabled" = false;
-        "extensions.pocket.enabled" = false;
+        "extensions.pocket.enabled" = true;
         "extensions.shield-recipe-client.enabled" = false;
         "reader.parse-on-load.enabled" = false; # "reader view"
 

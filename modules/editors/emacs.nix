@@ -26,6 +26,7 @@ in {
 
       # NixOS
       emacsPackages.direnv
+      emacsPackages.consult
 
       # Github Copilot
       emacsPackages.editorconfig

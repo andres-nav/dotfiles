@@ -22,11 +22,24 @@
   (org-use-sub-superscripts '{})
   (org-yank-adjusted-subtrees t)
   (org-ctrl-k-protect-subtree 'error)
+  (org-latex-logfiles-extensions (quote ("lof" "lot" "tex~" "aux" "idx" "log" "out" "nav" "snm" "vrb" "dvi" "fdb_latexmk" "blg" "brf" "fls" "entoc" "ps" "spl" "bbl")))
+  (org-hide-emphasis-markers t) ; hides the / and * characters around emphasized text
+
+  (org-latex-compiler "xelatex")
+  (org-latex-pdf-process '("xelatex %f"))
+
   :config
-  (add-to-list 'org-emphasis-alist
-               '("*" (:foreground "red"))
-	       '("_" (:foreground "green"))
-	       )
+  (font-lock-add-keywords 'org-mode
+                          '(("\\*\\(.*?\\)\\*" 1 '(face (:foreground "tomato")) prepend)))
+  (font-lock-add-keywords 'org-mode
+                          '(("\\/\\(.*?\\)\\/" 1 '(face (:foreground "green")) prepend)))
+  (font-lock-add-keywords 'org-mode
+                          '(("_\\(.*?\\)_" 1 '(face (:foreground "cyan")) prepend)))
+
+  ;; change - to bullet point
+  (font-lock-add-keywords 'org-mode
+			  '(("^ *\\([-]\\) "
+			     (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
   )
 
 (use-package visual-line

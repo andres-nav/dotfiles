@@ -12,6 +12,8 @@ exec --no-startup-id xsetroot -cursor_name left_ptr
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock 10 3 --nofork
 exec_always --no-startup-id xrandr --output HDMI-1-0 --auto --right-of eDP-1 # add the variables
 exec_always --no-startup-id feh -z $XDG_CONFIG_HOME/wallpapers --bg-fill
+exec --no-startup-id /usr/bin/env emacsclient -c 
+exec --no-startup-id /usr/bin/env firefox
 
 # Fn keys
 set $refresh_i3status pkill -RTMIN+10 i3blocks

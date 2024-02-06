@@ -26,9 +26,9 @@ in {
     useXkbConfig = mkDefault true;
   };
 
-  services.xserver = {
+  services.xserver.xkb = {
     layout = mkDefault "us";
-    xkbOptions = mkDefault "caps:swapescape,ctrl:swap_lalt_lctl";
+    options = mkDefault "caps:swapescape,ctrl:swap_lalt_lctl";
   };
 
   security.sudo.wheelNeedsPassword = false;

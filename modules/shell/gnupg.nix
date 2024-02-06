@@ -35,7 +35,7 @@ in {
         default-cache-ttl-ssh ${toString cfg.cacheTTL}
         max-cache-ttl ${toString cfg.cacheTTL}
         max-cache-ttl-ssh ${toString cfg.cacheTTL}
-        pinentry-program ${pkgs.pinentry.gtk2}/bin/pinentry
+        pinentry-program ${pkgs.pinentry.gnome3}/bin/pinentry
         allow-preset-passphrase
       '';
     };

@@ -74,6 +74,8 @@
   :custom
   (doom-modeline-minor-modes t)
   (doom-modeline-hud t)
+  (doom-modeline-buffer-encoding nil)
+  (doom-modeline-vcs-max-length 20)
   )
 
 ;; TODO: add popper <https://github.com/karthink/popper> or popwin or shackle

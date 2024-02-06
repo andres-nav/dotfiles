@@ -37,6 +37,9 @@
 (setq system-time-locale "C")
 (set-selection-coding-system 'utf-8)
 
+;; Don't compact font caches during GC
+(setq inhibit-compacting-font-caches t)
+
 (use-package saveplace
   :hook (after-init . save-place-mode))
 
