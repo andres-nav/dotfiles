@@ -13,15 +13,16 @@
   (TeX-master nil)
   (Tex-engine "luatex")
   (compilation-ask-about-save nil)
-  ;; :hook
-  ;; (LaTeX-mode . (lambda ()
-  ;;                 (turn-on-reftex)
-  ;;                 (setq reftex-plug-into-AUCTeX t)
-  ;;                 (reftex-isearch-minor-mode)
-  ;;                 (setq TeX-PDF-mode t)
-  ;;                 (setq TeX-source-correlate-method 'synctex)
-  ;;                 (setq TeX-source-correlate-start-server t)))
-  )
+	(TeX-view-program-list '(("zathura" "zathura %o"))
+												 TeX-view-program-selection '((output-pdf "zathura"))))
+;; :hook
+;; (LaTeX-mode . (lambda ()
+;;                 (turn-on-reftex)
+;;                 (setq reftex-plug-into-AUCTeX t)
+;;                 (reftex-isearch-minor-mode)
+;;                 (setq TeX-PDF-mode t)
+;;                 (setq TeX-source-correlate-method 'synctex)
+;;                 (setq TeX-source-correlate-start-server t)))
 
 (provide 'init-latex)
 

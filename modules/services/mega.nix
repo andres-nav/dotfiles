@@ -26,6 +26,7 @@ in {
         Type = "simple";
         ExecStart = ''${pkgs.megasync}/bin/megasync'';
         Restart = "always";
+        RestartSec = "10";
       };
     };
   };

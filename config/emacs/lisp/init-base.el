@@ -40,6 +40,11 @@
 ;; Don't compact font caches during GC
 (setq inhibit-compacting-font-caches t)
 
+;; add a new line at the end of the file
+(setq require-final-newline t
+			mode-require-final-newline t
+			)
+
 (use-package saveplace
   :hook (after-init . save-place-mode))
 
@@ -110,6 +115,7 @@
 
   (setq after-focus-change-function 'save-all)
   )
+
 
 ;; TODO: see <https://github.com/seagle0128/.emacs.d/blob/master/lisp/init-base.el#L142C3-L142C3>
 

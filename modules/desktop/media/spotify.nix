@@ -24,7 +24,7 @@ in {
         name = "spotify";
         desktopName = "Spotify";
         icon = "spotify";
-        exec = ''spotify'';
+        exec = ''spotifywm'';
         categories = ["Music"];
       })
     ];

@@ -30,7 +30,8 @@
      "^\\.stack-work"
      "^\\.ccls-cache"
      "^\\.cache"
-     "^\\.clangd"))
+     "^\\.clangd"
+     "^\\node_modules"))
   )
 
 ;; TODO: configure consult with projectile

@@ -7,6 +7,7 @@
 ;; Git
 ;; TODO: add flyspell <https://github.com/condy0919/.emacs.d/blob/336f30dccd03f3e7b6c07d22c71d61aa26d61351/lisp/init-git.el>
 (use-package magit
+	:if (executable-find "git")
   :diminish
   :hook
   (git-commit-mode . evil-insert-state)

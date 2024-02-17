@@ -93,10 +93,6 @@
   (electric-pair-open-newline-between-pairs-psif t)
   )
 
-;; TODO: look and configure align
-;; ;; Visual `align-regexp'
-;; (use-package ialign)
-
 ;; TODO: configure iedit
 ;; ;; Edit multiple regions in the same way simultaneously
 ;; (use-package iedit
@@ -236,6 +232,8 @@
   :hook (after-init . which-key-mode)
   :custom
   (which-key-idle-delay 0.5)
+	(which-key-separator " ")
+  (which-key-prefix-prefix "+")
   )
 
 (use-package rg

@@ -7,9 +7,10 @@
 (use-package format-all
   :diminish
   :hook (prog-mode . format-all-ensure-formatter)
+  :custom
+  (format-all-show-errors 'never)
   :config
-  (setq format-all-show-errors 'never)
-  (add-to-list 'format-all-default-formatters '("Nix" alejandra))
+  (add-to-list 'format-all-default-formatters '(("Nix" alejandra)))
   )
 
 (provide 'init-format-all)

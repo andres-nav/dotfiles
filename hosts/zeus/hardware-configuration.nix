@@ -14,7 +14,6 @@
     initrd.availableKernelModules = ["xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" "rtsx_pci_sdmmc"];
     initrd.kernelModules = ["dm-snapshot"];
     kernelModules = ["kvm-intel"];
-    extraModulePackages = [];
 
     # Refuse ICMP echo requests on my desktop/laptop; nobody has any business
     # pinging them, unlike my servers.

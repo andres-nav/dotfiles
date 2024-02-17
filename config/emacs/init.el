@@ -75,7 +75,6 @@ Otherwise the startup will be very slow."
 (require 'init-vcs)
 (require 'init-dired)
 (require 'init-term)
-(require 'init-treemacs)
 (require 'init-yasnippet)
 
 ;; Progamming

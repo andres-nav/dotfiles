@@ -15,9 +15,12 @@ in {
 
   config = mkIf cfg.enable {
     hardware.nvidia = {
+      package = config.boot.kernelPackages.nvidiaPackages.production; # install 535 as of 2024-02-14
       modesetting.enable = true;
+      open = false; # (2024-02-14) only supported for version 2000 and older (currently experimental)
       prime = {
-        offload.enable = true;
+        offload.enable = false; # (2024-02-14) only supported for version 2000 and older (currently experimental)
+        sync.enable = true;
 
         intelBusId = "PCI:0:2:0";
         nvidiaBusId = "PCI:1:0:0";

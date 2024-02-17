@@ -24,7 +24,7 @@
   (doom-themes-enable-italic t) ; if nil, italics is universally disabled
   (doom-themes-treemacs-theme "doom-dracula") ; use "doom-colors" for less minimal icon theme
   (doom-dracula-brighter-modeline t)
-  :init
+  :config
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
   ;; or treemacs users
@@ -47,28 +47,6 @@
 
   )
 
-
-;; (use-package telephone-line
-;;   :hook (after-init . telephone-line-mode)
-;;   :config
-;;   (setq telephone-line-primary-left-separator 'telephone-line-gradient
-;; 	telephone-line-secondary-left-separator 'telephone-line-nil
-;; 	telephone-line-primary-right-separator 'telephone-line-gradient
-;; 	telephone-line-secondary-right-separator 'telephone-line-nil)
-;;   (setq telephone-line-height 12
-;; 	telephone-line-evil-use-short-tag t)
-;;   (defface telephone-line-evil-char
-;; 	'((t (:background "forest green" :inherit telephone-line-evil)))
-;; 	"Face used in evil color-coded segments when in Char state."
-;; 	:group 'telephone-line-evil)
-;;   (defface telephone-line-evil-word
-;; 	'((t (:background "#5E81AC" :inherit telephone-line-evil)))
-;; 	"Face used in evil color-cioded segments when in Normal state."
-;; 	:group 'telephone-line-evil)
-;;   (add-to-list 'telephone-line-faces
-;; 		'(evil . (telephone-line-evil-word . telephone-line-evil-char)))
-;; )
-
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode)
   :custom
@@ -84,9 +62,9 @@
 (use-package hide-mode-line
   :diminish
   :hook ((help-mode
-	  treemacs-mode
-	  eshell-mode shell-mode
-	  term-mode vterm-mode) . hide-mode-line-mode)
+					treemacs-mode
+					eshell-mode shell-mode
+					term-mode vterm-mode) . hide-mode-line-mode)
   )
 
 ;; Show line numbers
@@ -112,14 +90,16 @@
 (setq window-resize-pixelwise t
       frame-resize-pixelwise t)
 
+(use-package ace-window
+	:custom
+	(aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+	(aw-dispatch-always nil)
+	)
+
 ;; Linux specific
 (setq x-gtk-use-system-tooltips nil
       x-gtk-use-native-input t
       x-underline-at-descent-line t)
-
-;; With GPG 2.1+, this forces gpg-agent to use the Emacs minibuffer to prompt
-;; for the key passphrase.
-(setq epg-pinentry-mode 'loopback)
 
 ;; Optimize for very long lines
 (setq-default bidi-paragraph-direction 'left-to-right)
@@ -132,7 +112,7 @@
 (add-hook 'window-setup-hook #'window-divider-mode)
 
 ;; Font
-(add-to-list 'default-frame-alist '(font . "CaskaydiaCove Nerd Font Mono 10"))
+(add-to-list 'default-frame-alist '(font . "CaskaydiaCove Nerd Font Mono 14"))
 
 ;; Highlight parenthesises
 (use-package paren

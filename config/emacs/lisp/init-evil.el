@@ -13,7 +13,7 @@
   (evil-want-keybinding nil)
   (evil-want-C-u-scroll t)
   (evil-want-Y-yank-to-eol t)
-  (evil-shift-width 4)
+  (evil-shift-width 2)
   (evil-esc-delay 0)
   (evil-echo-state nil)
   (evil-undo-system 'undo-fu)
@@ -25,9 +25,9 @@
          :map evil-motion-state-map
          ("t" . evil-avy-goto-char-in-line)
          :map evil-normal-state-map
-         ("R" . evil-avy-goto-char-timer )
+         ("r" . evil-avy-goto-char-timer )
          :map evil-normal-state-map
-         ("r" . evil-avy-goto-line)
+         ("R" . evil-avy-goto-line)
 	 )
 
   :config
@@ -53,11 +53,24 @@
 
 (use-package evil-collection
   :diminish evil-collection-unimpaired-mode
+	:hook (evil-mode . evil-collection-init)
   :after evil
   :config
   (evil-collection-swap-key nil 'evil-motion-state-map ";" ":")
-  :init (evil-collection-init)
   )
+
+;; add evil multi edit
+(use-package evil-multiedit
+	:diminish
+	:after evil
+	:config
+	(evil-multiedit-default-keybinds))
+
+(use-package evil-org
+	:diminish
+	:after (evil org)
+	:hook (org-mode . evil-org-mode)
+	)
 
 (use-package evil-leader
   :diminish
@@ -77,14 +90,15 @@
     "w" 'evil-window-map
     "n" 'org-roam-node-find
     "s" 'scratch-buffer
-    "<SPC>" 'format-all-buffer
+    "F" 'format-all-buffer
+		"<SPC>" 'ace-window
     )
   )
 
 
 (use-package evil-surround
   :diminish
-  :after evil-collection
+  :after evil
   :hook (evil-mode . global-evil-surround-mode))
 
 ;; TODO: install evil-indent-plus

@@ -54,7 +54,25 @@
 (use-package emacs
   :custom
   (js-indent-level 2)
+  (python-indent-offset 2)
+  (standard-indent 2)
+  (tab-width 2)
+  (c-basic-offset 2)
   )
+
+;; better compilation
+(use-package compile
+	:ensure nil
+	:custom
+	(compilation-always-kill t)
+	(compilation-scroll-output 'first-error)
+	(compilation-ask-about-save nil)
+	(compilation-context-lines 5)
+	(compilation-auto-jump-to-first-error t)
+	(compilation-skip-threshold 2)
+	(compilation-disable-input nil)
+	(compilation-environment '("TERM=xterm-256color"))
+	)
 
 
 ;; GitHub Copilot
@@ -74,6 +92,7 @@
   :hook (after-init .  direnv-mode)
   :custom
   (direnv-show-paths-in-summary nil)
+  (direnv-always-show-summary nil)
   )
 
 (provide 'init-prog)

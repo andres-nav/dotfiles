@@ -1,4 +1,4 @@
-;; init-flycheck.el --- Initialize flycheck configurations
+;; init-check --- Initialize check configurations
 
 ;;; Commentary:
 
@@ -9,17 +9,54 @@
   :hook (prog-mode . flycheck-mode)
   :custom
   (flycheck-temp-prefix ".flycheck")
-  (flycheck-check-syntax-automatically '(save mode-enabled))
+  (flycheck-check-syntax-automatically '(save idle-change))
   (flycheck-emacs-lisp-load-path 'inherit)
-  (flycheck-indication-mode 'right-fringe)
+  (flycheck-indication-mode (if (display-graphic-p) 'right-fringe 'right-margin))
+  (flycheck-highlighting-mode 'symbols)
+  :init
+  (progn
+    (define-fringe-bitmap 'my-flycheck-fringe-indicator
+      (vector #b00000000
+              #b00000000
+              #b00000000
+              #b00000000
+              #b00000000
+              #b00000000
+              #b00000000
+              #b00011100
+              #b00111110
+              #b00111110
+              #b00111110
+              #b00011100
+              #b00000000
+              #b00000000
+              #b00000000
+              #b00000000
+              #b00000000))
+
+    (flycheck-define-error-level 'error
+      :severity 2
+      :overlay-category 'flycheck-error-overlay
+      :fringe-bitmap 'my-flycheck-fringe-indicator
+      :fringe-face 'flycheck-fringe-error)
+
+    (flycheck-define-error-level 'warning
+      :severity 1
+      :overlay-category 'flycheck-warning-overlay
+      :fringe-bitmap 'my-flycheck-fringe-indicator
+      :fringe-face 'flycheck-fringe-warning)
+
+    (flycheck-define-error-level 'info
+      :severity 0
+      :overlay-category 'flycheck-info-overlay
+      :fringe-bitmap 'my-flycheck-fringe-indicator
+      :fringe-face 'flycheck-fringe-info))
   )
 
-;; (use-package sideline
-;;   :diminish sideline-mode
-;;   :hook (flycheck-mode . sideline-mode)
-;;   :init (setq sideline-backends-right '(sideline-flycheck)))
-
-;; (use-package sideline-flycheck :hook (flycheck-mode . sideline-flycheck-setup))
+(use-package flycheck-grammarly
+  :after flycheck
+  :hook
+  (flycheck-mode . flycheck-grammarly-setup))
 
 (use-package jinx
   :ensure nil

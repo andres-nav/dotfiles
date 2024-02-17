@@ -28,6 +28,18 @@ in {
       emacsPackages.direnv
       emacsPackages.consult
 
+      emacsPackages.org-modern
+      emacsPackages.org-roam
+
+      emacsPackages.evil
+      emacsPackages.evil-collection
+      emacsPackages.evil-multiedit
+
+      emacsPackages.flycheck
+      emacsPackages.flycheck-grammarly
+
+      emacsPackages.ace-window
+
       # Github Copilot
       emacsPackages.editorconfig
       nodejs
