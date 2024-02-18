@@ -54,6 +54,7 @@
   )
 
 (use-package flycheck-grammarly
+	:ensure nil
   :after flycheck
   :hook
   (flycheck-mode . flycheck-grammarly-setup))

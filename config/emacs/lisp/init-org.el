@@ -5,6 +5,7 @@
 ;;; Code:
 
 (use-package org
+	:ensure nil
   :diminish org-indent-mode
   :custom
   ;; pretify
@@ -18,7 +19,7 @@
 
   (org-list-demote-modify-bullet '(("+" . "-") ("1." . "a.") ("-" . "+")))
   (org-hidden-keywords '(title))
-  (org-ellipsis " ▼ ")
+  (org-ellipsis "🔻")
 
   ;; image
   (org-image-actual-width nil)
@@ -53,42 +54,34 @@
   :config
   (font-lock-add-keywords 'org-mode
                           '(("\\*\\(.*?\\)\\*" 1 '(face (:foreground "tomato")) prepend)))
-  (font-lock-add-keywords 'org-mode
-                          '((" _\\(.*?\\)_ " 1 '(face (:foreground "cyan")) prepend)))
+
+  ;; (defun my-org-evil-open-no-indent-advice (orig-func &rest args)
+  ;;   "Advice function to customize evil-open-below in Org mode."
+  ;;   (apply orig-func args)
+  ;;   (if (and evil-auto-indent (eq major-mode 'org-mode))
+	;; (progn
+  ;;         (when (and (org-in-item-p) (not (org-at-item-p)) (not (org-in-src-block-p)))
+  ;;           (save-excursion
+  ;;             (beginning-of-line)
+  ;;             (delete-horizontal-space))
+  ;;           ))
+  ;;     ))
 
 
-  (defun my-org-evil-open-no-indent-advice (orig-func &rest args)
-    "Advice function to customize evil-open-below in Org mode."
-    (apply orig-func args)
-    (if (and evil-auto-indent (eq major-mode 'org-mode))
-	(progn
-          (when (and (org-in-item-p) (not (org-at-item-p)) (not (org-in-src-block-p)))
-            (save-excursion
-              (beginning-of-line)
-              (delete-horizontal-space))
-            ))
-      ))
+  ;; (advice-add 'evil-open-below :around #'my-org-evil-open-no-indent-advice)
+  ;; (advice-add 'evil-open-above :around #'my-org-evil-open-no-indent-advice)
 
-
-  (advice-add 'evil-open-below :around #'my-org-evil-open-no-indent-advice)
-  (advice-add 'evil-open-above :around #'my-org-evil-open-no-indent-advice)
-
-(org-babel-do-load-languages
-   'org-babel-load-languages
-   '(;; other Babel languages
-     (python . t)
-     ))
   )
+
+
+(use-package org-ql
+	:after org
+	)
 
 (use-package visual-line
   :ensure nil
   :diminish visual-line-mode
   :hook (org-mode . visual-line-mode))
-
-;; Table of contents
-(use-package toc-org
-  :after org
-  :hook (org-mode . toc-org-mode))
 
 (use-package org-modern
   :ensure nil
@@ -105,85 +98,62 @@
    '((?X . "☑")
      (?- . #("☐–" 0 2 (composition ((2)))))
      (?\s . "☐")))
-  ;; This is usually the default, but keep in mind it must be nil
-  ;; (org-hide-leading-stars nil)
+  (org-hide-leading-stars nil)
   ;; This line is necessary.
-  ;; (org-superstar-leading-bullet ?\s)
-  ;; (org-superstar-leading-fallback ?\s)
-  ;; If you use Org Indent you also need to add this, otherwise the
-  ;; above has no effect while Indent is enabled.
-  ;; (org-indent-mode-turns-on-hiding-stars nil)
-  ;; :config
-  ;; (set-face-attribute 'org-level-8 nil :weight 'bold :inherit 'default)
+  (org-superstar-leading-bullet ?\s)
+  (org-superstar-leading-fallback ?\s)
+  :config
+  ;; (set-face-attribute 'org-level-8 nil :weight 'bold)
   ;; Low levels are unimportant => no scaling
   ;; (set-face-attribute 'org-level-7 nil :inherit 'org-level-8)
   ;; (set-face-attribute 'org-level-6 nil :inherit 'org-level-8)
   ;; (set-face-attribute 'org-level-5 nil :inherit 'org-level-8)
   ;; (set-face-attribute 'org-level-4 nil :inherit 'org-level-8)
   ;; Top ones get scaled the same as in LaTeX (\large, \Large, \LARGE)
-  ;; (set-face-attribute 'org-level-3 nil :inherit 'org-level-8 :height 1.2) ;\large
-  ;; (set-face-attribute 'org-level-2 nil :inherit 'org-level-8 :height 1.44) ;\Large
-  ;; (set-face-attribute 'org-level-1 nil :inherit 'org-level-8 :height 1.728) ;\LARGE
+  ;; (set-face-attribute 'org-level-3 nil :inherit 'org-level-8 :height 1.2)
+  ;; (set-face-attribute 'org-level-2 nil :inherit 'org-level-8 :height 1.44)
+  ;; (set-face-attribute 'org-level-1 nil :inherit 'org-level-8 :height 1.728)
   ;; :config
   )
 
 
 ;; Write codes in org-mode
-;; (use-package org-src
-;;   :ensure nil
-;;   :hook (org-babel-after-execute . org-redisplay-inline-images)
-;;   :bind (:map org-src-mode-map
-;;          ;; consistent with separedit/magit
-;;          ("C-c C-c" . org-edit-src-exit))
-;;   :custom
-;;   (org-confirm-babel-evaluate nil)
-;;   (org-src-fontify-natively t)
-;;   (org-src-tab-acts-natively t)
-;;   (org-src-window-setup 'other-window)
-;;   (org-src-lang-modes '(("C"      . c)
-;;                         ("C++"    . c++)
-;;                         ("bash"   . sh)
-;;                         ("cpp"    . c++)
-;;                         ("dot"    . graphviz-dot) ;; was `fundamental-mode'
-;;                         ("elisp"  . emacs-lisp)
-;;                         ("ocaml"  . tuareg)
-;;                         ("shell"  . sh)))
-;;   (org-babel-load-languages '((C          . t)
-;;                               (dot        . t)
-;;                               (emacs-lisp . t)
-;;                               (eshell     . t)
-;;                               (python     . t)
-;;                               (shell      . t))))
+(use-package org-src
+  :ensure nil
+  :hook (org-babel-after-execute . org-redisplay-inline-images)
+  :bind (:map org-src-mode-map
+							;; consistent with separedit/magit
+							("C-c C-c" . org-edit-src-exit))
+  :custom
+  (org-confirm-babel-evaluate nil)
+  (org-src-fontify-natively t)
+  (org-src-tab-acts-natively t)
+  (org-src-window-setup 'other-window)
+  (org-src-lang-modes '(
+                        ("bash"   . sh)
+                        ("fish"   . fish)
+                        ("elisp"  . emacs-lisp)
+                        ("shell"  . sh)))
+  (org-babel-load-languages '(
+                              (emacs-lisp . t)
+                              (eshell     . t)
+                              (python     . t)
+                              (shell      . t))))
 
 (use-package org-roam
+	:ensure nil
   :after org
   :hook (org-mode . org-roam-db-autosync-mode)
   :custom
   (org-roam-directory (file-truename "~/MEGA"))
   (org-roam-database-connector 'sqlite-builtin)
-  (org-roam-file-exclude-regexp '(".git/" "4_Archive/"))
+  (org-roam-file-exclude-regexp '(".git/" "4_Archive/" "node_modules/"))
   (org-roam-list-files-commands '(fd fdfind rg find))
-  :bind (("C-c n l" . org-roam-buffer-toggle)
-         ("C-c n f" . org-roam-node-find)
-         ("C-c n g" . org-roam-graph)
-         ("C-c n i" . org-roam-node-insert)
-         ("C-c n c" . org-roam-capture)
-         ;; Dailies
-         ("C-c n j" . org-roam-dailies-capture-today))
+  (org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
   :config
   (unless (file-exists-p org-roam-directory)
     (make-directory org-roam-directory))
-  ;; If you're using a vertical completion framework, you might want a more informative completion interface
-  (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
   )
-
-(use-package gnuplot
-  :after org)
-
-;; (use-package org-roam-ui
-;;   :bind ("C-c n u" . org-roam-ui-mode)
-;;   :init (when (featurep 'xwidget-internal)
-;;           (setq org-roam-ui-browser-function #'xwidget-webkit-browse-url)))
 
 (provide 'init-org)
 

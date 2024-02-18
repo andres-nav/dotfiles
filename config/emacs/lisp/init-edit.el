@@ -205,6 +205,7 @@
 
 ;; Undo history handler
 (use-package undo-fu
+	:ensure nil
   :diminish
   :custom
   (undo-limit 67108864) ; 64mb
@@ -213,12 +214,28 @@
   )
 
 (use-package undo-fu-session
+	:ensure nil
   :diminish
   :after undo-fu
   :hook (after-init . undo-fu-session-global-mode)
   :custom
   (undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'"))
   )
+
+;; TODO: run formatter before saving
+(use-package super-save
+  :ensure nil
+  :diminish super-save-mode
+	:hook (after-init . super-save-mode)
+  :custom
+  (super-save-auto-save-when-idle t)
+	(super-save-silent t)
+	(super-save-delete-trailing-whitespace t)
+	(super-save-all-buffers t)
+	(super-save-exclude '(".gpg" "COMMIT_EDITMSG" "git-rebase-todo"))
+  (super-save-triggers
+     '(ace-window evil-window-next evil-window-prev evil-window-right evil-window-left evil-window-up evil-window-down balance-windows other-window next-buffer previous-buffer)) ;; edit
+	)
 
 ;; TODO: add code folding <https://github.com/seagle0128/.emacs.d/blob/master/lisp/init-edit.el#L363>
 

@@ -19,6 +19,7 @@
   )
 
 (use-package forge
+	:ensure nil
   :diminish
   :after magit)
 

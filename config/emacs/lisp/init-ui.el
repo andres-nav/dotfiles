@@ -19,41 +19,42 @@
 
 ;; Theme
 (use-package doom-themes
+	:ensure nil
   :custom
   (doom-themes-enable-bold t)    ; if nil, bold is universally disabled
   (doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  (doom-themes-treemacs-theme "doom-dracula") ; use "doom-colors" for less minimal icon theme
-  (doom-dracula-brighter-modeline t)
-  :config
+  :init
+  (load-theme 'doom-gruvbox t)
+
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
-  ;; or treemacs users
-  (doom-themes-treemacs-config)
-  ;; Corrects (and improves) org-mode's native fontification.
-  (doom-themes-org-config);; Mode-line
 
-  (load-theme 'doom-dracula t)
+  ;; Corrects (and improves) org-mode's native fontification.
+  (doom-themes-org-config)
 
   ;; Widnow divider
-  (custom-theme-set-variables
-   'doom-dracula
-   '(window-divider-default-bottom-width 3)
-   '(window-divider-default-right-width 3)
-   )
+  ;; (custom-theme-set-variables
+  ;;  'doom-dracula
+  ;;  '(window-divider-default-bottom-width 3)
+  ;;  '(window-divider-default-right-width 3)
+  ;;  )
 
   (custom-theme-set-faces
-   'doom-dracula
+   'doom-gruvbox
    '(window-divider ((t (:foreground "yellow")))))
 
   )
 
 (use-package doom-modeline
+	:ensure nil
+	:after doom-themes
   :hook (after-init . doom-modeline-mode)
   :custom
   (doom-modeline-minor-modes t)
   (doom-modeline-hud t)
   (doom-modeline-buffer-encoding nil)
   (doom-modeline-vcs-max-length 20)
+	(doom-modeline-unicode-fallback t)
   )
 
 ;; TODO: add popper <https://github.com/karthink/popper> or popwin or shackle
@@ -112,7 +113,7 @@
 (add-hook 'window-setup-hook #'window-divider-mode)
 
 ;; Font
-(add-to-list 'default-frame-alist '(font . "CaskaydiaCove Nerd Font Mono 14"))
+(add-to-list 'default-frame-alist '(font . "CaskaydiaCove Nerd Font Mono 10"))
 
 ;; Highlight parenthesises
 (use-package paren
@@ -131,7 +132,9 @@
   ;; better word wrapping for CJK characters
   (word-wrap-by-category t)
   ;; paragraphs
-  (sentence-end-double-space nil))
+  (sentence-end-double-space nil)
+	)
+
 
 (provide 'init-ui)
 

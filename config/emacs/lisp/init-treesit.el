@@ -61,9 +61,9 @@
 ;; ;; TODO: make langs to install automatically
 
 ;; ;; TODO: add textobjects
-(use-package evil-textobj-tree-sitter
-  :diminish
-  )
+;; (use-package evil-textobj-tree-sitter
+;;   :diminish
+;;   )
 
 (provide 'init-treesit)
 

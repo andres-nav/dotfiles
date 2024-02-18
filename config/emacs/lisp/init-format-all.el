@@ -5,12 +5,11 @@
 ;;; Code:
 
 (use-package format-all
+	:ensure nil
   :diminish
-  :hook (prog-mode . format-all-ensure-formatter)
+  :hook (prog-mode . format-all-mode)
   :custom
   (format-all-show-errors 'never)
-  :config
-  (add-to-list 'format-all-default-formatters '(("Nix" alejandra)))
   )
 
 (provide 'init-format-all)

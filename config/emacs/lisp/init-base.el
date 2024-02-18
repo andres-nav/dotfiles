@@ -4,6 +4,10 @@
 
 ;;; Code:
 
+(use-package compat
+	:ensure nil
+	:demand t)
+
 ;; Personal information
 (setq user-full-name "Andres Navarro"
       user-mail-address "contact@andresnav.com"
@@ -14,19 +18,20 @@
   (setq command-line-x-option-alist nil
         ;; Increase how much is read from processes in a single chunk (default is 4kb)
         read-process-output-max #x10000  ; 64kb
-        ;; Don't ping things that look like domain names.
-        ffap-machine-p-known 'reject
+        ffap-machine-p-known 'reject ;; Don't ping things that look like domain names.
         )
   )
 
 ;; Garbage Collector Magic Hack
 (use-package gcmh
+	:ensure nil
   :diminish
   :hook (emacs-startup . gcmh-mode)
   :custom
   (gcmh-idle-delay 'auto)
   (gcmh-auto-idle-delay-factor 10)
   (gcmh-high-cons-threshold #x6400000) ;; 100 MB
+	(gcmh-verbose nil)
   )
 
 ;; Set UTF-8 as the default coding system
@@ -37,8 +42,13 @@
 (setq system-time-locale "C")
 (set-selection-coding-system 'utf-8)
 
+;; Environment (check if it is really necessary)
+;; (use-package exec-path-from-shell
+;;   :custom (exec-path-from-shell-arguments '("-l"))
+;;   :init (exec-path-from-shell-initialize)))
+
 ;; Don't compact font caches during GC
-(setq inhibit-compacting-font-caches t)
+;; (setq inhibit-compacting-font-caches t)
 
 ;; add a new line at the end of the file
 (setq require-final-newline t
@@ -49,7 +59,6 @@
   :hook (after-init . save-place-mode))
 
 (use-package recentf
-  :bind (("C-x C-r" . recentf-open-files))
   :hook (after-init . recentf-mode)
   :custom
   (recentf-max-saved-items 300)
@@ -65,7 +74,8 @@
 
 (use-package savehist
   :hook (after-init . savehist-mode)
-  :custom (enable-recursive-minibuffers t) ; Allow commands in minibuffers
+  :custom
+	(enable-recursive-minibuffers t) ; Allow commands in minibuffers
   (history-length 1000)
   (savehist-additional-variables '(mark-ring
                                    global-mark-ring
@@ -79,42 +89,30 @@
 (use-package hl-line
   :ensure nil
   :hook
-  (dired-mode . hl-line-mode)
-  (fundamental-mode . hl-line-mode)
-  (prog-mode . hl-line-mode)
-  (text-mode . hl-line-mode)
+	(after-init . global-hl-line-mode)
   :custom
   (hl-line-sticky-flag nil)
   )
 
-;;; Indent Guides
-(use-package highlight-indent-guides
-  :diminish
-  :custom
-  (highlight-indent-guides-method 'bitmap)
-  :hook
-  ((python-ts-mode js-ts-mode)
-   . highlight-indent-guides-mode)
-  )
-
 ;; Enable autosave
-(use-package files
-  :ensure nil
-  :preface
-  (defun save-all ()
-    (interactive)
-    (save-some-buffers t))
-  :hook
-  (after-init . auto-save-visited-mode)
-  :config
-  (setq auto-save-no-message t
-        auto-save-default t
-        auto-save-visited-file-name t
-        save-abbrevs 'silently
-        )
+;; (use-package files
+;;   :ensure nil
+;;   :preface
+;;   (defun save-all ()
+;;     (interactive)
+;;     (save-some-buffers t))
+;;   :hook
+;;   (after-init . auto-save-visited-mode)
+;;   :config
+;;   (setq auto-save-no-message t
+;;         auto-save-default t
+;;         save-abbrevs 'silently
+;;         )
 
-  (setq after-focus-change-function 'save-all)
-  )
+;;   (setq after-focus-change-function 'save-all)
+;;   )
+
+
 
 
 ;; TODO: see <https://github.com/seagle0128/.emacs.d/blob/master/lisp/init-base.el#L142C3-L142C3>
@@ -188,10 +186,6 @@
 (use-package simple
   :ensure nil
   :custom
-  ;; show line/column/filesize in modeline
-  (line-number-mode t)
-  (column-number-mode t)
-  (size-indication-mode t)
   ;; No visual feedback on copy/delete.
   (copy-region-blink-delay 0)
   (delete-pair-blink-delay 0)

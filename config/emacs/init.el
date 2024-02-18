@@ -3,14 +3,16 @@
 
 ;;; Code:
 
-;; Don't pass case-insensitive to `auto-mode-alist'
-(setq auto-mode-case-fold nil)
-
 ;; A big contributor to startup times is garbage collection. We up the gc
 ;; threshold to temporarily prevent it from running, and then reset it by the
 ;; `gcmh' package.
-(setq gc-cons-threshold most-positive-fixnum
-      gc-cons-percentage 0.6)
+(setq gc-cons-threshold most-positive-fixnum)
+
+;; Prevent flashing of unstyled modeline at startup
+(setq-default mode-line-format nil)
+
+;; Don't pass case-insensitive to `auto-mode-alist'
+(setq auto-mode-case-fold nil)
 
 (unless (or (daemonp) noninteractive init-file-debug)
   ;; Suppress file handlers operations at startup
@@ -25,20 +27,6 @@
                       (delete-dups (append file-name-handler-alist old-value))))
               101)))
 
-;; Install straight.el
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 6))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-	(url-retrieve-synchronously
-	 "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-	 'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
-
 ;; Load path
 ;; Optimize: Force "lisp"" and "site-lisp" at the head to reduce the startup time.
 (defun update-load-path (&rest _)
@@ -48,14 +36,17 @@
 
 (defun add-subdirs-to-load-path (&rest _)
   "Add subdirectories to `load-path'.
-
-Don't put large files in `site-lisp' directory, e.g. EAF.
-Otherwise the startup will be very slow."
+	Don't put large files in `site-lisp' directory, e.g. EAF.
+	Otherwise the startup will be very slow."
   (let ((default-directory (expand-file-name "site-lisp" user-emacs-directory)))
     (normal-top-level-add-subdirs-to-load-path)))
 
 (advice-add #'package-initialize :after #'update-load-path)
 (advice-add #'package-initialize :after #'add-subdirs-to-load-path)
+
+;; Custom var file
+(setq custom-file (locate-user-emacs-file "custom-vars.el"))
+(load custom-file 'noerror 'nomessage)
 
 (update-load-path)
 
@@ -67,7 +58,7 @@ Otherwise the startup will be very slow."
 
 (require 'init-ui)
 (require 'init-edit)
-(require 'init-evil)
+(require 'init-keyboard)
 (require 'init-completion)
 ;; TODO: add corfu
 ;; TODO: add yasnippets
@@ -86,3 +77,5 @@ Otherwise the startup will be very slow."
 (require 'init-org)
 (require 'init-latex)
 (require 'init-nix)
+
+;; init.el ends here

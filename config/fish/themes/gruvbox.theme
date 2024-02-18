@@ -1,0 +1,55 @@
+# Gruvbox Color Palette
+
+set -l foreground ebdbb2
+set -l selection 504945
+set -l comment 8f3f71
+set -l red fb4934
+set -l orange fe8019
+set -l yellow fabd2f
+set -l green b8bb26
+set -l purple d3869b
+set -l cyan 8ec07c
+set -l blue 83a598
+
+# Syntax Highlighting Colors
+fish_color_normal $foreground
+fish_color_command $cyan
+fish_color_keyword $pink
+fish_color_quote $yellow
+fish_color_redirection $foreground
+fish_color_end $orange
+fish_color_error $red
+fish_color_param $purple
+fish_color_comment $comment
+fish_color_selection --background=$selection
+fish_color_search_match --background=$selection
+fish_color_operator $green
+fish_color_escape $pink
+fish_color_autosuggestion $comment
+fish_color_cancel $red --reverse
+fish_color_option $orange
+fish_color_history_current --bold
+fish_color_status $red
+fish_color_valid_path --underline
+
+# Default Prompt Colors
+fish_color_cwd $green
+fish_color_cwd_root red
+fish_color_host $purple
+fish_color_host_remote $purple
+fish_color_user $cyan
+
+# Completion Pager Colors
+fish_pager_color_progress $comment
+fish_pager_color_background
+fish_pager_color_prefix $cyan
+fish_pager_color_completion $foreground
+fish_pager_color_description $comment
+fish_pager_color_selected_background --background=$selection
+fish_pager_color_selected_prefix $cyan
+fish_pager_color_selected_completion $foreground
+fish_pager_color_selected_description $comment
+fish_pager_color_secondary_background
+fish_pager_color_secondary_prefix $cyan
+fish_pager_color_secondary_completion $foreground
+fish_pager_color_secondary_description $comment
