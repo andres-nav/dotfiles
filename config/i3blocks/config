@@ -42,7 +42,15 @@ separator_block_width=40
 command=./modules/volume
 interval=once
 signal=10
-#STEP=5%
+label=🔈
+color=#fabd2f
+
+########################
+[spacer]
+separator_block_width=10
+full_text=⯻
+color=#ebdbb2
+########################
 
 
 # Disk usage
@@ -96,6 +104,15 @@ signal=10
 separator_block_width=40
 command=./modules/battery
 interval=30
+label=🔋
+color=#fabd2f
+
+########################
+[spacer]
+separator_block_width=10
+full_text=⯻
+color=#ebdbb2
+########################
 
 # Date Time
 #
@@ -103,6 +120,8 @@ interval=30
 separator_block_width=40
 command=date +'%A, %h %d (%H:%M)'
 interval=30
+label=🕐
+color=#fabd2f
 
 # Generic media player support
 #
