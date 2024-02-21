@@ -57,6 +57,7 @@ in {
           fi
 
           $DOOM/bin/doom sync
+          systemctl --user restart emacs.service
         ''}";
       };
 
