@@ -28,7 +28,10 @@ in {
     ];
 
     home.configFile = {
-      "git".source = "${configDir}/git";
+      "git" = {
+        source = "${configDir}/git";
+        recursive = true;
+      };
     };
   };
 }

@@ -16,65 +16,24 @@ in {
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
-      gnuplot
-
-      emacsPackages.compat
-      emacsPackages.gcmh
-      emacsPackages.super-save
-
-      emacsPackages.magit
-      emacsPackages.forge
-
-      emacsPackages.format-all
-
-
-      # Grammar checker
-      emacsPackages.jinx
-      nuspell # for language checker jinx
-      hunspellDicts.en_US # install hunspell dicts
-      hunspellDicts.es_ES
-      emacsPackages.flycheck-grammarly
-
-      # NixOS
-      emacsPackages.direnv
-      emacsPackages.consult
-      emacsPackages.diminish
-
-      # Theme
-      emacsPackages.doom-themes
-      emacsPackages.doom-modeline
-
-      # Org
-      emacsPackages.org-modern
-      emacsPackages.org-roam
-      emacsPackages.org-ql
-
-      # Evil
-      emacsPackages.evil
-      emacsPackages.evil-collection
-      emacsPackages.evil-leader
-      emacsPackages.evil-multiedit
-      emacsPackages.evil-surround
-      emacsPackages.evil-commentary
-      emacsPackages.evil-lion
-      emacsPackages.evil-matchit
-      emacsPackages.evil-org
-
-      emacsPackages.undo-fu
-      emacsPackages.undo-fu-session
-
-      emacsPackages.flycheck
-
-      emacsPackages.ace-window
+      # Doom Emacs dependencies
+      binutils
+      ripgrep
+      gnutls
+      fd
+      imagemagick
+      zstd
+      # nodePackages.javascript-typescript-langserver
+      sqlite
+      editorconfig-core-c
+      emacs-all-the-icons-fonts
 
       # Github Copilot
-      emacsPackages.editorconfig
       nodejs
     ];
 
     services.emacs = {
       enable = true;
-      package = pkgs.emacs29;
       defaultEditor = true;
     };
 
@@ -84,10 +43,26 @@ in {
     };
 
     home.configFile = {
-      "emacs" = {
-        source = "${configDir}/emacs";
+      "doom" = {
+        source = "${configDir}/doom";
         recursive = true;
+        onChange = "${pkgs.writeShellScript "doom-change" ''
+          #!/bin/sh
+          DOOM="$XDG_CONFIG_HOME/emacs"
+
+          if [ ! -f "$DOOM/bin/doom" ]; then
+            rm -rf $DOOM # Remove old Emacs config
+          	git clone --depth 1 https://github.com/doomemacs/doomemacs $DOOM
+          	$DOOM/bin/doom -y install
+          fi
+
+          $DOOM/bin/doom sync
+        ''}";
       };
+
+      # "emacs" = {
+      #   source = "${configDir}/emacs";
+      # };
     };
   };
 }
