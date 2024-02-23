@@ -20,13 +20,20 @@ in {
       binutils
       ripgrep
       gnutls
+      findutils
       fd
       imagemagick
       zstd
       # nodePackages.javascript-typescript-langserver
       sqlite
+      wordnet
       editorconfig-core-c
       emacs-all-the-icons-fonts
+
+      aspell
+      enchant
+      hunspell
+      hunspellDicts.es_ES
 
       # Github Copilot
       nodejs

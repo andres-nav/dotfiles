@@ -80,35 +80,45 @@
 
 ;;; :ui modeline
 ;; An evil mode indicator is redundant with cursor shape
-(setq doom-modeline-modal nil)
+(setq doom-modeline-modal nil
+      doom-modeline-height 25)
 
 ;;; :editor evil
 ;; Focus new window after splitting
 (setq evil-split-window-below t
-      evil-vsplit-window-right t)
+      evil-vsplit-window-right t
+      evil-move-beyond-eol t)
+
+(after! evil
+  (global-set-key [remap evil-quit] 'kill-current-buffer)
+  )
 
 ;; Implicit /g flag on evil ex substitution, because I use the default behavior
 ;; less often.
 (setq evil-ex-substitute-global t)
 
-;;; :tools lsp
-;; Disable invasive lsp-mode features
-(after! lsp-mode
-  (setq lsp-enable-symbol-highlighting nil
-        ;; If an LSP server isn't present when I start a prog-mode buffer, you
-        ;; don't need to tell me. I know. On some machines I don't care to have
-        ;; a whole development environment for some ecosystems.
-        lsp-enable-suggest-server-download nil))
-(after! lsp-ui
-  (setq lsp-ui-sideline-enable nil  ; no more useful than flycheck
-        lsp-ui-doc-enable nil))     ; redundant with K
+(setq evil-collection-setup-minibuffer t)
 
+;;; flycheck
+(after! flycheck
+  (setq flycheck-check-syntax-automatically '(save idle-change)
+        flycheck-idle-change-delay 0.8))
+
+;;; latex
+(setq TeX-view-program-selection '((output-pdf "Zathura"))
+      TeX-view-program-list '(("Zathura" "zathura %o"))
+      +latex-viewers '(zathura)
+      Tex-auto-save t
+      TeX-parse-self t
+      TeX-command-extra-options "-output-directory=./latexbuild")
 
 ;;; :tools magit
 (setq magit-repository-directories '(("~/git" . 2))
       magit-save-repository-buffers nil
       ;; Don't restore the wconf after quitting magit, it's jarring
       magit-inhibit-save-previous-winconf t
+      git-commit-major-mode 'markdown-mode
+      magit-commit-ask-to-stage "stage"
       evil-collection-magit-want-horizontal-movement t
       transient-values '((magit-rebase "--autosquash" "--autostash")
                          (magit-pull "--rebase" "--autostash")
@@ -118,71 +128,25 @@
 (setq org-directory "~/MEGA/"
       org-roam-directory org-directory
       org-roam-db-location (file-name-concat org-directory ".org-roam.db")
-      org-roam-dailies-directory "0_Inbox/"
       org-roam-file-exclude-regexp '(".git/" "4_Archive/" "node_modules/")
       org-archive-location (file-name-concat org-directory "4_Archive/%s::")
-      org-agenda-files (list org-directory))
+      org-agenda-files (list org-directory)
+      org-roam-db-update-on-save nil)
 
 (after! org
   (setq org-startup-folded 'show2levels
-        org-ellipsis " ⮟ "
-        org-capture-templates
-        '(("t" "todo" entry (file+headline "todo.org" "Inbox")
-           "* [ ] %?\n%i\n%a"
-           :prepend t)
-          ("d" "deadline" entry (file+headline "todo.org" "Inbox")
-           "* [ ] %?\nDEADLINE: <%(org-read-date)>\n\n%i\n%a"
-           :prepend t)
-          ("s" "schedule" entry (file+headline "todo.org" "Inbox")
-           "* [ ] %?\nSCHEDULED: <%(org-read-date)>\n\n%i\n%a"
-           :prepend t)
-          ("c" "check out later" entry (file+headline "todo.org" "Check out later")
-           "* [ ] %?\n%i\n%a"
-           :prepend t)
-          ("l" "ledger" plain (file "ledger/personal.gpg")
-           "%(+beancount/clone-transaction)"))))
+        org-ellipsis " ▼ "
+        org-hide-emphasis-markers t
+        org-src-fontify-natively t
+        )
+  ;; (custom-set-faces! `((org-block-begin-line org-block-end-line) :background ,(doom-color 'blue))
+  ;;   `((org-bold org-italic) :foreground ,(doom-color 'red)))
+  (setq org-highlight-latex-and-related '(native entities script)
+        org-image-actual-width (min (/ (frame-pixel-width) 2) 800))
+  )
 
-(after! org-roam
-  (setq org-roam-capture-templates
-        `(("n" "note" plain
-           ,(format "#+title: ${title}\n%%[%s/template/note.org]" org-roam-directory)
-           :target (file "note/%<%Y%m%d%H%M%S>-${slug}.org")
-           :unnarrowed t)
-          ("r" "thought" plain
-           ,(format "#+title: ${title}\n%%[%s/template/thought.org]" org-roam-directory)
-           :target (file "thought/%<%Y%m%d%H%M%S>-${slug}.org")
-           :unnarrowed t)
-          ("t" "topic" plain
-           ,(format "#+title: ${title}\n%%[%s/template/topic.org]" org-roam-directory)
-           :target (file "topic/%<%Y%m%d%H%M%S>-${slug}.org")
-           :unnarrowed t)
-          ("c" "contact" plain
-           ,(format "#+title: ${title}\n%%[%s/template/contact.org]" org-roam-directory)
-           :target (file "contact/%<%Y%m%d%H%M%S>-${slug}.org")
-           :unnarrowed t)
-          ("p" "project" plain
-           ,(format "#+title: ${title}\n%%[%s/template/project.org]" org-roam-directory)
-           :target (file "project/%<%Y%m%d>-${slug}.org")
-           :unnarrowed t)
-          ("i" "invoice" plain
-           ,(format "#+title: %%<%%Y%%m%%d>-${title}\n%%[%s/template/invoice.org]" org-roam-directory)
-           :target (file "invoice/%<%Y%m%d>-${slug}.org")
-           :unnarrowed t)
-          ("f" "ref" plain
-           ,(format "#+title: ${title}\n%%[%s/template/ref.org]" org-roam-directory)
-           :target (file "ref/%<%Y%m%d%H%M%S>-${slug}.org")
-           :unnarrowed t)
-          ("w" "works" plain
-           ,(format "#+title: ${title}\n%%[%s/template/works.org]" org-roam-directory)
-           :target (file "works/%<%Y%m%d%H%M%S>-${slug}.org")
-           :unnarrowed t)
-          ("s" "secret" plain "#+title: ${title}\n\n"
-           :target (file "secret/%<%Y%m%d%H%M%S>-${slug}.org.gpg")
-           :unnarrowed t))
-        ;; Use human readable dates for dailies titles
-        org-roam-dailies-capture-templates
-        `(("d" "default" plain ""
-           :target (file+head "%<%Y-%m-%d>.org" ,(format "%%[%s/template/journal.org]" org-roam-directory))))))
+
+;; TODO org-roam capture templates
 
 (after! org-tree-slide
   ;; I use g{h,j,k} to traverse headings and TAB to toggle their visibility, and
@@ -194,25 +158,18 @@
   ;; Offer completion for #tags and @areas separately from notes.
   (add-to-list 'org-roam-completion-functions #'org-roam-complete-tag-at-point)
 
-  ;; Automatically update the slug in the filename when #+title: has changed.
-  (add-hook 'org-roam-find-file-hook #'org-roam-update-slug-on-save-h)
-
   ;; Make the backlinks buffer easier to peruse by folding leaves by default.
   (add-hook 'org-roam-buffer-postrender-functions #'magit-section-show-level-2)
-
-  ;; List dailies and zettels separately in the backlinks buffer.
-  (advice-add #'org-roam-backlinks-section :override #'org-roam-grouped-backlinks-section)
 
   ;; Open in focused buffer, despite popups
   (advice-add #'org-roam-node-visit :around #'+popup-save-a)
 
-  ;; Make sure tags in vertico are sorted by insertion order, instead of
-  ;; arbitrarily (due to the use of group_concat in the underlying SQL query).
-  (advice-add #'org-roam-node-list :filter-return #'org-roam-restore-insertion-order-for-tags-a)
-
   ;; Add ID, Type, Tags, and Aliases to top of backlinks buffer.
   (advice-add #'org-roam-buffer-set-header-line-format :after #'org-roam-add-preamble-a))
 
+;;; :editor format
+(after! format-all
+  (add-hook 'prog-mode-hook #'format-all-mode))
 
 ;;; :app everywhere
 (after! emacs-everywhere
@@ -245,3 +202,22 @@
               ("C-<tab>" . 'copilot-accept-completion-by-word)))
 
 (map! :leader :desc "Copilot"        "t c" #'copilot-mode)
+
+;;; super-save
+(use-package! super-save
+  :hook (after-init . super-save-mode)
+  :custom
+  (super-save-auto-save-when-idle t)
+  (super-save-silent t)
+  (auto-save-default nil) ;; Disable auto-save as we use super-save
+  (super-save-delete-trailing-whitespace t)
+  (super-save-remote-files nil)
+  (super-save-exclude '(".gpg" "COMMIT_EDITMSG" "git-rebase-todo"))
+  (super-save-triggers
+   '(ace-window
+     evil-window-next evil-window-prev
+     evil-window-right evil-window-left
+     evil-window-up evil-window-down
+     other-window
+     next-buffer previous-buffer))
+  )

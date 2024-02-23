@@ -109,7 +109,7 @@ workspace $ws2 output $monitor_primary
 workspace $ws3 output $monitor_primary
 workspace $ws4 output $monitor_primary
 workspace $ws5 output $monitor_primary
-workspace $ws6 output $monitor_primary 
+workspace $ws6 output $monitor_primary
 
 workspace $ws7 output $monitor_right
 workspace $ws8 output $monitor_right
@@ -159,10 +159,10 @@ bindsym $mod+Shift+space move scratchpad
 # window rules
 for_window [class="Emacs"] move container to workspace $ws1
 for_window [class="Spotify"] move container to workspace $ws5
-for_window [class="zoom"] move container to workspace $ws10 
+for_window [class="zoom"] move container to workspace $ws10
 for_window [class="Skype"] move container to workspace $ws10
 
-exec --no-startup-id /usr/bin/env emacsclient -c 
+exec --no-startup-id /usr/bin/env emacsclient -c
 exec --no-startup-id /usr/bin/env firefox
 exec --no-startup-id scratch
 
@@ -231,14 +231,14 @@ colors {
         background $bg
         # text color used for blocks that do not have a color specified.
         statusline $yellow
-        # workspaces section            
+        # workspaces section
         #                    border  backgr. text
         focused_workspace    $aqua $aqua $darkgray
         inactive_workspace   $darkgray $darkgray $yellow
         active_workspace     $darkgray $darkgray $yellow
         urgent_workspace     $red $red $bg
     }
-		}
+}
 
 bar {
     output $monitor_right
@@ -251,7 +251,7 @@ bar {
         background $bg
         # text color used for blocks that do not have a color specified.
         statusline $yellow
-        # workspaces section            
+        # workspaces section
         #                    border  backgr. text
         focused_workspace    $aqua $aqua $darkgray
         inactive_workspace   $darkgray $darkgray $yellow
