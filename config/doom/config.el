@@ -80,8 +80,11 @@
 
 ;;; :ui modeline
 ;; An evil mode indicator is redundant with cursor shape
-(setq doom-modeline-modal nil
-      doom-modeline-height 25)
+(after! doom-modile
+  (setq doom-modeline-modal nil
+        doom-modeline-major-mode-icon t
+        doom-modeline-height 25)
+  )
 
 ;;; :editor evil
 ;; Focus new window after splitting
@@ -108,9 +111,32 @@
 (setq TeX-view-program-selection '((output-pdf "Zathura"))
       TeX-view-program-list '(("Zathura" "zathura %o"))
       +latex-viewers '(zathura)
-      Tex-auto-save t
+      TeX-auto-save t
       TeX-parse-self t
+      compilation-ask-about-save nil ;; save all buffers on compilation
+      TeX-engine 'luatex
       TeX-command-extra-options "-output-directory=./latexbuild")
+
+;;; dired
+(after! dired
+  (setq dired-free-space nil
+        dired-dwim-target t
+        dired-kill-when-opening-new-dired-buffer t ;; only one dired buffer
+        dired-recursive-copies 'always
+        dired-recursive-deletes 'always
+        dired-listing-switches "-AFlGh1v --group-directories-first" ;;  show directories first
+        dired-clean-confirm-killing-deleted-buffers nil ;; don't ask to kill buffers visiting deleted files
+        dired-auto-revert-buffer #'dired-directory-changed-p ;; auto revert dired buffer when directory changes
+        )
+  ;; (map! :map dired-mode-map
+  ;;       :n "h" #'dired-up-directory
+  ;;       :n "l" #'dired-find-alternate-file ;; open file in same buffer and kill dired buffer
+  ;;       :n "=" #'dired-create-empty-file
+  ;;       )
+  )
+
+;;;; Which key
+(setq which-key-idle-delay 0.3)
 
 ;;; :tools magit
 (setq magit-repository-directories '(("~/git" . 2))
@@ -119,7 +145,6 @@
       magit-inhibit-save-previous-winconf t
       git-commit-major-mode 'markdown-mode
       magit-commit-ask-to-stage "stage"
-      evil-collection-magit-want-horizontal-movement t
       transient-values '((magit-rebase "--autosquash" "--autostash")
                          (magit-pull "--rebase" "--autostash")
                          (magit-revert "--autostash")))
@@ -145,6 +170,14 @@
         org-image-actual-width (min (/ (frame-pixel-width) 2) 800))
   )
 
+;; TODO Formatter for vhdl example for sql
+;; (after! sql
+;; set formatter to sql-formatter
+;; (set-formatter!
+;;   'sql-formatter
+;;   "sql-formatter"
+;;   :modes '(sql-mode)))
+
 
 ;; TODO org-roam capture templates
 
@@ -166,10 +199,6 @@
 
   ;; Add ID, Type, Tags, and Aliases to top of backlinks buffer.
   (advice-add #'org-roam-buffer-set-header-line-format :after #'org-roam-add-preamble-a))
-
-;;; :editor format
-(after! format-all
-  (add-hook 'prog-mode-hook #'format-all-mode))
 
 ;;; :app everywhere
 (after! emacs-everywhere
@@ -199,7 +228,9 @@
               ("<tab>" . 'copilot-accept-completion)
               ("TAB" . 'copilot-accept-completion)
               ("C-TAB" . 'copilot-accept-completion-by-word)
-              ("C-<tab>" . 'copilot-accept-completion-by-word)))
+              ("C-<tab>" . 'copilot-accept-completion-by-word))
+  :config
+  (add-to-list 'warning-suppress-types '(copilot)))
 
 (map! :leader :desc "Copilot"        "t c" #'copilot-mode)
 

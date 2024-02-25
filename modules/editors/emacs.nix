@@ -15,7 +15,9 @@ in {
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [
+    environment.systemPackages = with pkgs; let
+myhunspell = (pkgs.hunspellWithDicts (with pkgs.hunspellDicts; [en-us-large es-es]));
+      in [
       # Doom Emacs dependencies
       binutils
       ripgrep
@@ -32,8 +34,7 @@ in {
 
       aspell
       enchant
-      hunspell
-      hunspellDicts.es_ES
+      myhunspell
 
       # Github Copilot
       nodejs

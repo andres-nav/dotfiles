@@ -11,5 +11,5 @@ with lib.my; let
 in {
   options.modules.dev.nix = {enable = mkBoolOpt false;};
 
-  config = mkIf cfg.enable {environment.systemPackages = with pkgs; [nil alejandra];};
+  config = mkIf cfg.enable {environment.systemPackages = with pkgs; [nil alejandra nixfmt];};
 }
