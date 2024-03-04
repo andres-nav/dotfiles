@@ -220,6 +220,9 @@
                           (+ x (/ width 2) (- (/ width 2)))
                           (+ y (/ height 2))))))
 
+;; formatter
+;; (set-formatter! 'vhdl #'vhdl-beautify-region :modes '(vhdl-mode))
+
 ;;;; Copilot.el
 ;; accept completion from copilot and fallback to company
 (use-package! copilot
@@ -230,7 +233,8 @@
               ("C-TAB" . 'copilot-accept-completion-by-word)
               ("C-<tab>" . 'copilot-accept-completion-by-word))
   :config
-  (add-to-list 'warning-suppress-types '(copilot)))
+  (add-to-list 'warning-suppress-types '(copilot)) ;; suppress warnings about copilot
+  )
 
 (map! :leader :desc "Copilot"        "t c" #'copilot-mode)
 
