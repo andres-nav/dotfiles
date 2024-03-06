@@ -8,31 +8,27 @@ in {
   options.modules.editors.emacs = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs;
-      let
-        myhunspell = (pkgs.hunspellWithDicts
-          (with pkgs.hunspellDicts; [ en-us-large es-es ]));
-      in [
-        # Doom Emacs dependencies
-        binutils
-        ripgrep
-        gnutls
-        findutils
-        fd
-        imagemagick
-        zstd
-        # nodePackages.javascript-typescript-langserver
-        sqlite
-        wordnet
-        editorconfig-core-c
-        emacs-all-the-icons-fonts
+    environment.systemPackages = with pkgs; [
+      # Doom Emacs dependencies
+      binutils
+      ripgrep
+      gnutls
+      findutils
+      fd
+      imagemagick
+      zstd
+      # nodePackages.javascript-typescript-langserver
+      sqlite
+      wordnet
+      editorconfig-core-c
+      emacs-all-the-icons-fonts
 
-        # Language
-        langugatools
+      # Language
+      languagetool
 
-        # Github Copilot
-        nodejs
-      ];
+      # Github Copilot
+      nodejs
+    ];
 
     services.emacs = {
       enable = true;

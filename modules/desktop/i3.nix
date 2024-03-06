@@ -1,22 +1,18 @@
-{
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ options, config, lib, pkgs, ... }:
 with lib;
-with lib.my; let
+with lib.my;
+let
   cfg = config.modules.desktop.i3;
   configDir = config.dotfiles.configDir;
 in {
-  options.modules.desktop.i3 = {
-    enable = mkBoolOpt false;
-  };
+  options.modules.desktop.i3 = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       lightdm
+      xclip
+      xdotool
+      xorg.xwininfo
     ];
 
     services = {
@@ -30,11 +26,7 @@ in {
         };
         windowManager.i3 = {
           enable = true;
-          extraPackages = with pkgs; [
-            i3status
-            xss-lock
-            i3blocks
-          ];
+          extraPackages = with pkgs; [ i3status xss-lock i3blocks ];
         };
       };
     };

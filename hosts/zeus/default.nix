@@ -1,20 +1,12 @@
 # Zeus: my main laptop
-{...}: {
-  imports = [../home.nix ./hardware-configuration.nix];
+{ ... }: {
+  imports = [ ../home.nix ./hardware-configuration.nix ];
 
   ## Modules
   modules = {
     desktop = {
       i3.enable = true;
-      apps = {
-        dbeaver.enable = true;
-        insomnia.enable = true;
-        ledger-live.enable = true;
-        rofi.enable = true;
-        freecad.enable = true;
-        prusaslicer.enable = true;
-        todoist.enable = true;
-      };
+      apps = { ledger-live.enable = true; };
       browsers = {
         default = "firefox";
         chromium.enable = true;
@@ -22,7 +14,6 @@
         firefox.enable = true;
       };
       media = {
-        #graphics.enable = true;
         discord.enable = true;
         documents.enable = true;
         latex.enable = true;
@@ -35,7 +26,7 @@
         default = "alacritty";
         alacritty.enable = true;
       };
-      vm = {qemu.enable = true;};
+      vm = { qemu.enable = true; };
     };
     dev = {
       node.enable = true;
@@ -66,7 +57,7 @@
       docker.enable = true;
       zerotier = {
         enable = true;
-        joinNetworks = ["9bee8941b5092092"];
+        joinNetworks = [ "9bee8941b5092092" ];
       };
     };
 

@@ -76,10 +76,10 @@ bindsym $mod+2 layout tabbed
 bindsym $mod+3 layout toggle split
 
 # toggle tiling / floating
-bindsym $mod+Shift+period floating toggle
+bindsym $mod+Shift+slash floating toggle
 
 # change focus between tiling / floating windows
-bindsym $mod+period focus mode_toggle
+bindsym $mod+slash focus mode_toggle
 
 # focus the parent container
 bindsym $mod+i focus parent
@@ -142,16 +142,18 @@ bindsym $mod+Shift+r move container to workspace number $ws10
 
 
 # focus next screen
-bindsym $mod+comma focus output next
+bindsym $mod+comma focus output $monitor_primary
+bindsym $mod+period focus output $monitor_right
 # move container between screens
-bindsym $mod+Shift+comma move container to output next
+bindsym $mod+Shift+comma move container to output $monitor_primary
+bindsym $mod+Shift+period move container to output $monitor_right
 
 # scratchpads
 for_window [class="scratch"] move window to scratchpad, scratchpad show
 
 # emacs everywhere
-bindsym $mod+slash exec "emacsclient --eval '(emacs-everywhere)'"
-for_window [title="^Emacs Everywhere ::"] floating enable
+# bindsym $mod+slash exec "emacsclient --eval '(emacs-everywhere)'"
+# for_window [title="^Emacs Everywhere ::"] floating enable
 
 bindsym $mod+Mod1+space exec scratch
 bindsym $mod+space [class="scratch"] scratchpad show

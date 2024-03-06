@@ -1,13 +1,7 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
-}:
+{ config, options, lib, pkgs, ... }:
 with lib;
-with lib.my; let
-  cfg = config.modules.hardware.fs;
+with lib.my;
+let cfg = config.modules.hardware.fs;
 in {
   options.modules.hardware.fs = {
     enable = mkBoolOpt false;
@@ -16,7 +10,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    programs.udevil.enable = true;
+    programs.udevil.enable = true; # For automounting drives
 
     # Support for more filesystems, mostly to support external drives
     environment.systemPackages = with pkgs; [
@@ -26,8 +20,6 @@ in {
       hfsprogs # MacOS drives
     ];
 
-    services = mkIf cfg.ssd.enable {
-      fstrim.enable = true;
-    };
+    services = mkIf cfg.ssd.enable { fstrim.enable = true; };
   };
 }

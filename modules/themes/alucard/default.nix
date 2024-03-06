@@ -1,14 +1,8 @@
 # modules/themes/alucard/default.nix --- a regal dracula-inspired theme
-{
-  options,
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ options, config, lib, pkgs, ... }:
 with lib;
-with lib.my; let
-  cfg = config.modules.theme;
+with lib.my;
+let cfg = config.modules.theme;
 in {
   config = mkIf (cfg.active == "alucard") (mkMerge [
     # Desktop-agnostic configuration
@@ -51,11 +45,9 @@ in {
         };
 
         desktop.browsers = {
-          firefox.userChrome = concatMapStringsSep "\n" readFile [
-            ./config/firefox/userChrome.css
-          ];
-          qutebrowser.userStyles =
-            concatMapStringsSep "\n" readFile
+          firefox.userChrome = concatMapStringsSep "\n" readFile
+            [ ./config/firefox/userChrome.css ];
+          qutebrowser.userStyles = concatMapStringsSep "\n" readFile
             (map toCSSFile [
               ./config/qutebrowser/userstyles/monospace-textareas.scss
               ./config/qutebrowser/userstyles/stackoverflow.scss
@@ -65,50 +57,5 @@ in {
       };
     }
 
-    # Desktop (X11) theming
-    (mkIf config.services.xserver.enable {
-      environment.systemPackages = with pkgs; [
-        unstable.dracula-theme
-        paper-icon-theme # for rofi
-      ];
-
-      # Other dotfiles
-      home.configFile = with config.modules;
-        mkMerge [
-          {
-            "wallpapers" = {
-              source = "${pkgs.my.wallpapers}";
-              recursive = true;
-            };
-          }
-          {
-            # Sourced from sessionCommands in modules/themes/default.nix
-            "xtheme/90-theme".source = ./config/Xresources;
-          }
-          (mkIf desktop.bspwm.enable {
-            #"bspwm/rc.d/95-polybar".source = ./config/polybar/run.sh;
-          })
-          (mkIf desktop.apps.rofi.enable {
-            "rofi/theme" = {
-              source = ./config/rofi;
-              recursive = true;
-            };
-          })
-          (mkIf (desktop.bspwm.enable || desktop.stumpwm.enable) {
-            "Dracula-purple-solid-kvantum" = {
-              recursive = true;
-              source = "${pkgs.unstable.dracula-theme}/share/themes/Dracula/kde/kvantum/Dracula-purple-solid";
-              target = "Kvantum/Dracula-purple-solid";
-            };
-            "kvantum.kvconfig" = {
-              text = "theme=Dracula-purple-solid";
-              target = "Kvantum/kvantum.kvconfig";
-            };
-          })
-          (mkIf desktop.browsers.qutebrowser.enable {
-            "qutebrowser/extra/theme.py".source = ./config/qutebrowser/theme.py;
-          })
-        ];
-    })
   ]);
 }
