@@ -89,7 +89,7 @@
 (setq which-key-idle-delay 1)
 
 ;; Tabs and final EOL
-(setq-default tab-width 8)
+(setq-default tab-width 4)
 (setq require-final-newline t)
 
 ;;;; Local variables
@@ -104,6 +104,7 @@
       magit-commit-ask-to-stage "stage"
       transient-values '((magit-rebase "--autosquash" "--autostash")
                          (magit-pull "--rebase" "--autostash")
+                         (magit-push "--force-with-lease") ;; it forces a push but fails if the remote branch has been updated
                          (magit-revert "--autostash")))
 
 ;;; :lang org
@@ -123,8 +124,7 @@
         org-src-tab-acts-natively t
         org-src-preserve-indentation t
         )
-  (custom-set-faces! `((org-block-begin-line org-block-end-line) :background ,(doom-color 'blue))
-    `((org-bold org-italic) :foreground ,(doom-color 'red)))
+  (custom-set-faces! `((bold italic) :foreground ,(doom-color 'aquamarine)))
 
   (setq org-highlight-latex-and-related '(native entities script)
         org-image-actual-width (/ (display-pixel-width) 3)
