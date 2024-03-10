@@ -47,7 +47,7 @@ bindsym $mod+Shift+Return exec alacritty -e bash -c "(tmux ls | grep -qEv 'attac
 bindsym $mod+Mod1+q kill
 
 # Rofi
-bindsym $mod+Return exec $DOTFILES_BIN/rofi/appmenu
+bindsym $mod+Return exec "rofi -show drun -modi drun,run -show-icons"
 
 # change focus
 bindsym $mod+h exec emacs-i3 left

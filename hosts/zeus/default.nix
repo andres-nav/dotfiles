@@ -6,7 +6,10 @@
   modules = {
     desktop = {
       i3.enable = true;
-      apps = { ledger-live.enable = true; };
+      apps = {
+        ledger-live.enable = true;
+        rofi.enable = true;
+      };
       browsers = {
         default = "firefox";
         chromium.enable = true;

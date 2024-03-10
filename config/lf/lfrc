@@ -56,16 +56,16 @@ cmd fzf_directory ${{
 
 map <c-d> :fzf_directory
 
-map w 
+map w
 map W :hide; open_terminal
 map e
-map e $$EDITOR -nw "$f" 
+map e $$EDITOR -nw "$f"
 map c
 map U clear
 
 map q
 map <a-q> quit
-map ; read 
+map ; read
 
 $mkdir -p ~/.trash
 cmd trash $IFS="$(printf '\n\t')"; mv $fx ~/.trash/$(date +'%Y-%m-%d-%M')
@@ -82,10 +82,10 @@ map gc cd ~/.config
 
 map <enter> shell
 
-map O $ echo $f | sed -r "s/\s/\\\ /g" | mimeopen --ask 
+map O $ echo $f | sed -r "s/\s/\\\ /g" | mimeopen --ask
 
 set drawbox
-ratios 1:2:1
+set ratios 1:2:1
 
 map l open_and_close_scratchpad
 map <right> open_and_close_scratchpad

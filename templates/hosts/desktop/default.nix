@@ -1,22 +1,11 @@
-{
-  pkgs,
-  config,
-  lib,
-  ...
-}: {
-  imports = [
-    ../home.nix
-    ./hardware-configuration.nix
-  ];
+{ pkgs, config, lib, ... }: {
+  imports = [ ../home.nix ./hardware-configuration.nix ];
 
   ## Modules
   modules = {
     desktop = {
       bspwm.enable = true;
-      apps = {
-        rofi.enable = true;
-        # godot.enable = true;
-      };
+      apps = { rofi.enable = true; };
       browsers = {
         default = "brave";
         brave.enable = true;
@@ -40,9 +29,7 @@
         default = "xst";
         st.enable = true;
       };
-      vm = {
-        qemu.enable = true;
-      };
+      vm = { qemu.enable = true; };
     };
     dev = {
       node.enable = true;

@@ -1,17 +1,9 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
-}:
+{ config, options, lib, pkgs, ... }:
 with lib;
-with lib.my; let
-  cfg = config.modules.desktop.apps.rofi;
+with lib.my;
+let cfg = config.modules.desktop.apps.rofi;
 in {
-  options.modules.desktop.apps.rofi = {
-    enable = mkBoolOpt false;
-  };
+  options.modules.desktop.apps.rofi = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
     # link recursively so other modules can link files in its folder
@@ -19,10 +11,11 @@ in {
     #   source = <config/rofi>;
     #   recursive = true;
     # };
+    #
 
     environment.systemPackages = with pkgs; [
       (writeScriptBin "rofi" ''
-        #!${stdenv.shell}
+        !${stdenv.shell}
         exec ${pkgs.rofi}/bin/rofi -terminal xst -m -1 "$@"
       '')
 
