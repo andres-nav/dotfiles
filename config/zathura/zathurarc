@@ -24,7 +24,7 @@ set scroll-step 100
 set window-title-basename true
 set statusbar-basename true
 set zoom-min 10
-set guioptions ""
+set guioptions shv
 
 set window-title-basename "true"
 set selection-clipboard "clipboard"

@@ -104,7 +104,7 @@
       magit-commit-ask-to-stage "stage"
       transient-values '((magit-rebase "--autosquash" "--autostash")
                          (magit-pull "--rebase" "--autostash")
-                         (magit-push "--force-with-lease") ;; it forces a push but fails if the remote branch has been updated
+                         (magit-push "--force-with-lease") ;; it forces a push but checks if the remote branch has been updated
                          (magit-revert "--autostash")))
 
 ;;; :lang org
