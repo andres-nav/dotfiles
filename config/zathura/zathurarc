@@ -10,6 +10,7 @@ map J zoom out
 map i toggle_index
 map ; focus_inputbar :
 map z set recolor false
+map p feedkeys ":exec zathura $FILE<Return>"
 
 #map d exec "echo $FILE | sed -r 's/\s/\\\ /g' | zathura"
 

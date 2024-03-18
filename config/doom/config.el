@@ -58,8 +58,8 @@
         flycheck-idle-change-delay 0.8))
 
 ;;; latex
-(setq TeX-view-program-selection '((output-pdf "Zathura"))
-      TeX-view-program-list '(("Zathura" "zathura %o"))
+(setq TeX-view-program-selection '((output-pdf "zathura"))
+      TeX-view-program-list '(("zathura" "zathura --page=$(outpage) %o"))
       +latex-viewers '(zathura)
       TeX-auto-save t
       TeX-parse-self t
