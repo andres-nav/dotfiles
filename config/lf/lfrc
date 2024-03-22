@@ -68,7 +68,7 @@ map <a-q> quit
 map ; read
 
 $mkdir -p ~/.trash
-cmd trash $IFS="$(printf '\n\t')"; mv $fx ~/.trash/$(date +'%Y-%m-%d-%M')
+cmd trash $TRASH_DIR="$HOME/.trash/$(date +'%Y-%m-%d-%H-%M')"; mkdir -p $TRASH_DIR; mv $fx -t $TRASH_DIR/
 map D trash
 
 map gm cd ~/MEGA
