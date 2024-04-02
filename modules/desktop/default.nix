@@ -54,6 +54,9 @@ in {
       # '';
     };
 
+    # Set global dpi to 100
+    services.xserver.dpi = 100;
+
     services.unclutter = { enable = true; };
 
     # Try really hard to get QT to respect my GTK theme.

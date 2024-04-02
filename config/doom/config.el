@@ -78,11 +78,58 @@
         dired-clean-confirm-killing-deleted-buffers nil ;; don't ask to kill buffers visiting deleted files
         dired-auto-revert-buffer #'dired-directory-changed-p ;; auto revert dired buffer when directory changes
         )
-  ;; (map! :map dired-mode-map
-  ;;       :n "h" #'dired-up-directory
-  ;;       :n "l" #'dired-find-alternate-file ;; open file in same buffer and kill dired buffer
-  ;;       :n "=" #'dired-create-empty-file
-  ;;       )
+
+  (defun open-file-in-main-frame ()
+    (interactive)
+    (let ((file (dired-get-file-for-visit)))
+      (when file
+        (select-frame-by-name "main")
+        (dired--find-possibly-alternative-file file)
+        )))
+
+  (map! :map dired-mode-map
+        :n "l" 'open-file-in-main-frame
+        :n "<return>" 'open-file-in-main-frame
+        )
+
+  (defun find-file-at-path (path)
+    "Find a file at a specific path."
+    (interactive)
+    (let* ((default-directory path)
+           (file (read-file-name "Find file: " default-directory)))
+      (find-file file)))
+
+  (defun run-command-in-scratch (command)
+    "Run a command in the scratch buffer."
+    (interactive)
+    (select-frame-by-name "scratch")
+    (command)
+    )
+
+  (map!  :leader
+         (:prefix-map ("d" . "directory")
+          :desc "pwd" "d"   #'(lambda () (interactive) (dired default-directory))
+          :desc "projectile" "SPC"   #'(lambda () (interactive) (projectile-dired))
+          :desc "MEGA     " "m"   #'(lambda () (interactive) (dired "~/MEGA/"))
+          :desc "git      " "g"   #'(lambda () (interactive) (my/find-file-at-path "~/git/"))
+          :desc ".config  " "c"   #'(lambda () (interactive) (my/find-file-at-path "~/.config/"))
+          :desc "Inbox    " "i"   #'(lambda () (interactive) (my/find-file-at-path "~/MEGA/0_Inbox/"))
+          :desc "Projects " "p"   #'(lambda () (interactive) (my/find-file-at-path "~/MEGA/1_Projects/"))
+          :desc "Areas    " "a"   #'(lambda () (interactive) (my/find-file-at-path "~/MEGA/2_Areas/"))
+          :desc "Resources" "r"   #'(lambda () (interactive) (my/find-file-at-path "~/MEGA/3_Resources/"))
+          )
+         )
+
+
+  ;; openwith
+  (use-package! openwith
+    :after (dired)
+    :hook (dired-mode . openwith-mode)
+    :custom
+    (openwith-associations '(("\\.pdf\\'" "zathura" (file))
+                             ))
+    )
+
   )
 
 ;;;; Which key
@@ -197,3 +244,9 @@
   (add-to-list 'super-save-triggers 'magit-status)
   (add-to-list 'super-save-hook-triggers 'focus-out-hook)
   )
+
+;; (use-package mm-util
+;;   :straight gnus
+;;   :config
+;;   (add-to-list 'mm-inhibit-file-name-handlers 'openwith-file-handler)
+;;   )

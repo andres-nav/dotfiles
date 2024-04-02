@@ -55,4 +55,6 @@
 
 (package! super-save)
 
+(package! openwith)
+
 ;; install gptel and gptel-extra

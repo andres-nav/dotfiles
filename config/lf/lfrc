@@ -4,7 +4,7 @@ cmd open_terminal &{{
 
 cmd hide_if_file &{{
     if test -f "$f"; then
-	lf -remote "send $id hide"
+        lf -remote "send $id hide"
     fi
 }}
 

@@ -45,13 +45,6 @@ signal=10
 label=🔈
 color=#fabd2f
 
-########################
-[spacer]
-separator_block_width=10
-full_text=⯻
-color=#ebdbb2
-########################
-
 
 # Disk usage
 #
@@ -104,15 +97,7 @@ color=#ebdbb2
 separator_block_width=40
 command=./modules/battery
 interval=30
-label=🔋
 color=#fabd2f
-
-########################
-[spacer]
-separator_block_width=10
-full_text=⯻
-color=#ebdbb2
-########################
 
 # Date Time
 #

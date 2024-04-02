@@ -1,26 +1,17 @@
-{
-  config,
-  options,
-  pkgs,
-  lib,
-  ...
-}:
+{ config, options, pkgs, lib, ... }:
 with lib;
-with lib.my; let
+with lib.my;
+let
   cfg = config.modules.shell.fish;
   configDir = config.dotfiles.configDir;
 in {
-  options.modules.shell.fish = with types; {
-    enable = mkBoolOpt false;
-  };
+  options.modules.shell.fish = with types; { enable = mkBoolOpt false; };
 
   # TODO: make fish default shell in home.nix
   config = mkIf cfg.enable {
     users.defaultUserShell = pkgs.fish;
 
-    programs.fish = {
-      enable = true;
-    };
+    programs.fish = { enable = true; };
 
     environment.systemPackages = with pkgs; [
       fd
@@ -42,6 +33,8 @@ in {
       fishPlugins.z
 
       fishPlugins.colored-man-pages
+
+      atuin # add atuin for shell history
     ];
 
     environment.shellAliases = {
@@ -56,9 +49,7 @@ in {
       };
     };
 
-    environment.sessionVariables = {
-      FZF_DEFAULT_COMMAND = "fd";
-    };
+    environment.sessionVariables = { FZF_DEFAULT_COMMAND = "fd"; };
 
     # system.userActivationScripts.cleanupZgen = ''
     #   rm -rf $ZSH_CACHE

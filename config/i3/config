@@ -149,28 +149,32 @@ bindsym $mod+Shift+comma move container to output $monitor_primary
 bindsym $mod+Shift+period move container to output $monitor_right
 
 # scratchpads
-for_window [class="scratch"] move window to scratchpad, scratchpad show
+for_window [title="scratchpad"] move window to scratchpad, scratchpad show
 
 # emacs everywhere
 # bindsym $mod+slash exec "emacsclient --eval '(emacs-everywhere)'"
 # for_window [title="^Emacs Everywhere ::"] floating enable
 
-bindsym $mod+Mod1+space exec scratch
-bindsym $mod+space [class="scratch"] scratchpad show
-bindsym $mod+v [class="^(?!scratch)"] scratchpad show
+bindsym $mod+Mod1+space exec emacsclient_custom scratchpad
+bindsym $mod++Shift+Mod1+space exec emacsclient_custom main
+bindsym $mod+space [title="scratchpad"] scratchpad show
+bindsym $mod+v [title="^(?!scratchpad)"] scratchpad show
 bindsym $mod+Shift+space move scratchpad
 
 # window rules
 for_window [class="Spotify"] move container to workspace $ws5
+for_window [title="Todoist"] move container to workspace $ws6
+for_window [title="Notion"] move container to workspace $ws6
 for_window [class="zoom"] move container to workspace $ws9
 for_window [class="Skype"] move container to workspace $ws9
 
-exec --no-startup-id /usr/bin/env emacsclient -c
+exec --no-startup-id emacsclient_custom main
+exec --no-startup-id emacsclient_custom scratchpad
 exec --no-startup-id /usr/bin/env firefox
-exec --no-startup-id scratch
 
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Mod1+r restart
+bindsym $mod+Mod1+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -213,7 +217,7 @@ set $gray #a89984
 set $darkgray #1d2021
 
 # class                 border  bground text    indicator child_border
-client.focused          $green $green $darkgray $purple $darkgray
+client.focused          yellow yellow $darkgray $purple $darkgray
 client.focused_inactive $darkgray $darkgray $yellow $purple $darkgray
 client.unfocused        $darkgray $darkgray $yellow $purple $darkgray
 client.urgent           $red $red $white $red $red

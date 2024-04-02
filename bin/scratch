@@ -1,18 +1,19 @@
 #!/usr/bin/env bash
 
-SCRID=scratch
-CMD=${1:-'tmux new-session -A -s scratch -n scratch'}
+SCRID=scratchpad
+# CMD=$emacsclient -nc -F '\''(quote (name . \"$SCRID\"))'\''  -e '\''(dired default-directory)'\'''
+
 focused=$(xdotool getactivewindow)
-scratch=$(xdotool search --onlyvisible --classname $SCRID)
+scratch=$(xdotool search --name $SCRID)
 if [[ -n $scratch ]]; then
     if [[ $focused == $scratch ]]; then
         xdotool windowkill $scratch
     else
         xdotool windowactivate $scratch
     fi
-elif command -v alacritty >/dev/null; then
-    alacritty -T $SCRID --class $SCRID \
-        -e bash -c "$CMD"
+elif command -v emacsclient >/dev/null; then
+    emacsclient -nc -F '(quote (name . "scratchpad"))'  -e '(dired default-directory)' # FIXME: use the variable
+
 else
     >&2 echo "No shell to launch the scratch terminal with"
     exit 1
