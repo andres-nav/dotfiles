@@ -3,63 +3,15 @@
 (setq user-full-name "Andrés Navarro"
       user-mail-address "contact@andresnav.com")
 
+(setq auth-sources '("~/.authinfo.gpg")
+      auth-source-cache-expiry nil
+      password-cache-expiry nil ;; never expire passwords
+      )
+
 (setq doom-scratch-initial-major-mode 'org-mode
       initial-scratch-message nil)
 
-(setq-default delete-by-moving-to-trash t
-              x-stretch-cursor t
-              )
-
-;; Doom exposes five (optional) variables for controlling fonts in Doom:
-;;
-;; - `doom-font' -- the primary font to use
-;; - `doom-variable-pitch-font' -- a non-monospace font (where applicable)
-;; - `doom-big-font' -- used for `doom-big-font-mode'; use this for
-;;   presentations or streaming.
-;; - `doom-symbol-font' -- for symbols
-;; - `doom-serif-font' -- for the `fixed-pitch-serif' face
-;;
-;; See 'C-h v doom-font' for documentation and more examples of what they
-;; accept. For example:
-;;
-(setq doom-font (font-spec :family "CaskaydiaCove Nerd Font" :size 14)
-      doom-variable-pitch-font (font-spec :family "CaskaydiaCove Nerd Font" :size 16))
-
-(setq display-line-numbers-type nil) ;; disable line numbers
-
-;; Theme
-(setq doom-theme 'doom-gruvbox-light
-      doom-gruvbox-light-brighter-modeline t)
-
-;; Completition
-(after! company
-  (setq company-idle-delay nil))
-
-;; Modeline
-(setq +modeline-height 20)
-
-;;; :editor evil
-;; Focus new window after splitting
-(setq evil-split-window-below t
-      evil-vsplit-window-right t
-      evil-move-beyond-eol nil
-      evil-ex-substitute-global t ;; Implicit /g flag on evil ex substitution.
-      evil-collection-setup-minibuffer t
-      )
-
-(with-eval-after-load 'evil-maps
-  (define-key evil-normal-state-map (kbd ":") 'evil-repeat-find-char)
-  (define-key evil-normal-state-map (kbd ";") 'evil-ex)
-  )
-
-(after! evil
-  (global-set-key [remap evil-quit] 'kill-current-buffer)
-  )
-
-;;; flycheck
-(after! flycheck
-  (setq flycheck-check-syntax-automatically '(save idle-change)
-        flycheck-idle-change-delay 0.8))
+(setq delete-by-moving-to-trash t)
 
 ;;; latex
 (setq TeX-view-program-selection '((output-pdf "zathura"))
@@ -130,7 +82,6 @@
   :desc "git      " "g"   #'(lambda () (interactive) (run-command-in-scratch 'find-file-at-path "~/git/"))
   :desc "home     " "h"   #'(lambda () (interactive) (run-command-in-scratch 'find-file-at-path "~"))
   :desc "temp     " "t"   #'(lambda () (interactive) (run-command-in-scratch 'find-file-at-path "/tmp/"))
-  :desc ".config  " "c"   #'(lambda () (interactive) (run-command-in-scratch 'find-file-at-path "~/.config/"))
   :desc "Inbox    " "i"   #'(lambda () (interactive) (run-command-in-scratch 'find-file-at-path "~/MEGA/0_Inbox/"))
   :desc "Projects " "p"   #'(lambda () (interactive) (run-command-in-scratch 'find-file-at-path "~/MEGA/1_Projects/"))
   :desc "Areas    " "a"   #'(lambda () (interactive) (run-command-in-scratch 'find-file-at-path "~/MEGA/2_Areas/"))
@@ -147,74 +98,6 @@
                            ("\\.doc\\|\\.docx\\|\\.ppt\\|\\.pptx\\|\\.xls\\|\\.xlsx\\'" "libreoffice" (file))
                            ("\\.png\\|\\.jpg\\|\\.jpeg\\|\\.webp\\|\\.gif\\|\\.bmp\\|\\.tiff\\'" "feh" (file))
                            ))
-  )
-
-
-;;;; Which key
-(setq which-key-idle-delay 1)
-
-;; Tabs and final EOL
-(setq-default tab-width 4)
-(setq require-final-newline t)
-
-;;;; Local variables
-(setq-default enable-local-variables t)
-
-;;; :tools magit
-(setq magit-repository-directories '(("~/git" . 2))
-      magit-save-repository-buffers nil
-      ;; Don't restore the wconf after quitting magit, it's jarring
-      magit-inhibit-save-previous-winconf t
-      git-commit-major-mode 'markdown-mode
-      magit-commit-ask-to-stage "stage"
-      transient-values '((magit-rebase "--autosquash" "--autostash")
-                         (magit-pull "--rebase" "--autostash")
-                         (magit-push "--force-with-lease") ;; it forces a push but checks if the remote branch has been updated
-                         (magit-revert "--autostash")))
-
-;;; :lang org
-(setq org-directory "~/MEGA/"
-      org-roam-directory org-directory
-      org-roam-db-location (file-name-concat org-directory ".org-roam.db")
-      org-roam-file-exclude-regexp '(".git/" "4_Archive/" "node_modules/")
-      org-archive-location (file-name-concat org-directory "4_Archive/%s::")
-      org-agenda-files (list org-directory)
-      org-roam-db-update-on-save nil)
-
-(after! org
-  (setq org-startup-folded 'fold
-        org-ellipsis " ▼ "
-        org-hide-emphasis-markers t
-        org-src-fontify-natively t
-        org-src-tab-acts-natively t
-        org-src-preserve-indentation t
-        org-list-demote-modify-bullet '(("+" . "-") ("-" . "+") ("*" . "+") ("1." . "a."))
-        )
-
-
-
-  ;; (custom-set-faces! `((bold italic) :foreground ,(doom-color 'aquamarine)))
-
-  (setq org-highlight-latex-and-related '(native entities script)
-        org-image-actual-width '(0.9)
-        )
-
-  ;; TODO org-roam capture templates
-  (after! org-roam
-    ;; Offer completion for #tags and @areas separately from notes.
-    (add-to-list 'org-roam-completion-functions #'org-roam-complete-tag-at-point)
-
-    ;; Make the backlinks buffer easier to peruse by folding leaves by default.
-    (add-hook 'org-roam-buffer-postrender-functions #'magit-section-show-level-2)
-
-    ;; Open in focused buffer, despite popups
-    (advice-add #'org-roam-node-visit :around #'+popup-save-a)
-
-    ;; Add ID, Type, Tags, and Aliases to top of backlinks buffer.
-    (advice-add #'org-roam-buffer-set-header-line-format :after #'org-roam-add-preamble-a)
-
-    (setq org-roam-completion-everywhere nil) ;; disable org-roam completion everywhere
-    )
   )
 
 ;;; :app everywhere
@@ -237,51 +120,6 @@
                           (+ x (/ width 2) (- (/ width 2)))
                           (+ y (/ height 2))))))
 
-
-;;;; Copilot.el
-(use-package! copilot
-  :hook (prog-mode . copilot-mode)
-  :bind (:map copilot-completion-map
-              ("<tab>" . 'copilot-accept-completion)
-              ("TAB" . 'copilot-accept-completion)
-              ("C-TAB" . 'copilot-accept-completion-by-word)
-              ("C-<tab>" . 'copilot-accept-completion-by-word))
-  :config
-  (add-to-list 'warning-suppress-types '(copilot)) ;; suppress warnings about copilot
-  )
-
-(map!
- :after copilot-mode
- :map doom-leader-toggle-map
- :desc "Copilot"        "c" #'copilot-mode)
-
-;; tmux
-(map!
- :map doom-leader-code-map
- :desc "tmux cd to project"        "p" #'+tmux/cd-to-project
- :desc "tmux rerun"        "c" #'+tmux/rerun
- :desc "tmux run"        "C" #'+tmux/run
- )
-
-;;; super-save
-(use-package! super-save
-  :hook (after-init . super-save-mode)
-  :custom
-  (super-save-auto-save-when-idle t)
-  (super-save-idle-duration 30)
-  (super-save-silent t)
-  (super-save-all-buffers t)
-  (auto-save-default nil) ;; Disable auto-save as we use super-save
-  (super-save-remote-files nil)
-  (super-save-exclude '(".gpg" "COMMIT_EDITMSG" "git-rebase-todo"))
-  :config
-  (add-to-list 'super-save-triggers 'ace-window)
-  (add-to-list 'super-save-triggers 'magit-status)
-  (add-to-list 'super-save-hook-triggers 'focus-out-hook)
-  )
-
-;; (use-package mm-util
-;;   :straight gnus
-;;   :config
-;;   (add-to-list 'mm-inhibit-file-name-handlers 'openwith-file-handler)
-;;   )
+(load! "lisp/+ui")
+(load! "lisp/+edit")
+(load! "lisp/+org")

@@ -38,8 +38,10 @@ in {
     fonts = {
       fontDir.enable = true;
       enableGhostscriptFonts = true;
-      packages = with pkgs;
-        [ (nerdfonts.override { fonts = [ "CascadiaCode" "Overpass" ]; }) ];
+      packages = with pkgs; [
+        (nerdfonts.override { fonts = [ "CascadiaCode" "CascadiaMono" ]; })
+        julia-mono
+      ];
     };
 
     ## Apps/Services

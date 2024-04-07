@@ -26,6 +26,8 @@ in {
 
       # Language
       languagetool
+      enchant
+      pkgconf
 
       # Github Copilot
       nodejs
