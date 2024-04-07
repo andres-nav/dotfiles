@@ -39,7 +39,7 @@ in {
       fontDir.enable = true;
       enableGhostscriptFonts = true;
       packages = with pkgs;
-        [ (nerdfonts.override { fonts = [ "CascadiaCode" ]; }) ];
+        [ (nerdfonts.override { fonts = [ "CascadiaCode" "Overpass" ]; }) ];
     };
 
     ## Apps/Services

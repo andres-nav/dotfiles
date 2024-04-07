@@ -3,8 +3,12 @@
 (setq user-full-name "Andrés Navarro"
       user-mail-address "contact@andresnav.com")
 
-(setq initial-major-mode 'org-mode
+(setq doom-scratch-initial-major-mode 'org-mode
       initial-scratch-message nil)
+
+(setq-default delete-by-moving-to-trash t
+              x-stretch-cursor t
+              )
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom:
 ;;
@@ -77,60 +81,74 @@
         dired-listing-switches "-AFlGh1v --group-directories-first" ;;  show directories first
         dired-clean-confirm-killing-deleted-buffers nil ;; don't ask to kill buffers visiting deleted files
         dired-auto-revert-buffer #'dired-directory-changed-p ;; auto revert dired buffer when directory changes
+
+        find-file-visit-truename nil ;; don't resolve symlinks when opening files
         )
-
-  (defun open-file-in-main-frame ()
-    (interactive)
-    (let ((file (dired-get-file-for-visit)))
-      (when file
-        (select-frame-by-name "main")
-        (dired--find-possibly-alternative-file file)
-        )))
-
-  (map! :map dired-mode-map
-        :n "l" 'open-file-in-main-frame
-        :n "<return>" 'open-file-in-main-frame
-        )
-
-  (defun find-file-at-path (path)
-    "Find a file at a specific path."
-    (interactive)
-    (let* ((default-directory path)
-           (file (read-file-name "Find file: " default-directory)))
-      (find-file file)))
-
-  (defun run-command-in-scratch (command)
-    "Run a command in the scratch buffer."
-    (interactive)
-    (select-frame-by-name "scratch")
-    (command)
-    )
-
-  (map!  :leader
-         (:prefix-map ("d" . "directory")
-          :desc "pwd" "d"   #'(lambda () (interactive) (dired default-directory))
-          :desc "projectile" "SPC"   #'(lambda () (interactive) (projectile-dired))
-          :desc "MEGA     " "m"   #'(lambda () (interactive) (dired "~/MEGA/"))
-          :desc "git      " "g"   #'(lambda () (interactive) (my/find-file-at-path "~/git/"))
-          :desc ".config  " "c"   #'(lambda () (interactive) (my/find-file-at-path "~/.config/"))
-          :desc "Inbox    " "i"   #'(lambda () (interactive) (my/find-file-at-path "~/MEGA/0_Inbox/"))
-          :desc "Projects " "p"   #'(lambda () (interactive) (my/find-file-at-path "~/MEGA/1_Projects/"))
-          :desc "Areas    " "a"   #'(lambda () (interactive) (my/find-file-at-path "~/MEGA/2_Areas/"))
-          :desc "Resources" "r"   #'(lambda () (interactive) (my/find-file-at-path "~/MEGA/3_Resources/"))
-          )
-         )
-
-
-  ;; openwith
-  (use-package! openwith
-    :after (dired)
-    :hook (dired-mode . openwith-mode)
-    :custom
-    (openwith-associations '(("\\.pdf\\'" "zathura" (file))
-                             ))
-    )
-
   )
+
+(defun open-file-in-main-frame ()
+  "Open file in main frame."
+  (interactive)
+  (let ((file (dired-get-file-for-visit)))
+    (when (and file (file-regular-p file))
+      (select-frame-by-name "main")
+      (dired--find-possibly-alternative-file file)
+      )))
+
+(map!
+ :after dired
+ :map dired-mode-map
+ :nv "<return>" #'open-file-in-main-frame
+ :nv "l" #'open-file-in-main-frame
+ )
+
+(defun find-file-at-path (path)
+  "Find a file at a specific path."
+  (interactive)
+  (let* ((default-directory path)
+         (file (read-file-name "Find file: " default-directory)))
+    (find-file file)))
+
+(defun run-command-in-scratch (func &optional arg)
+  "Run a command in the scratch buffer."
+  (interactive)
+  (select-frame-by-name "scratchpad")
+  (shell-command "emacsclient_custom scratchpad >/dev/null 2>&1")
+  (if arg
+      (funcall func arg)
+    (funcall func))
+  )
+
+;; One of my first elisp functions, there is probably a better way to do this. If you know it, please let me know :)
+(map!
+ :after dired
+ :leader
+ (:prefix-map ("d" . "directory")
+  :desc "pwd" "d"   #'(lambda () (interactive) (run-command-in-scratch 'dired default-directory))
+  :desc "projectile" "SPC"   #'(lambda () (interactive) (run-command-in-scratch 'projectile-dired))
+  :desc "MEGA     " "m"   #'(lambda () (interactive) (run-command-in-scratch 'dired "~/MEGA/"))
+  :desc "git      " "g"   #'(lambda () (interactive) (run-command-in-scratch 'find-file-at-path "~/git/"))
+  :desc "home     " "h"   #'(lambda () (interactive) (run-command-in-scratch 'find-file-at-path "~"))
+  :desc "temp     " "t"   #'(lambda () (interactive) (run-command-in-scratch 'find-file-at-path "/tmp/"))
+  :desc ".config  " "c"   #'(lambda () (interactive) (run-command-in-scratch 'find-file-at-path "~/.config/"))
+  :desc "Inbox    " "i"   #'(lambda () (interactive) (run-command-in-scratch 'find-file-at-path "~/MEGA/0_Inbox/"))
+  :desc "Projects " "p"   #'(lambda () (interactive) (run-command-in-scratch 'find-file-at-path "~/MEGA/1_Projects/"))
+  :desc "Areas    " "a"   #'(lambda () (interactive) (run-command-in-scratch 'find-file-at-path "~/MEGA/2_Areas/"))
+  :desc "Resources" "r"   #'(lambda () (interactive) (run-command-in-scratch 'find-file-at-path "~/MEGA/3_Resources/"))
+  ))
+
+
+;; openwith
+(use-package! openwith
+  :after (dired)
+  :hook (dired-mode . openwith-mode)
+  :custom
+  (openwith-associations '(("\\.pdf\\'" "zathura" (file))
+                           ("\\.doc\\|\\.docx\\|\\.ppt\\|\\.pptx\\|\\.xls\\|\\.xlsx\\'" "libreoffice" (file))
+                           ("\\.png\\|\\.jpg\\|\\.jpeg\\|\\.webp\\|\\.gif\\|\\.bmp\\|\\.tiff\\'" "feh" (file))
+                           ))
+  )
+
 
 ;;;; Which key
 (setq which-key-idle-delay 1)
@@ -170,11 +188,15 @@
         org-src-fontify-natively t
         org-src-tab-acts-natively t
         org-src-preserve-indentation t
+        org-list-demote-modify-bullet '(("+" . "-") ("-" . "+") ("*" . "+") ("1." . "a."))
         )
-  (custom-set-faces! `((bold italic) :foreground ,(doom-color 'aquamarine)))
+
+
+
+  ;; (custom-set-faces! `((bold italic) :foreground ,(doom-color 'aquamarine)))
 
   (setq org-highlight-latex-and-related '(native entities script)
-        org-image-actual-width (/ (display-pixel-width) 3)
+        org-image-actual-width '(0.9)
         )
 
   ;; TODO org-roam capture templates
@@ -190,6 +212,8 @@
 
     ;; Add ID, Type, Tags, and Aliases to top of backlinks buffer.
     (advice-add #'org-roam-buffer-set-header-line-format :after #'org-roam-add-preamble-a)
+
+    (setq org-roam-completion-everywhere nil) ;; disable org-roam completion everywhere
     )
   )
 
@@ -226,7 +250,18 @@
   (add-to-list 'warning-suppress-types '(copilot)) ;; suppress warnings about copilot
   )
 
-(map! :leader :desc "Copilot"        "t c" #'copilot-mode)
+(map!
+ :after copilot-mode
+ :map doom-leader-toggle-map
+ :desc "Copilot"        "c" #'copilot-mode)
+
+;; tmux
+(map!
+ :map doom-leader-code-map
+ :desc "tmux cd to project"        "p" #'+tmux/cd-to-project
+ :desc "tmux rerun"        "c" #'+tmux/rerun
+ :desc "tmux run"        "C" #'+tmux/run
+ )
 
 ;;; super-save
 (use-package! super-save
