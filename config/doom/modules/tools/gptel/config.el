@@ -13,11 +13,21 @@
 
     (setq gptel-model   "mixtral-8x7b-32768"
           gptel-backend (gptel-make-openai "Groq"
-                                           :host host
-                                           :endpoint "/openai/v1/chat/completions"
-                                           :stream t
-                                           :key key
-                                           :models '("mixtral-8x7b-32768"
-                                                     "gemma-7b-it"
-                                                     "llama2-70b-4096"))))
+                          :host host
+                          :endpoint "/openai/v1/chat/completions"
+                          :stream nil
+                          :key key
+                          :models '("mixtral-8x7b-32768"
+                                    "gemma-7b-it"
+                                    "llama2-70b-4096"))))
   )
+
+(map! :after gptel
+      :leader :prefix ("l" . "llm")
+      :desc "Gptel" "g" #'gptel-menu
+      :desc "Gptel send" "s" #'gptel-send
+      :desc "Gptel system prompt" "p" #'gptel-system-prompt
+      :desc "Gptel org set properties" "o" #'gptel-org-set-properties
+      :desc "Gptel org set topic" "t" #'gptel-org-set-topic
+      )
+

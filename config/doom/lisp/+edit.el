@@ -71,5 +71,14 @@
                          (magit-pull "--rebase" "--autostash")
                          (magit-revert "--autostash")))
 
+(after! magit
+  (defun +magit-fetch-from-upstream-default ()
+    "Fetch from the upstream remote."
+    (magit-git-fetch (magit-get-current-remote) (magit-fetch-arguments)))
+
+  ;; Fetch from upstream when entering magit-status
+  (add-hook 'magit-status-mode-hook #'+magit-fetch-from-upstream-default)
+  )
+
 ;;; projectile
 (setq projectile-ignored-projects (list "~/" "/tmp" (expand-file-name "straight/repos" doom-local-dir)))

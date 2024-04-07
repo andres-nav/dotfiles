@@ -19,6 +19,7 @@ in {
       zstd
       gnuplot # used to create graphs in org-mode
       # nodePackages.javascript-typescript-langserver
+      # delta # used for diffing with magit-delta
       sqlite
       wordnet
       editorconfig-core-c
@@ -26,8 +27,7 @@ in {
 
       # Language
       languagetool
-      enchant
-      pkgconf
+      emacsPackages.jinx # need to install it via nix for enchant support
 
       # Github Copilot
       nodejs

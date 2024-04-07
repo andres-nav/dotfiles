@@ -1,6 +1,6 @@
 ;;; $DOOMDIR/lisp/+org.el -*- lexical-binding: t; -*-
 
-(setq org-directory "~/MEGA/"
+(setq org-directory (expand-file-name "~/MEGA/")
       org-agenda-files (list org-directory)
       org-archive-location (file-name-concat org-directory "4_Archive/%s::")
       )
@@ -8,12 +8,11 @@
 (setq org-startup-folded 'fold
       org-ellipsis " ▼ "
       org-hide-emphasis-markers t
-      ;; org-src-fontify-natively t
       org-image-actual-width '(0.9)
       org-list-demote-modify-bullet '(("+" . "-") ("-" . "+") ("*" . "+") ("1." . "a."))
       )
 
-;; TODO org-roam capture templates
+;; TODO og-roam capture templates
 (setq org-roam-directory org-directory
       org-roam-db-location (file-name-concat org-directory ".org-roam.db")
       org-roam-file-exclude-regexp '(".git/" ".github" "4_Archive/" "node_modules/" ".direnv" ".*" ".terraform")

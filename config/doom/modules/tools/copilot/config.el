@@ -13,6 +13,6 @@
   )
 
 (map! :after (evil copilot)
-      :leader :prefix ("t" . "toggle")
-      :desc "Fill Column Indicator" "i" #'global-display-fill-column-indicator-mode
-      :desc "Copilot" "c" #'copilot-mode)
+      :leader :prefix ("l" . "llm")
+      :desc "Copilot" "c" #'copilot-mode
+      )

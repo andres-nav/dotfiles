@@ -8,7 +8,7 @@
       password-cache-expiry nil ;; never expire passwords
       )
 
-(setq doom-scratch-initial-major-mode 'org-mode
+(setq initial-major-mode 'org-mode
       initial-scratch-message nil)
 
 (setq delete-by-moving-to-trash t)
