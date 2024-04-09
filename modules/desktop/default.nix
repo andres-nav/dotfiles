@@ -37,6 +37,7 @@ in {
       # Dictionary
       hunspellDicts.en_US-large
       hunspellDicts.es_ES
+      # TODO: add custom dictionary `http://app.aspell.net/create?defaults=en_US-large`
     ];
 
     fonts = {

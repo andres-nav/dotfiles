@@ -12,7 +12,6 @@
 
   )
 
-(map! :after (evil copilot)
-      :leader :prefix ("l" . "llm")
+(map! :leader :prefix ("l" . "llm")
       :desc "Copilot" "c" #'copilot-mode
       )
