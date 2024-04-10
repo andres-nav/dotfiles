@@ -11,7 +11,9 @@
 (setq initial-major-mode 'org-mode
       initial-scratch-message nil)
 
-(setq delete-by-moving-to-trash t)
+(setq delete-by-moving-to-trash t
+      large-file-warning-threshold 100000000 ;; 100mb
+      )
 
 ;;; latex
 (setq TeX-view-program-selection '((output-pdf "zathura"))
@@ -123,3 +125,4 @@
 (load! "lisp/+ui")
 (load! "lisp/+edit")
 (load! "lisp/+org")
+(load! "lisp/+ai")

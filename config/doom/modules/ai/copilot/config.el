@@ -1,6 +1,7 @@
 ;;; tools/copilot/config.el -*- lexical-binding: t; -*-
 
 (use-package! copilot
+  :after-call (copilot-mode)
   :hook (prog-mode . copilot-mode)
   :bind (:map copilot-completion-map
               ("<tab>" . 'copilot-accept-completion)

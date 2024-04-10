@@ -40,3 +40,26 @@
 ;;                 t)))
 
 ;; (add-hook 'after-change-major-mode-hook #'doom-modeline-conditional-buffer-encoding)
+
+
+(custom-set-faces
+ '(tab-bar-tab-active ((t (:background "goldenrod" :foreground "black"))))
+ '(tab-bar-tab-inactive ((t (:background "dim gray" :foreground "black"))))
+ '(tab-bar-tab-unselected ((t (:background "dim gray" :foreground "black"))))
+ )
+
+(after! evil
+  ;; TODO: create tab-map
+  (map!
+   :map evil-window-map
+   "SPC" 'aw-flip-window
+   "t" 'tab-new
+   "n" 'evil-tab-next
+   "p" 'tab-previous
+   )
+
+  (map!
+   :leader
+   :desc "Toggle last popup" "TAB" #'+popup/toggle
+   )
+  )

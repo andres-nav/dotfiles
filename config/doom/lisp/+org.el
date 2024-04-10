@@ -10,6 +10,8 @@
       org-hide-emphasis-markers t
       org-image-actual-width '(0.9)
       org-list-demote-modify-bullet '(("+" . "-") ("-" . "+") ("*" . "+") ("1." . "a."))
+      org-preview-latex-default-process 'dvisvgm
+      org-startup-with-latex-preview t
       )
 
 (setq org-roam-directory org-directory

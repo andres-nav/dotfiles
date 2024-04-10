@@ -20,7 +20,7 @@
 
   ;; prompt to opne buffer after splitting window
   (defadvice! prompt-for-buffer (&rest _)
-    :after '(evil-window-split evil-window-vsplit)
+    :after '(evil-window-split evil-window-vsplit tab-new)
     (consult-buffer))
 
   (global-set-key [remap evil-quit] 'kill-current-buffer)
