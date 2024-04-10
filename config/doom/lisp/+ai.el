@@ -7,6 +7,7 @@
   ;; (add-to-list 'gptel-directives '(scala . "")
   ;;              )
 
+  (gptel--system-message)
 
   (setq! gptel-model   "mixtral-8x7b-32768"
          gptel-backend
@@ -24,14 +25,6 @@
            )
          )
 
-  (let* ((host "kagi.com")
-         (user "kagi")
-         )
-    (gptel-make-kagi user
-      :key (gptel-api-key-from-auth-source host user)
-      )
-    )
-
   (let* ((host "api.together.xyz")
          (user "togetherai")
          )
@@ -40,11 +33,15 @@
       :key (gptel-api-key-from-auth-source host user)
       :stream t
       :models '(;; has many more, check together.ai
-                "mistralai/Mixtral-8x7B-Instruct-v0.1"
-                "codellama/CodeLlama-70b-hf"
-                "allenai/OLMo-7B-Twin-2T"
-                "stabilityai/stable-diffusion-2-1"
-                "stabilityai/stable-diffusion-xl-base-1.0"
+                "mistralai/Mixtral-8x22B" ;; super big boy
+                "databricks/dbrx-instruct" ;; really big model
+                "deepseek-ai/deepseek-llm-67b-chat"
+                "togethercomputer/evo-1-131k-base"
+                "NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT"
+                "Qwen/Qwen1.5-72B-Chat"
+                "meta-llama/Llama-2-70b-chat-hf"
+                "codellama/CodeLlama-34b-Python-hf"
+                "Phind/Phind-CodeLlama-34B-v2"
                 ))
     )
   )

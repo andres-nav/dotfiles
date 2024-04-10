@@ -78,7 +78,7 @@ in {
       # Reduce search engine noise in the urlbar's completion window. The
       # shortcuts and suggestions will still work, but Firefox won't clutter
       # its UI with reminders that they exist.
-      "browser.urlbar.suggest.searches" = false;
+      "browser.urlbar.suggest.searches" = true;
       "browser.urlbar.shortcuts.bookmarks" = true;
       "browser.urlbar.shortcuts.history" = true;
       "browser.urlbar.shortcuts.tabs" = false;
