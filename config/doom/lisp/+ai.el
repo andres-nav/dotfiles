@@ -1,39 +1,43 @@
 ;;; $DOOMDIR/lisp/+ai.el -*- lexical-binding: t; -*-
 
 (after! gptel
-  ;; (require 'auth-source)
+  ;; Prompts
+  ;;https://github.com/friuns2/BlackFriday-GPTs-Prompts
+  ;;https://github.com/ai-boost/awesome-prompts/
+  ;; (add-to-list 'gptel-directives '(scala . "")
+  ;;              )
 
-  (let* ((auth-info (car (auth-source-search :user "groq")))
-         (host (plist-get auth-info :host))
-         (key (plist-get auth-info :secret)))
 
-    (setq gptel-model   "mixtral-8x7b-32768"
-          gptel-backend
-          (gptel-make-openai "Groq"
-            :host host
-            :key key
-            :endpoint "/openai/v1/chat/completions"
-            :stream t
-            :models '("mixtral-8x7b-32768"
-                      "gemma-7b-it"
-                      "llama2-70b-4096"))
-          )
-    )
+  (setq! gptel-model   "mixtral-8x7b-32768"
+         gptel-backend
+         (let* ((host "api.groq.com")
+                (user "groq")
+                )
+           (gptel-make-openai user
+             :host host
+             :key (gptel-api-key-from-auth-source host user)
+             :endpoint "/openai/v1/chat/completions"
+             :stream t
+             :models '("mixtral-8x7b-32768"
+                       "gemma-7b-it"
+                       "llama2-70b-4096"))
+           )
+         )
 
-  (let* ((auth-info (car (auth-source-search :user "kagi")))
-         (host (plist-get auth-info :host))
-         (key (plist-get auth-info :secret)))
-    (gptel-make-kagi "Kagi"
-      :key key
+  (let* ((host "kagi.com")
+         (user "kagi")
+         )
+    (gptel-make-kagi user
+      :key (gptel-api-key-from-auth-source host user)
       )
     )
 
-  (let* ((auth-info (car (auth-source-search :user "togetherai")))
-         (host (plist-get auth-info :host))
-         (key (plist-get auth-info :secret)))
-    (gptel-make-openai "TogetherAI"
+  (let* ((host "api.together.xyz")
+         (user "togetherai")
+         )
+    (gptel-make-openai user
       :host host
-      :key key
+      :key (gptel-api-key-from-auth-source host user)
       :stream t
       :models '(;; has many more, check together.ai
                 "mistralai/Mixtral-8x7B-Instruct-v0.1"
