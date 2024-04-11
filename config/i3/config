@@ -48,6 +48,7 @@ bindsym $mod+Mod1+q kill
 
 # Rofi
 bindsym $mod+Return exec "rofi -show drun -modi drun,run -show-icons"
+bindsym Print exec "scrcap"
 
 # change focus
 bindsym $mod+h exec emacs-i3 left
@@ -162,7 +163,6 @@ bindsym $mod+v [title="^(?!scratchpad)"] scratchpad show
 bindsym $mod+Shift+space move scratchpad
 
 # window rules
-for_window [title="main"] move container to workspace $ws1 # FIXME: change the main title
 for_window [class="Spotify"] move container to workspace $ws5
 for_window [title="Todoist"] move container to workspace $ws6
 for_window [title="Notion"] move container to workspace $ws6

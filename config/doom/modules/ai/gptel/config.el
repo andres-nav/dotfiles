@@ -1,6 +1,5 @@
 ;;; ai/gptel/config.el -*- lexical-binding: t; -*-
 
-use-package
 (use-package! gptel
   :after-call (gptel-mode-hook)
   :custom

@@ -7,7 +7,8 @@
   ;; (add-to-list 'gptel-directives '(scala . "")
   ;;              )
 
-  (gptel--system-message)
+  ;; FIXME: temporary fix for the system message. To reset the system message
+  (setq gptel--system-message (alist-get 'default gptel-directives))
 
   (setq! gptel-model   "mixtral-8x7b-32768"
          gptel-backend
