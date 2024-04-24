@@ -31,7 +31,7 @@ if [ "$choice" = "ocr" ]; then
   set -- ocr
 fi
 
-if nix run nixpkgs#maim -- -kus >"$tmp"; then
+if nix run nixpkgs#maim -- -us >"$tmp"; then
   if [ $choice = "ocr" ] || [ $choice = "ocr_es" ]; then
     lang="eng"
     if [ $choice = "ocr_es" ]; then

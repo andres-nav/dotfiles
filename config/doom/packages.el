@@ -53,4 +53,6 @@
 
 (package! openwith)
 
-;; install gptel and gptel-extra
+;; org-roam-ui
+(unpin! org-roam)
+(package! org-roam-ui)

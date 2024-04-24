@@ -5,7 +5,6 @@
   :custom
   (gptel-directives '((default . "")))
   :config
-  (add-hook 'gptel-post-send-hook #'gptel-auto-scroll)
   (setq! gptel-default-mode #'org-mode)
 
   (setf (alist-get 'org-mode gptel-response-prefix-alist)

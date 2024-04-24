@@ -182,6 +182,8 @@ in {
       "browser.tabs.crashReporting.sendReport" = false;
       "browser.crashReports.unsubmittedCheck.autoSubmit2" =
         false; # don't submit backlogged reports
+      # Unload tabs to save memory
+      "browser.tabs.unloadOnLowMemory" = true;
 
       # Disable Form autofill
       # https://wiki.mozilla.org/Firefox/Features/Form_Autofill

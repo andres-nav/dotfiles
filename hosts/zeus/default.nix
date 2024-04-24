@@ -9,7 +9,7 @@
       apps = {
         ledger-live.enable = true;
         rofi.enable = true;
-      };
+      } ;
       browsers = {
         default = "firefox";
         chromium.enable = true;
@@ -29,7 +29,9 @@
         default = "alacritty";
         alacritty.enable = true;
       };
-      vm = { qemu.enable = true; };
+      vm = { qemu.enable = true;
+           # virtualbox.enable = true;
+           };
     };
     dev = {
       node.enable = true;

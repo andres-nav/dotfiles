@@ -6,6 +6,7 @@
 (setq auth-sources '("~/.authinfo.gpg")
       auth-source-cache-expiry nil
       password-cache-expiry nil ;; never expire passwords
+      default-input-method "spanish-prefix"
       )
 
 (setq initial-major-mode 'org-mode
@@ -16,14 +17,13 @@
       )
 
 ;;; latex
-(setq TeX-view-program-selection '((output-pdf "zathura"))
-      TeX-view-program-list '(("zathura" "zathura --page=$(outpage) %o"))
-      +latex-viewers '(zathura)
-      TeX-auto-save t
-      TeX-parse-self t
+(setq TeX-auto-save t
+      ;; TeX-view-program-selection '((output-pdf "zathura"))
+      ;; TeX-view-program-list '(("zathura" "zathura --page=$(outpage) %o"))
+      +latex-viewers '(pdf-tools zathura)
+      ;; TeX-parse-self t
       compilation-ask-about-save nil ;; save all buffers on compilation
-      TeX-engine 'luatex
-      TeX-command-extra-options "-output-directory=./latexbuild")
+      TeX-command-extra-options "-output-directory=/tmp/latexbuild")
 
 ;;; dired
 (after! dired
@@ -121,6 +121,22 @@
       (set-frame-position frame
                           (+ x (/ width 2) (- (/ width 2)))
                           (+ y (/ height 2))))))
+
+(use-package! websocket
+  :after org-roam)
+
+(use-package! org-roam-ui
+  :after org-roam ;; or :after org
+  ;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
+  ;;         a hookable mode anymore, you're advised to pick something yourself
+  ;;         if you don't care about startup time, use
+  ;;  :hook (after-init . org-roam-ui-mode)
+  :config
+  (setq org-roam-ui-sync-theme t
+        org-roam-ui-follow t
+        org-roam-ui-update-on-save t
+        org-roam-ui-open-on-start t))
+
 
 (load! "lisp/+ui")
 (load! "lisp/+edit")

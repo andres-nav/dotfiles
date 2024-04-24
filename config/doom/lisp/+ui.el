@@ -54,6 +54,7 @@
    :map evil-window-map
    "SPC" 'aw-flip-window
    "t" 'tab-new
+   "r" 'tab-rename
    "n" 'evil-tab-next
    "p" 'tab-previous
    )
