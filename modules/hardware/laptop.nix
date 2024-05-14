@@ -1,13 +1,23 @@
 # modules/hardware/laptop.nix --- support for laptops
-{ options, config, lib, pkgs, ... }:
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
 with lib.my;
-let cfg = config.modules.hardware.laptop;
-in {
-  options.modules.hardware.laptop = { enable = mkBoolOpt false; };
+let
+  cfg = config.modules.hardware.laptop;
+in
+{
+  options.modules.hardware.laptop = {
+    enable = mkBoolOpt false;
+  };
 
   config = mkIf cfg.enable {
-    services.xserver.libinput = {
+    services.libinput = {
       enable = lib.mkDefault true; # trackpad
       touchpad.disableWhileTyping = true;
     };
@@ -36,8 +46,7 @@ in {
 
     services.acpid.enable = true;
 
-    hardware.enableRedistributableFirmware =
-      lib.mkDefault true; # add firmware such has wifi
+    hardware.enableRedistributableFirmware = lib.mkDefault true; # add firmware such has wifi
 
     environment.systemPackages = with pkgs; [
       acpi

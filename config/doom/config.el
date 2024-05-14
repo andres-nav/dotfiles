@@ -17,13 +17,14 @@
       )
 
 ;;; latex
-(setq TeX-auto-save t
-      ;; TeX-view-program-selection '((output-pdf "zathura"))
-      ;; TeX-view-program-list '(("zathura" "zathura --page=$(outpage) %o"))
-      +latex-viewers '(pdf-tools zathura)
-      ;; TeX-parse-self t
-      compilation-ask-about-save nil ;; save all buffers on compilation
-      TeX-command-extra-options "-output-directory=/tmp/latexbuild")
+(setq! TeX-auto-save t
+       ;; TeX-view-program-list '(("zathura" "zathura --page=$(outpage) %o"))
+       +latex-viewers '(pdf-tools zathura)
+       TeX-parse-self t
+       compilation-ask-about-save nil ;; save all buffers on compilation
+       TeX-engine 'luatex
+       tex-directory "/tmp/latexbuild"
+       TeX-command-extra-options "-output-directory=/tmp/latexbuild")
 
 ;;; dired
 (after! dired

@@ -22,7 +22,7 @@
              :stream t
              :models '("mixtral-8x7b-32768"
                        "gemma-7b-it"
-                       "llama2-70b-4096"))
+                       "llama3-70b-8192"))
            )
          )
 

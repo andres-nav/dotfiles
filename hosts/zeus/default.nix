@@ -1,6 +1,10 @@
 # Zeus: my main laptop
-{ ... }: {
-  imports = [ ../home.nix ./hardware-configuration.nix ];
+{ ... }:
+{
+  imports = [
+    ../home.nix
+    ./hardware-configuration.nix
+  ];
 
   ## Modules
   modules = {
@@ -9,7 +13,7 @@
       apps = {
         ledger-live.enable = true;
         rofi.enable = true;
-      } ;
+      };
       browsers = {
         default = "firefox";
         chromium.enable = true;
@@ -29,9 +33,10 @@
         default = "alacritty";
         alacritty.enable = true;
       };
-      vm = { qemu.enable = true;
-           # virtualbox.enable = true;
-           };
+      vm = {
+        qemu.enable = true;
+        # virtualbox.enable = true;
+      };
     };
     dev = {
       node.enable = true;
@@ -62,7 +67,10 @@
       docker.enable = true;
       zerotier = {
         enable = true;
-        joinNetworks = [ "9bee8941b5092092" ];
+        joinNetworks = [
+          "9bee8941b5092092"
+          "60ee7c034acb3fe5"
+        ];
       };
     };
 
