@@ -1,21 +1,31 @@
-{ config, options, lib, pkgs, ... }:
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
 with lib.my;
 let
   cfg = config.modules.desktop;
   configDir = config.dotfiles.configDir;
-in {
+in
+{
   config = mkIf config.services.xserver.enable {
     assertions = [
       {
         assertion = (countAttrs (n: v: n == "enable" && value) cfg) < 2;
-        message =
-          "Can't have more than one desktop environment enabled at a time";
+        message = "Can't have more than one desktop environment enabled at a time";
       }
       {
-        assertion = let srv = config.services;
-        in srv.xserver.enable || srv.sway.enable || !(anyAttrs
-          (n: v: isAttrs v && anyAttrs (n: v: isAttrs v && v.enable)) cfg);
+        assertion =
+          let
+            srv = config.services;
+          in
+          srv.xserver.enable
+          || srv.sway.enable
+          || !(anyAttrs (n: v: isAttrs v && anyAttrs (n: v: isAttrs v && v.enable)) cfg);
         message = "Can't enable a desktop app without a desktop environment";
       }
     ];
@@ -44,8 +54,16 @@ in {
       fontDir.enable = true;
       enableGhostscriptFonts = true;
       packages = with pkgs; [
-        (nerdfonts.override { fonts = [ "CascadiaCode" "CascadiaMono" ]; })
-        julia-mono
+        (nerdfonts.override {
+          fonts = [
+            "CascadiaCode"
+            "CascadiaMono"
+            "Tinos"
+            "SourceCodePro"
+            "FiraCode"
+            "FiraMono"
+          ];
+        })
       ];
     };
 
@@ -64,7 +82,9 @@ in {
     # Set global dpi to 100
     services.xserver.dpi = 100;
 
-    services.unclutter = { enable = true; };
+    services.unclutter = {
+      enable = true;
+    };
 
     # Try really hard to get QT to respect my GTK theme.
     env.GTK_DATA_PREFIX = [ "${config.system.path}" ];
