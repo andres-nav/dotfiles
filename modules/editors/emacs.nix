@@ -1,11 +1,20 @@
-{ config, options, lib, pkgs, ... }:
+{
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
 with lib.my;
 let
   cfg = config.modules.editors.emacs;
   configDir = config.dotfiles.configDir;
-in {
-  options.modules.editors.emacs = { enable = mkBoolOpt false; };
+in
+{
+  options.modules.editors.emacs = {
+    enable = mkBoolOpt false;
+  };
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
@@ -28,6 +37,9 @@ in {
       # Language
       languagetool
       emacsPackages.jinx # need to install it via nix for enchant support
+
+      # For org superagenda
+      dash
 
       # Github Copilot
       nodejs

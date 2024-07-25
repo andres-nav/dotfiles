@@ -32,6 +32,7 @@ in
 
     environment.systemPackages = with pkgs; [
       feh # image viewer
+      dunst # notification manger
       htop
       libqalculate # calculator cli w/ currency conversion
       (makeDesktopItem {

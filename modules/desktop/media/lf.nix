@@ -7,10 +7,12 @@
   ...
 }:
 with lib;
-with lib.my; let
+with lib.my;
+let
   cfg = config.modules.desktop.media.lf;
   configDir = config.dotfiles.configDir;
-in {
+in
+{
   options.modules.desktop.media.lf = {
     enable = mkBoolOpt false;
   };
@@ -18,6 +20,10 @@ in {
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       lf
+      trash-cli
+      fd
+      fzf
+      perl538Packages.FileMimeInfo # for mimeopen
     ];
 
     home.configFile = {

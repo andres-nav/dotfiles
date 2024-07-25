@@ -136,20 +136,8 @@
         org-roam-ui-update-on-save t
         org-roam-ui-open-on-start t))
 
-
-(map!
- :map pdf-view-mode-map
- :gn "j" #'pdf-view-scroll-up-or-next-page
- :gn "J" #'pdf-view-next-line-or-next-page
- :gn "k" #'pdf-view-scroll-down-or-previous-page
- :gn "K" #'pdf-view-previous-line-or-previous-page
- :gn "h" #'pdf-view-next-page-command
- :gn "l" #'pdf-view-previous-page-command
- :gn "c" #'pdf-view-center-in-window
- )
-
 (load! "lisp/+ui")
 (load! "lisp/+edit")
 (load! "lisp/+org")
 (load! "lisp/+ai")
-
+(load! "lisp/+keybindings")

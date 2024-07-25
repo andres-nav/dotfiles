@@ -6,10 +6,12 @@
   ...
 }:
 with lib;
-with lib.my; let
+with lib.my;
+let
   cfg = config.modules.shell.git;
   configDir = config.dotfiles.configDir;
-in {
+in
+{
   options.modules.shell.git = {
     enable = mkBoolOpt false;
   };
@@ -22,15 +24,14 @@ in {
       gitAndTools.gh
       gitAndTools.git-open
       gitAndTools.diff-so-fancy
-      (mkIf config.modules.shell.gnupg.enable
-        gitAndTools.git-crypt)
+      (mkIf config.modules.shell.gnupg.enable gitAndTools.git-crypt)
       act
     ];
 
     home.configFile = {
       "git" = {
         source = "${configDir}/git";
-        recursive = true;
+        # recursive = true;
       };
     };
   };

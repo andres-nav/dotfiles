@@ -2,30 +2,27 @@
 #
 # Set up and enforce XDG compliance. Other modules will take care of their own,
 # but this takes care of the general cases.
+{ config, home-manager, ... }:
 {
-  config,
-  home-manager,
-  ...
-}: {
   ### A tidy $HOME is a tidy mind
   home-manager.users.${config.user.name}.xdg = {
     enable = true;
     mimeApps = {
       enable = true;
       defaultApplications = {
-        "application/pdf" = ["org.pwmt.zathura.desktop"];
-        "x-scheme-handler/http" = ["firefox.desktop"];
-        "x-scheme-handler/https" = ["firefox.desktop"];
-        "x-scheme-handler/msteams" = ["teams.desktop"];
-        "x-scheme-handler/spotify" = ["spotify.desktop"];
-        "image/jpg" = ["feh.desktop"];
-        "image/jpeg" = ["feh.desktop"];
-        "image/png" = ["feh.desktop"];
-        "image/webp" = ["feh.desktop"];
-        "text/plain" = ["emacsclient.desktop"];
-        "text/html" = ["firefox.desktop"];
-        "application/x-ipynb+json" = ["codium.desktop"];
-        "inode/directory" = ["lf.desktop"];
+        "application/pdf" = [ "emacsclient.desktop" ];
+        "x-scheme-handler/http" = [ "firefox.desktop" ];
+        "x-scheme-handler/https" = [ "firefox.desktop" ];
+        "x-scheme-handler/msteams" = [ "teams.desktop" ];
+        "x-scheme-handler/spotify" = [ "spotify.desktop" ];
+        "image/jpg" = [ "feh.desktop" ];
+        "image/jpeg" = [ "feh.desktop" ];
+        "image/png" = [ "feh.desktop" ];
+        "image/webp" = [ "feh.desktop" ];
+        "text/plain" = [ "emacsclient.desktop" ];
+        "text/html" = [ "firefox.desktop" ];
+        "application/x-ipynb+json" = [ "codium.desktop" ];
+        "inode/directory" = [ "lf.desktop" ];
       };
     };
   };

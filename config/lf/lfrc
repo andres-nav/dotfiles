@@ -1,7 +1,3 @@
-cmd open_terminal &{{
-	alacritty --hold $F
-}}
-
 cmd hide_if_file &{{
     if test -f "$f"; then
         lf -remote "send $id hide"
@@ -18,14 +14,6 @@ cmd open_emacsclient &{{
 	pwd | sed -r "s/\s/\\\ /g" | emacsclient .
 }}
 
-# cmd done ${{
-# 	if test -f "$f"; then
-# 		filename=$(basename $f)
-# 		echo ${filename}
-# 		mv "${filename}" "(D) ${filename}"
-# 	fi
-# }}
-
 cmd fzf_file ${{
     res="$(fd --type f . | fzf --reverse --header='Jump to location')"
     if [ -n "$res" ]; then
@@ -38,8 +26,6 @@ cmd fzf_file ${{
         lf -remote "send $id $cmd \"$res\""
     fi
 }}
-
-map <c-f> :fzf_file
 
 cmd fzf_directory ${{
     res="$(fd --type d . | fzf --reverse --header='Jump to location')"
@@ -55,34 +41,24 @@ cmd fzf_directory ${{
 }}
 
 map <c-d> :fzf_directory
-
-map w
-map W :hide; open_terminal
-map e
-map e $$EDITOR -nw "$f"
-map c
-map U clear
+map <c-f> :fzf_file
+map . :shell -window 'read -p "Enter text: " input && [ -n "$input" ] && z "$input"'
 
 map q
 map <a-q> quit
 map ; read
 
-$mkdir -p ~/.trash
-cmd trash $TRASH_DIR="$HOME/.trash/$(date +'%Y-%m-%d-%H-%M')"; mkdir -p $TRASH_DIR; mv $fx -t $TRASH_DIR/
-map D trash
+map D trash-put $fx
 
 map gm cd ~/MEGA
-map gi cd ~/MEGA/0_Inbox
-map gp cd ~/MEGA/1_Projects
-map ga cd ~/MEGA/2_Areas
-map gr cd ~/MEGA/3_Resources
-map gd cd ~/git/dotfiles
+map gi cd ~/MEGA/0_inbox
+map gb cd ~/MEGA/1_brain
+map ga cd ~/MEGA/2_attachments
+map gd cd ~/Downloads
 map gg cd ~/git
-map gc cd ~/.config
+map gt cd /tmp/
 
-map <enter> shell
-
-map O $ echo $f | sed -r "s/\s/\\\ /g" | mimeopen --ask
+map o $ echo $f | sed -r "s/\s/\\\ /g" | mimeopen --ask
 
 set drawbox
 set ratios 1:2:1

@@ -69,7 +69,7 @@ bindsym $mod+n split h
 bindsym $mod+m split v
 
 # enter fullscreen mode for the focused container
-bindsym $mod+c fullscreen toggle
+bindsym $mod+g fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+1 layout stacking
@@ -102,18 +102,22 @@ set $ws7 "7: D"
 set $ws8 "8: F"
 set $ws9 "9: E"
 set $ws10 "10: R"
+set $ws11 "11: C"
+set $ws12 "12: V"
 
-workspace $ws1 output $monitor_primary
-workspace $ws2 output $monitor_primary
-workspace $ws3 output $monitor_primary
-workspace $ws4 output $monitor_primary
-workspace $ws5 output $monitor_primary
-workspace $ws6 output $monitor_primary
+workspace $ws1 output $monitor_right
+workspace $ws2 output $monitor_right
+workspace $ws3 output $monitor_right
+workspace $ws4 output $monitor_right
+workspace $ws5 output $monitor_right
+workspace $ws6 output $monitor_right
 
-workspace $ws7 output $monitor_right
-workspace $ws8 output $monitor_right
-workspace $ws9 output $monitor_right
-workspace $ws10 output $monitor_right
+workspace $ws7 output $monitor_primary
+workspace $ws8 output $monitor_primary
+workspace $ws9 output $monitor_primary
+workspace $ws10 output $monitor_primary
+workspace $ws11 output $monitor_primary
+workspace $ws12 output $monitor_primary
 
 # switch to workspace
 bindsym $mod+a workspace number $ws1
@@ -127,6 +131,8 @@ bindsym $mod+d workspace number $ws7
 bindsym $mod+f workspace number $ws8
 bindsym $mod+e workspace number $ws9
 bindsym $mod+r workspace number $ws10
+bindsym $mod+c workspace number $ws11
+bindsym $mod+v workspace number $ws12
 
 # move focused container to workspace
 bindsym $mod+Shift+a move container to workspace number $ws1
@@ -140,14 +146,16 @@ bindsym $mod+Shift+d move container to workspace number $ws7
 bindsym $mod+Shift+f move container to workspace number $ws8
 bindsym $mod+Shift+e move container to workspace number $ws9
 bindsym $mod+Shift+r move container to workspace number $ws10
-
+bindsym $mod+Shift+c move container to workspace number $ws11
+bindsym $mod+Shift+v move container to workspace number $ws12
 
 # focus next screen
-bindsym $mod+comma focus output $monitor_primary
-bindsym $mod+period focus output $monitor_right
+# bindsym $mod+comma focus output $monitor_primary
+# bindsym $mod+period focus output $monitor_right
+
 # move container between screens
-bindsym $mod+Shift+comma move container to output $monitor_primary
-bindsym $mod+Shift+period move container to output $monitor_right
+# bindsym $mod+Shift+comma move container to output $monitor_primary
+# bindsym $mod+Shift+period move container to output $monitor_right
 
 # scratchpads
 for_window [title="scratchpad"] move window to scratchpad, scratchpad show
@@ -159,15 +167,17 @@ for_window [title="scratchpad"] move window to scratchpad, scratchpad show
 bindsym $mod+Mod1+space exec emacsclient_custom scratchpad
 bindsym $mod++Shift+Mod1+space exec emacsclient_custom main
 bindsym $mod+space [title="scratchpad"] scratchpad show
-bindsym $mod+v [title="^(?!scratchpad)"] scratchpad show
+bindsym $mod+t [title="^(?!scratchpad)"] scratchpad show
 bindsym $mod+Shift+space move scratchpad
 
 # window rules
 for_window [class="Spotify"] move container to workspace $ws5
-for_window [title="Todoist"] move container to workspace $ws6
-for_window [title="Notion"] move container to workspace $ws6
-for_window [class="zoom"] move container to workspace $ws9
-for_window [class="Skype"] move container to workspace $ws9
+for_window [title="Notion Calendar - Mozilla Firefox"] move container to workspace $ws12
+for_window [class="zoom"] move container to workspace $ws11
+for_window [class="Skype"] move container to workspace $ws11
+
+# switch to workspace with urgent window automatically
+for_window [urgent=latest] focus
 
 exec --no-startup-id emacsclient_custom main
 exec --no-startup-id emacsclient_custom scratchpad

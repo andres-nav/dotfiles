@@ -1,20 +1,27 @@
-{ options, config, lib, pkgs, ... }:
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
 with lib.my;
-let cfg = config.modules.hardware.nvidia;
-in {
-  options.modules.hardware.nvidia = { enable = mkBoolOpt false; };
+let
+  cfg = config.modules.hardware.nvidia;
+in
+{
+  options.modules.hardware.nvidia = {
+    enable = mkBoolOpt false;
+  };
 
   config = mkIf cfg.enable {
     hardware.nvidia = {
-      package =
-        config.boot.kernelPackages.nvidiaPackages.production; # install 535 as of 2024-02-14
+      package = config.boot.kernelPackages.nvidiaPackages.production; # install 535 as of 2024-02-14
       modesetting.enable = true; # required for some wayland compositors
-      open =
-        false; # (2024-02-14) only supported for version 2000 and older (currently experimental)
+      open = false; # (2024-02-14) only supported for version 2000 and older (currently experimental)
       prime = {
-        offload.enable =
-          false; # (2024-02-14) only supported for version 2000 and older (currently experimental)
+        offload.enable = false; # (2024-02-14) only supported for version 2000 and older (currently experimental)
         sync.enable = true;
 
         intelBusId = "PCI:0:2:0";
@@ -22,10 +29,8 @@ in {
       };
     };
 
-    hardware.opengl = {
+    hardware.graphics = {
       enable = true;
-      driSupport = true;
-      driSupport32Bit = true;
     };
 
     services.xserver.videoDrivers = [ "nvidia" ];

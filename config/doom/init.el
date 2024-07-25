@@ -70,12 +70,12 @@
        (syntax +childframe)              ; tasing you for every semicolon you forget
        ;;(spell +enchant +hunspell) ; tasing you for misspelling mispelling
        ;; TODO: Change writegood for proseline https://github.com/amperser/proselint
-       grammar           ; tasing grammar mistake every you make
+       ;; grammar           ; tasing grammar mistake every you make
        jinx
 
        :tools
        ansible
-       ;;biblio            ; Writes a PhD for you (citation needed)
+       biblio            ; Writes a PhD for you (citation needed)
        ;;collab            ; buffers with friends
        ;;debugger          ; FIXME stepping through code, to help you add bugs
        direnv
@@ -90,7 +90,7 @@
        ;;pass              ; password manager for nerds
        pdf               ; pdf enhancements
        ;;prodigy           ; FIXME managing external services & code builders
-       rgb               ; creating color strings
+       ;; rgb               ; creating color strings
        ;;taskrunner        ; taskrunner for all your projects
        terraform         ; infrastructure as code
        tmux              ; an API for interacting with tmux
@@ -149,7 +149,7 @@
        ;;ocaml             ; an objective camel
        (org                         ; organize your plain life in plain text
         ;; +dragndrop                  ; drag & drop files/images into org buffers
-        ;;+hugo                     ; use Emacs for hugo blogging
+        +hugo                     ; use Emacs for hugo blogging
         +noter                      ; enhanced PDF notetaking
         ;; +jupyter                    ; ipython/jupyter support for babel
         +pandoc                     ; export-with-pandoc support

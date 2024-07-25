@@ -1,12 +1,10 @@
-{
-  config,
-  lib,
-  ...
-}:
+{ config, lib, ... }:
 with builtins;
-with lib; let
-  #blocklist = fetchurl https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts;
-in {
+with lib;
+let
+in
+#blocklist = fetchurl https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts;
+{
   #networking.extraHosts = '' # TODO: populate extra hosts in each config (probably option in zerotier module)
 
   # Block garbage
@@ -29,6 +27,7 @@ in {
   services.xserver.xkb = {
     layout = mkDefault "us";
     options = mkDefault "caps:swapescape,ctrl:swap_lalt_lctl";
+    # variant = mkDefault "dvorak";
   };
 
   security.sudo.wheelNeedsPassword = false;

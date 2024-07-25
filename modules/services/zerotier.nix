@@ -5,12 +5,14 @@
   ...
 }:
 with lib;
-with lib.my; let
+with lib.my;
+let
   cfg = config.modules.services.zerotier;
-in {
+in
+{
   options.modules.services.zerotier = with types; {
     enable = mkBoolOpt false;
-    joinNetworks = mkOpt (listOf str) [];
+    joinNetworks = mkOpt (listOf str) [ ];
   };
 
   # TODO: investigate cloudflared
