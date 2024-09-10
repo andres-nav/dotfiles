@@ -1,45 +1,44 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-(setq user-full-name "Andrés Navarro Pedregal"
-      user-mail-address "contact@andresnav.com")
+(setq! user-full-name "Andrés Navarro Pedregal"
+       user-mail-address "contact@andresnav.com")
 
-(setq auth-sources '("~/.authinfo.gpg")
-      auth-source-cache-expiry nil
-      password-cache-expiry nil ;; never expire passwords
-      default-input-method "spanish-prefix"
-      )
+(setq! auth-sources '("~/.authinfo.gpg")
+       auth-source-cache-expiry nil
+       password-cache-expiry nil ;; never expire passwords
+       default-input-method "spanish-prefix"
+       )
 
-(setq initial-major-mode 'org-mode
-      initial-scratch-message nil)
+(setq! initial-major-mode 'org-mode
+       initial-scratch-message nil)
 
-(setq delete-by-moving-to-trash t
-      large-file-warning-threshold 50000000 ;; 50mb
-      )
+(setq! delete-by-moving-to-trash t
+       large-file-warning-threshold 50000000 ;; 50mb
+       )
 
 ;;; latex
-(setq! TeX-auto-save t
-       ;; TeX-view-program-list '(("zathura" "zathura --page=$(outpage) %o"))
-       +latex-viewers '(pdf-tools zathura)
-       TeX-parse-self t
-       compilation-ask-about-save nil ;; save all buffers on compilation
-       TeX-engine 'luatex
-       tex-directory "/tmp/latexbuild"
-       TeX-command-extra-options "-output-directory=/tmp/latexbuild")
+(setq! ;; TeX-auto-save t
+ ;; TeX-view-program-list '(("zathura" "zathura --page=$(outpage) %o"))
+ +latex-viewers '(pdf-tools zathura)
+ ;; TeX-parse-self t
+ compilation-ask-about-save nil ;; save all buffers on compilation
+ ;; TeX-engine 'luatex
+ tex-directory "/tmp/latexbuild" ;; hide ugly files
+ ;; TeX-command-extra-options "-output-directory=/tmp/latexbuild"
+ )
 
 ;;; dired
-(after! dired
-  (setq dired-free-space nil
-        dired-dwim-target t
-        dired-kill-when-opening-new-dired-buffer t ;; only one dired buffer
-        dired-recursive-copies 'always
-        dired-recursive-deletes 'always
-        dired-listing-switches "-AFlGh1v --group-directories-first" ;;  show directories first
-        dired-clean-confirm-killing-deleted-buffers nil ;; don't ask to kill buffers visiting deleted files
-        dired-auto-revert-buffer #'dired-directory-changed-p ;; auto revert dired buffer when directory changes
+(setq! dired-free-space nil
+       dired-dwim-target t
+       dired-kill-when-opening-new-dired-buffer t ;; only one dired buffer
+       dired-recursive-copies 'always
+       dired-recursive-deletes 'always
+       dired-listing-switches "-AFlGh1v --group-directories-first" ;;  show directories first
+       dired-clean-confirm-killing-deleted-buffers nil ;; don't ask to kill buffers visiting deleted files
+       dired-auto-revert-buffer #'dired-directory-changed-p ;; auto revert dired buffer when directory changes
 
-        find-file-visit-truename nil ;; don't resolve symlinks when opening files
-        )
-  )
+       find-file-visit-truename nil ;; don't resolve symlinks when opening files
+       )
 
 (defun open-file-in-main-frame ()
   "Open file in main frame."
@@ -85,12 +84,8 @@
   :desc "git      " "g"   #'(lambda () (interactive) (run-command-in-scratch 'find-file-at-path "~/git/"))
   :desc "home     " "h"   #'(lambda () (interactive) (run-command-in-scratch 'find-file-at-path "~"))
   :desc "temp     " "t"   #'(lambda () (interactive) (run-command-in-scratch 'find-file-at-path "/tmp/"))
-  :desc "Inbox    " "i"   #'(lambda () (interactive) (run-command-in-scratch 'find-file-at-path "~/MEGA/0_Inbox/"))
-  :desc "Projects " "p"   #'(lambda () (interactive) (run-command-in-scratch 'find-file-at-path "~/MEGA/1_Projects/"))
-  :desc "Areas    " "a"   #'(lambda () (interactive) (run-command-in-scratch 'find-file-at-path "~/MEGA/2_Areas/"))
-  :desc "Resources" "r"   #'(lambda () (interactive) (run-command-in-scratch 'find-file-at-path "~/MEGA/3_Resources/"))
+  :desc "inbox    " "i"   #'(lambda () (interactive) (run-command-in-scratch 'find-file-at-path "~/MEGA/0_inbox/"))
   ))
-
 
 ;; openwith
 (use-package! openwith
@@ -105,7 +100,7 @@
 (after! emacs-everywhere
   ;; Easier to match with a bspwm rule:
   ;;   bspc rule -a 'Emacs:emacs-everywhere' state=floating sticky=on
-  (setq emacs-everywhere-frame-name-format "emacs-anywhere")
+  (setq! emacs-everywhere-frame-name-format "emacs-anywhere")
 
   ;; The modeline is not useful to me in the popup window. It looks much nicer
   ;; to hide it.
@@ -120,6 +115,10 @@
       (set-frame-position frame
                           (+ x (/ width 2) (- (/ width 2)))
                           (+ y (/ height 2))))))
+
+(use-package! treesit-auto
+  :config
+  (global-treesit-auto-mode))
 
 (use-package! websocket
   :after org-roam)

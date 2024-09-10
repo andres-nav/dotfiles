@@ -40,6 +40,9 @@ in
       emacsPackages.jinx
       libgccjit
 
+      # for compiling treesit languages
+      gcc
+
       # For org superagenda
       dash
 

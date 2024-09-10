@@ -1,7 +1,5 @@
 # -*- mode: snippet -*-
 # name: print
-# uuid: print
-# key: pf
-# condition: t
+# key: p
 # --
-print(f"${1}")
+print($0)

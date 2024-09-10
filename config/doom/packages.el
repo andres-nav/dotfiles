@@ -62,6 +62,8 @@
 
 (package! org-re-reveal)
 
+(package! treesit-auto)
+
 ;; install org-roam-ui
 (unpin! org-roam)
 (package! org-roam-ui)
