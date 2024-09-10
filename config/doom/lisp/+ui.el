@@ -17,7 +17,6 @@
 ;; Theme
 (setq doom-theme 'doom-gruvbox-light
       doom-gruvbox-light-brighter-modeline t
-      doom-gruvbox-light-brighter-comments t
       +modeline-height 20)
 
 (setq-default x-stretch-cursor t
@@ -59,10 +58,5 @@
    "r" 'tab-rename
    "n" 'evil-tab-next
    "p" 'tab-previous
-   )
-
-  (map!
-   :leader
-   :desc "Toggle last popup" "TAB" #'+popup/toggle
    )
   )

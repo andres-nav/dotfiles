@@ -2,7 +2,7 @@
 
 (use-package! copilot
   :after-call (copilot-mode)
-  :hook (prog-mode . copilot-mode)
+  :hook ((prog-mode markdown-mode text-mode) . copilot-mode)
   :bind (:map copilot-completion-map
               ("<tab>" . 'copilot-accept-completion)
               ("TAB" . 'copilot-accept-completion)

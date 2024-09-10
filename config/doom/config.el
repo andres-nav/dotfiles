@@ -57,11 +57,6 @@
  :nv "l" #'open-file-in-main-frame
  )
 
-(use-package-hook! evil
-  :pre-init
-  (setq evil-respect-visual-line-mode t) ;; sane j and k behavior
-  t)
-
 (defun find-file-at-path (path)
   "Find a file at a specific path."
   (interactive)
@@ -138,7 +133,6 @@
   :config
   (setq org-roam-ui-sync-theme t
         org-roam-ui-follow t
-        org-roam-ui-update-on-save t
         org-roam-ui-open-on-start t))
 
 (load! "lisp/+ui")

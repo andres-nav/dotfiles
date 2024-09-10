@@ -37,7 +37,8 @@ in
 
       # Language
       languagetool
-      enchant
+      emacsPackages.jinx
+      libgccjit
 
       # For org superagenda
       dash
