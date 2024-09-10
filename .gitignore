@@ -1,2 +1,4 @@
 result
 /config/emacs/elpa/
+/.direnv/
+/.envrc

@@ -56,5 +56,11 @@
       } // mapModulesRec ./modules import;
 
       nixosConfigurations = mapHosts ./hosts { };
+
+      devShells.${system}.default = with pkgs; mkShell {
+          packages = [
+            alejandra
+          ];
+        };
     };
 }
