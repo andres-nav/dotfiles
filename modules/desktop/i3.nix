@@ -22,6 +22,7 @@ in
       xclip
       xdotool
       xorg.xwininfo
+      rofi
     ];
 
     services = {

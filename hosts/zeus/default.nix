@@ -35,6 +35,7 @@
       };
     };
     dev = {
+      tools.enable = true;
       # node.enable = true;
       python.enable = true;
       # solidity.enable = true;
@@ -55,6 +56,7 @@
       # nom.enable = true;
       tmux.enable = true;
       fish.enable = true;
+      mob.enable = true;
     };
     services = {
       mega.enable = true;
