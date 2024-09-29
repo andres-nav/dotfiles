@@ -1,59 +1,91 @@
 ;;; $DOOMDIR/lisp/+org.el -*- lexical-binding: t; -*-
 
-(setq org-ellipsis " ▼ "
-      org-hide-emphasis-markers t
-      org-image-actual-width '(0.9)
-      org-list-demote-modify-bullet '(("+" . "-") ("-" . "+") ("*" . "+") ("1." . "a."))
-      org-preview-latex-default-process 'dvisvgm
-      org-startup-with-latex-preview nil
-      org-startup-folded 'fold
-      org-export-in-background t
-      org-export-creator-string nil
-      )
-
 (setq +directory (expand-file-name "~/MEGA/")
       +directory-inbox (file-name-concat +directory "0_inbox")
       +directory-brain (file-name-concat +directory "1_brain")
       +directory-attachments (file-name-concat +directory "2_attachments")
       +directory-archive (file-name-concat +directory "z_archive")
-      +org-default-file "readme.org"
+      +file-bibliography (file-name-concat +directory-brain "bibliography.bib")
 
       org-directory +directory
       org-attach-id-dir +directory-attachments
-      org-agenda-files (list +directory-brain)
       +org-capture-todo-file (file-name-concat +directory-inbox "todo.org")
       +org-capture-notes-file (file-name-concat +directory-inbox "notes.org")
       org-publish-project-alist '(("org"
                                    :base-directory +directory
                                    :publishing-directory "/tmp/org-publish/"
                                    )) ;; TODO check if it really works
-      ;; +org-capture-journal-file (file-name-concat +directory-areas "journal" +org-default-file)
-      ;; org-archive-location (file-name-concat +directory-archive "%s::") ;; TODO edit properly
-      ;;
       org-roam-directory +directory-brain
       org-roam-db-location (file-name-concat +directory-archive ".org-roam.db")
       org-roam-file-exclude-regexp '(".git/" "node_modules/")
       org-roam-db-update-on-save nil
       org-roam-completion-everywhere nil ;; disable org-roam completition everywhere
       org-roam-verbose nil
+
+      citar-bibliography +file-bibliography
+      citar-notes-paths (list +directory-brain)
+      citar-org-roam-note-title-template "${title}\n#+filetags: :literature:"
+      org-cite-global-bibliography (list +file-bibliography)
+      citar-file-additional-files-separator "-"
+      citar-indicators (list (citar-indicator-create :symbol "" :function #'citar-has-files :tag "has:files")
+                             (citar-indicator-create :symbol "" :function #'citar-has-links :tag "has:links")
+                             (citar-indicator-create :symbol "" :function #'citar-has-notes :tag "has:notes"))
       )
 
 (after! org
-  (setq org-capture-templates
-        '(
-          ("t" "Task Inbox" entry
-           (file +org-capture-todo-file)
-           "* TODO %?\n %i\n %a" :prepend t :empty-lines-after 1)
-          ("n" "Note Inbox" entry
-           (file +org-capture-notes-file)
-           "* %?\n %i\n %a\n %u" :prepend t :empty-lines-after 1)
-          ("p" "Projects")
-          ("pt" "Task" entry
-           (function (org-roam-node-find))
-           "* TODO %?\n %i\n %a" :prepend t :empty-lines-after 1)
+  (setq org-ellipsis " ▼ "
+        org-hide-emphasis-markers t
+        org-image-actual-width '(0.9)
+        org-list-demote-modify-bullet '(("+" . "-") ("-" . "+") ("*" . "+") ("1." . "a."))
+        org-preview-latex-default-process 'dvisvgm
+        org-startup-with-latex-preview nil
+        org-startup-folded 'fold
+        org-export-in-background t
+        org-export-creator-string nil
+        org-cycle-separator-lines 0
+        org-tags-column 8
+        org-enforce-todo-dependencies t
+        org-enforce-todo-checkbox-dependencies t
+        org-fast-tag-selection-include-todo t
+        org-todo-keywords
+        '((sequence "TODO(t)" "PROGRESS(p)" "FOCUS(f)" "|" "DONE(d)" "HOLD(h@/!)" "CANCELED(c@/!)" "HANDLED(l@/!)")
           )
         )
   )
+
+(defun andresnav/org-roam-agenda-files ()
+  "Return a list of note files containing project tag." ;
+  (seq-uniq
+   (seq-map
+    #'car
+    (org-roam-db-query
+     [:select [nodes:file]
+      :from tags
+      :left-join nodes
+      :on (= tags:node-id nodes:id)
+      :where (or (like tag (quote "%\"area\"%"))
+                 (like tag (quote "%\"project\"%")))]))))
+
+(defun andresnav/agenda-files-update (&rest _)
+  "Update the value of `org-agenda-files'."
+  (interactive)
+  (setq org-agenda-files (andresnav/org-roam-agenda-files)))
+
+(setq org-capture-templates
+      '(
+        ("t" "Task Inbox" entry
+         (file +org-capture-todo-file)
+         "* TODO %?\n %i\n %a" :prepend t :empty-lines-after 1)
+        ("n" "Note Inbox" entry
+         (file +org-capture-notes-file)
+         "* %?\n %i\n %a\n %u" :prepend t :empty-lines-after 1)
+        ("p" "Projects")
+        ("pt" "Task" entry
+         (function (org-roam-node-find))
+         "* TODO %?\n %i\n %a" :prepend t :empty-lines-after 1)
+        )
+      )
+
 ;; ox-hugo config
 (setq org-hugo-base-dir "~/git/github/quartz-andresnav.com"
       org-export-with-broken-links t
@@ -139,31 +171,40 @@
   (require 'ox-extra)
   (ox-extras-activate '(ignore-headlines latex-header-blocks)))
 
-(defun my/org-roam-filter-by-tags (tag-names)
-  "Filter function to check if the given NODE has the specified TAGS."
+(defun andresnav/org-roam-filter-by-tags (tag-names)
+  "Filter function to check if the given NODE has the specified TAGS and is not a heading."
   (lambda (node)
-    (cl-loop for tag in tag-names
-             thereis (member tag (org-roam-node-tags node)))))
+    (and (cl-loop for tag in tag-names
+                  thereis (member tag (org-roam-node-tags node)))
+         (= (org-roam-node-level node) 0))))  ;; Exclude headings (level > 0)
 
-(defun my/org-roam-find-project-or-area ()
+(defun andresnav/org-roam-find-project-or-area ()
   "Find and open an Org-roam node based on the \=project\= or \=area\= tags."
   (interactive)
   (org-roam-node-find nil nil
-                      (my/org-roam-filter-by-tags '("project" "area"))))
+                      (andresnav/org-roam-filter-by-tags '("project" "area"))))
 
-(defun my/org-roam-find-contact ()
-  "Find and open an Org-roam node based on the \=project\= or \=area\= tags."
+(defun andresnav/org-roam-find-contact ()
+  "Find and open an Org-roam node based on the \=contact\= tag."
   (interactive)
   (org-roam-node-find nil nil
-                      (my/org-roam-filter-by-tags '("contact"))))
+                      (andresnav/org-roam-filter-by-tags '("contact"))))
+
+(defun andresnav/org-roam-find-all ()
+  "Find and open an Org-roam node in my brain, including only top-level nodes (non-headings)."
+  (interactive)
+  (org-roam-node-find nil nil
+                      (lambda (node)
+                        (= (org-roam-node-level node) 0))))  ;; Filter for top-level nodes only
 
 (map! :after evil
       :map doom-leader-notes-map
       :desc "Org capture" "n" #'org-capture
       (:prefix-map ("f" . "find")
-       :desc "Find project or area" "f" #'my/org-roam-find-project-or-area
-       :desc "Find node" "SPC" #'org-roam-node-find
-       :desc "Find contact" "c" #'my/org-roam-find-contact
+       :desc "Find project or area" "f" #'andresnav/org-roam-find-project-or-area
+       :desc "Find node" "SPC" #'andresnav/org-roam-find-all
+       :desc "Find contact" "c" #'andresnav/org-roam-find-contact
+       :desc "Find all" "a" #'org-roam-node-find
        )
       )
 
@@ -181,7 +222,9 @@
 ;; ;; Add ID, Type, Tags, and Aliases to top of backlinks buffer.
 ;; (advice-add #'org-roam-buffer-set-header-line-format :after #'org-roam-add-preamble-a)
 
-(after! org-super-agenda
+(use-package! org-super-agenda
+  :hook (org-agenda-mode . org-super-agenda-mode)
+  :config
   (setq org-super-agenda-groups '(
                                   (:name "Today"
                                    :time-grid t
@@ -205,11 +248,20 @@
         org-agenda-include-deadlines t
         org-agenda-block-separator nil
         org-agenda-compact-blocks t
+        org-agenda-files (andresnav/org-roam-agenda-files)
         org-agenda-start-day nil ;; i.e. today
         org-agenda-span 1
         org-agenda-start-on-weekday nil)
+  (setq org-columns-default-format
+        "%TODO %3PRIORITY %40ITEM(Task) %17Effort(Estimated Effort){:} %CLOCKSUM %8TAGS(TAG)")
   (setq org-agenda-custom-commands
-        '(("c" "Super view"
+        '(("d" "Done tasks" tags "/DONE|CANCELED")
+          ("g" "Plan Today"
+           ((agenda "" ((org-agenda-span 'day)))
+            (org-agenda-skip-function '(org-agenda-skip-deadline-if-not-today))
+            (org-agenda-entry-types '(:deadline))
+            (org-agenda-overriding-header "Today's Deadlines ")))
+          ("c" "Super view"
            ((agenda "" ((org-agenda-overriding-header "")
                         (org-super-agenda-groups
                          '((:name "Today"
@@ -218,17 +270,12 @@
                             :order 1)))))
             (alltodo "" ((org-agenda-overriding-header "")
                          (org-super-agenda-groups
-                          '((:log t)
-                            (:name "To refile"
-                             :file-path "refile\\.org")
-                            (:name "Next to do"
-                             :todo "NEXT"
+                          '((:name "In progress"
+                             :todo "IN-PROGRESS"
                              :order 1)
                             (:name "Important"
                              :priority "A"
                              :order 6)
-                            (:name "Today's tasks"
-                             :file-path "journal/")
                             (:name "Due Today"
                              :deadline today
                              :order 2)
@@ -238,9 +285,6 @@
                             (:name "Overdue"
                              :deadline past
                              :order 7)
-                            (:name "Meetings"
-                             :and (:todo "MEET" :scheduled future)
-                             :order 10)
                             (:discard (:not (:todo "TODO")))))))))))
   )
 
@@ -263,10 +307,4 @@
   (consult-customize
    consult-org-roam-forward-links
    :preview-key "M-.")
-  :bind
-  ;; Define some convenient keybindings as an addition
-  ("C-c n e" . consult-org-roam-file-find)
-  ("C-c n b" . consult-org-roam-backlinks)
-  ("C-c n B" . consult-org-roam-backlinks-recursive)
-  ("C-c n l" . consult-org-roam-forward-links)
-  ("C-c n r" . consult-org-roam-search))
+  )

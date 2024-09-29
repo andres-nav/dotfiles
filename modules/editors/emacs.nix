@@ -1,20 +1,13 @@
-{
-  config,
-  options,
-  lib,
-  pkgs,
-  ...
-}:
+{ config, options, lib, pkgs, ... }:
 with lib;
 with lib.my;
 let
   cfg = config.modules.editors.emacs;
   configDir = config.dotfiles.configDir;
-in
-{
-  options.modules.editors.emacs = {
-    enable = mkBoolOpt false;
-  };
+  emacs-nixos = ((pkgs.emacsPackagesFor pkgs.emacs).emacsWithPackages
+    (epkgs: with epkgs; [ jinx ]));
+in {
+  options.modules.editors.emacs = { enable = mkBoolOpt false; };
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
@@ -33,11 +26,10 @@ in
       sqlite
       wordnet
       editorconfig-core-c
-      emacs-all-the-icons-fonts
 
       # Language
       languagetool
-      emacsPackages.jinx
+      enchant
       libgccjit
 
       # for compiling treesit languages
@@ -55,6 +47,7 @@ in
 
     services.emacs = {
       enable = true;
+      package = emacs-nixos;
     };
 
     environment.shellAliases = {
@@ -80,10 +73,6 @@ in
           emacsclient -e '(doom/reload)'
         ''}";
       };
-
-      # "emacs" = {
-      #   source = "${configDir}/emacs";
-      # };
     };
   };
 }

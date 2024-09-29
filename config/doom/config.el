@@ -92,7 +92,9 @@
   :after (dired)
   :hook (dired-mode . openwith-mode)
   :custom
-  (openwith-associations '(("\\.doc\\|\\.docx\\|\\.ppt\\|\\.pptx\\|\\.xls\\|\\.xlsx\\'" "libreoffice" (file))
+  (openwith-associations '(
+                           ("\\.doc\\|\\.docx\\|\\.ppt\\|\\.pptx\\|\\.xls\\|\\.xlsx\\'" "libreoffice" (file))
+                           ("\\.gan\\'" "nix run nixpkgs#ganttproject-bin -- " (file))
                            ))
   )
 
@@ -133,6 +135,13 @@
   (setq org-roam-ui-sync-theme t
         org-roam-ui-follow t
         org-roam-ui-open-on-start t))
+
+(use-package! vlf
+  :config
+  (require 'vlf-setup)
+  (custom-set-variables
+   '(vlf-application 'dont-ask))
+  )
 
 (load! "lisp/+ui")
 (load! "lisp/+edit")

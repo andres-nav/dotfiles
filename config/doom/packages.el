@@ -62,6 +62,8 @@
 
 (package! org-re-reveal)
 
+(package! vlf)
+
 (package! treesit-auto)
 
 ;; install org-roam-ui

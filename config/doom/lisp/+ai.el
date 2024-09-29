@@ -10,7 +10,7 @@
   ;; FIXME: temporary fix for the system message. To reset the system message
   (setq gptel--system-message (alist-get 'default gptel-directives))
 
-  (setq! gptel-model   "mixtral-8x7b-32768"
+  (setq! gptel-model   "llama-3.1-70b-versatile"
          gptel-backend
          (let* ((host "api.groq.com")
                 (user "groq")
@@ -22,7 +22,6 @@
              :stream t
              :models '("mixtral-8x7b-32768"
                        "gemma-7b-it"
-                       "llama3-70b-8192"
                        "llama-3.1-70b-versatile"))
            )
          )
