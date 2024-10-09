@@ -24,7 +24,6 @@
 
 ;;; Config
 (setf *mouse-focus-policy* :click)
-(set-font "-CTDB-Fira Sans-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1")
 
 
 ;;; Keybinds

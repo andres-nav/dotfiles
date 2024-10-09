@@ -81,4 +81,4 @@
   )
 
 ;;; projectile
-(setq! projectile-ignored-projects (list "~/" "/tmp" (expand-file-name "straight/repos" doom-local-dir)))
+(setq! projectile-ignored-projects (list "~/" "~/MEGA/" "/tmp" (expand-file-name "straight/repos" doom-local-dir)))

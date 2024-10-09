@@ -16,10 +16,6 @@ in {
             iconTheme = "Paper";
             cursorTheme = "Paper";
           };
-          fonts = {
-            sans.name = "Fira Sans";
-            mono.name = "Fira Code";
-          };
           colors = {
             black = "#1E2029";
             red = "#ffb86c";

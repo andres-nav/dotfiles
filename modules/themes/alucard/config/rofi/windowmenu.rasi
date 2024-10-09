@@ -22,6 +22,3 @@ prompt {
  * Elements are tab-delimited, which look weird in the default variable-pitch
  * font, so use a monospace one.
  */
-element {
-  font: "Fira Code 12";
-}

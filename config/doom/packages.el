@@ -55,6 +55,8 @@
 
 (package! org-super-agenda)
 
+(package! org-agenda-show-deadlines)
+
 (package! consult-org-roam)
 
 ;; packages for ox-hugo

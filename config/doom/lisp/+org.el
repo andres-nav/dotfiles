@@ -32,27 +32,6 @@
                              (citar-indicator-create :symbol "" :function #'citar-has-notes :tag "has:notes"))
       )
 
-(after! org
-  (setq org-ellipsis " ▼ "
-        org-hide-emphasis-markers t
-        org-image-actual-width '(0.9)
-        org-list-demote-modify-bullet '(("+" . "-") ("-" . "+") ("*" . "+") ("1." . "a."))
-        org-preview-latex-default-process 'dvisvgm
-        org-startup-with-latex-preview nil
-        org-startup-folded 'fold
-        org-export-in-background t
-        org-export-creator-string nil
-        org-cycle-separator-lines 0
-        org-tags-column 8
-        org-enforce-todo-dependencies t
-        org-enforce-todo-checkbox-dependencies t
-        org-fast-tag-selection-include-todo t
-        org-todo-keywords
-        '((sequence "TODO(t)" "PROGRESS(p)" "FOCUS(f)" "|" "DONE(d)" "HOLD(h@/!)" "CANCELED(c@/!)" "HANDLED(l@/!)")
-          )
-        )
-  )
-
 (defun andresnav/org-roam-agenda-files ()
   "Return a list of note files containing project tag." ;
   (seq-uniq
@@ -86,6 +65,156 @@
         )
       )
 
+
+(after! org
+  (setq org-ellipsis " ▼ "
+        org-hide-emphasis-markers t
+        org-image-actual-width '(0.9)
+        org-list-demote-modify-bullet '(("+" . "-") ("-" . "+") ("*" . "+") ("1." . "a."))
+        org-preview-latex-default-process 'dvisvgm
+        org-startup-with-latex-preview nil
+        org-startup-folded 'fold
+        org-export-in-background t
+        org-cycle-separator-lines 0
+        org-tags-column 8
+        org-fast-tag-selection-include-todo t
+        org-todo-keywords
+        '(
+          (sequence
+           "TODO(t)" ; doing later
+           "NEXT(n)" ; doing now or soon
+           "|"
+           "DONE(d)" ; done
+           )
+          (sequence
+           "WAIT(w@/!)" ; waiting
+           "IDEA(i)" ; maybe someday
+           "GOAL(g)" ; goal to achieve
+           "|"
+           "STOP(s@/!)" ; stopped waiting, decided not to work on it
+           )
+          )
+        org-log-done 'time
+        org-log-into-drawer t
+        )
+
+
+  (use-package! org-super-agenda
+    :hook (org-agenda-mode . org-super-agenda-mode)
+    )
+
+  (setq org-agenda-skip-scheduled-if-done t
+        org-agenda-skip-deadline-if-done t
+        org-agenda-include-deadlines t
+        org-agenda-block-separator nil
+        org-agenda-compact-blocks t
+        org-agenda-files (andresnav/org-roam-agenda-files)
+        org-agenda-start-day nil ;; i.e. today
+        org-agenda-span 7
+        )
+
+  (setq org-columns-default-format
+        "%TODO %3PRIORITY %40ITEM(Task) %17Effort(Estimated Effort){:} %CLOCKSUM %8TAGS(TAG)")
+
+  (defun andresnav/org-roam-get-title ()
+    "Get the first 15 characters of the Org-roam title for the current entry, right-aligned and padded with spaces."
+    (when-let* ((file (buffer-file-name))
+                (title (caar (org-roam-db-query
+                              [:select title :from nodes :where (= file $s1)]
+                              file))))
+      (let ((short-title (if (> (length title) 15)
+                             (substring title 0 15)
+                           title)))
+        (format "%-15s" short-title))))  ;; Pad with spaces to 10 characters, left-aligned
+
+  (setq org-agenda-prefix-format
+        '((agenda . "%-4t %(andresnav/org-roam-get-title) %-4t %s")
+          (todo . "%-4t %(andresnav/org-roam-get-title) %-4t %s")
+          (tags . "%-4t %(andresnav/org-roam-get-title) %-4t %s")
+          (search . " %l")))
+
+  ;; hide project and area tags in the org agenda view
+  (setq org-agenda-hide-tags-regexp "\\(?:\\`\\|:\\)\\(project\\|area\\)\\(?:\\'\\|:\\)")
+
+  ;; Customize the look of deadlines and scheduled tasks in the agenda
+  (setq org-agenda-deadline-leaders '("Deadline:  " "In %d days: " "%d days ago: "))
+  (setq org-agenda-scheduled-leaders '("Scheduled: " "%d days ago: "))
+
+  ;; Ensure scheduled tasks are shown on all agenda views
+  (setq org-agenda-show-all-dates t)
+
+  (setq org-agenda-sorting-strategy
+        '((agenda deadline-up scheduled-up habit-down time-up urgency-down category-keep)
+          (todo deadline-up scheduled-up urgency-down category-keep)
+          (tags deadline-up scheduled-up urgency-down category-keep)
+          (search category-keep)))
+
+
+  (setq org-agenda-custom-commands
+        '(("z" "Super view"
+           ((agenda "" ((org-agenda-span 'day)
+                        (org-super-agenda-groups
+                         '((:name "Today"
+                            :date today
+                            :scheduled (past, today)
+                            :deadline (past, today)
+                            :order 1)
+                           (:name "Due Soon"
+                            :scheduled future
+                            :deadline future
+                            :order 2)
+                           ))))
+            (alltodo "" ((org-agenda-overriding-header "")
+                         (org-agenda-todo-ignore-scheduled 'near)
+                         (org-agenda-todo-ignore-deadlines 'near)
+                         (org-super-agenda-groups
+                          '((:name "Next to do"
+                             :todo "NEXT"
+                             :order 10)
+                            (:name "REALLY Important"
+                             :priority "A"
+                             :order 11)
+                            (:name "Waiting"
+                             :todo "WAIT"
+                             :order 12)
+                            (:name "Important"
+                             :priority "B"
+                             :order 13)
+                            (:name "Future"
+                             :scheduled future
+                             :deadline future
+                             :order 14)
+                            (:name "Active Projects"
+                             :and (:tag "project"
+                                   :not (:todo "IDEA"))
+                             :order 20)
+                            (:name "Focus Areas"
+                             :and (:tag "area"
+                                   :not (:todo "IDEA"))
+                             :order 21)
+                            (:name "Ideas"
+                             :todo ("IDEA")
+                             :order 90)))))))))
+
+
+  (use-package! org-agenda-show-deadlines
+    :after org
+    :hook (org-agenda-mode . org-agenda-show-deadlines-mode)
+    :custom
+    (org-agenda-show-deadlines-date-format  "%B %d, %Y")
+    )
+  )
+
+
+
+(map! :leader "z" #'org-agenda)
+
+(map! :after (evil org)
+      :map org-super-agenda-header-map
+      "j" #'org-agenda-next-item
+      "k" #'org-agenda-previous-item
+      )
+
 ;; ox-hugo config
 (setq org-hugo-base-dir "~/git/github/quartz-andresnav.com"
       org-export-with-broken-links t
@@ -98,6 +227,15 @@
       (when (and (file-directory-p file)
                  (not (member (file-name-nondirectory file) '("." ".."))))
         (delete-directory file t t)))))
+
+(after! org
+  (org-link-set-parameters "projectile"
+                           :follow (lambda (path)
+                                     (projectile-switch-project-by-name path)))
+  )
+
+(after! projectile
+  (add-to-list 'projectile-globally-ignored-directories "~/MEGA/"))
 
 (defun andresnav/remove-publish-tag (file-path)
   "Remove the publish tag from the front matter of the markdown FILE-PATH."
@@ -221,72 +359,6 @@
 
 ;; ;; Add ID, Type, Tags, and Aliases to top of backlinks buffer.
 ;; (advice-add #'org-roam-buffer-set-header-line-format :after #'org-roam-add-preamble-a)
-
-(use-package! org-super-agenda
-  :hook (org-agenda-mode . org-super-agenda-mode)
-  :config
-  (setq org-super-agenda-groups '(
-                                  (:name "Today"
-                                   :time-grid t
-                                   :scheduled today)
-                                  (:name "Due today"
-                                   :deadline today)
-                                  (:name "Important"
-                                   :priority "A")
-                                  (:name "Overdue"
-                                   :deadline past)
-                                  (:name "Due soon"
-                                   :deadline future)
-                                  (:name "Projects"
-                                   :tag "project")
-                                  (:name "Areas"
-                                   :tag "area")
-                                  ))
-
-  (setq org-agenda-skip-scheduled-if-done t
-        org-agenda-skip-deadline-if-done t
-        org-agenda-include-deadlines t
-        org-agenda-block-separator nil
-        org-agenda-compact-blocks t
-        org-agenda-files (andresnav/org-roam-agenda-files)
-        org-agenda-start-day nil ;; i.e. today
-        org-agenda-span 1
-        org-agenda-start-on-weekday nil)
-  (setq org-columns-default-format
-        "%TODO %3PRIORITY %40ITEM(Task) %17Effort(Estimated Effort){:} %CLOCKSUM %8TAGS(TAG)")
-  (setq org-agenda-custom-commands
-        '(("d" "Done tasks" tags "/DONE|CANCELED")
-          ("g" "Plan Today"
-           ((agenda "" ((org-agenda-span 'day)))
-            (org-agenda-skip-function '(org-agenda-skip-deadline-if-not-today))
-            (org-agenda-entry-types '(:deadline))
-            (org-agenda-overriding-header "Today's Deadlines ")))
-          ("c" "Super view"
-           ((agenda "" ((org-agenda-overriding-header "")
-                        (org-super-agenda-groups
-                         '((:name "Today"
-                            :time-grid t
-                            :date today
-                            :order 1)))))
-            (alltodo "" ((org-agenda-overriding-header "")
-                         (org-super-agenda-groups
-                          '((:name "In progress"
-                             :todo "IN-PROGRESS"
-                             :order 1)
-                            (:name "Important"
-                             :priority "A"
-                             :order 6)
-                            (:name "Due Today"
-                             :deadline today
-                             :order 2)
-                            (:name "Scheduled Soon"
-                             :scheduled future
-                             :order 8)
-                            (:name "Overdue"
-                             :deadline past
-                             :order 7)
-                            (:discard (:not (:todo "TODO")))))))))))
-  )
 
 (use-package! consult-org-roam
   :after org-roam

@@ -61,8 +61,6 @@ in
             "CascadiaMono"
             "Tinos"
             "SourceCodePro"
-            "FiraCode"
-            "FiraMono"
           ];
         })
       ];
