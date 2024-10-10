@@ -137,11 +137,14 @@
   (setq org-agenda-hide-tags-regexp "\\(?:\\`\\|:\\)\\(project\\|area\\)\\(?:\\'\\|:\\)")
 
   ;; Customize the look of deadlines and scheduled tasks in the agenda
-  (setq org-agenda-deadline-leaders '("Deadline:  " "In %d days: " "%d days ago: "))
-  (setq org-agenda-scheduled-leaders '("Scheduled: " "%d days ago: "))
+  (setq org-agenda-deadline-leaders '("" "In %d days: " "%d days ago: "))
+  (setq org-agenda-scheduled-leaders '("" "%d days ago: "))
 
   ;; Ensure scheduled tasks are shown on all agenda views
   (setq org-agenda-show-all-dates t)
+
+  ;; Remove inherited tags
+  (setq org-agenda-show-inherited-tags nil)
 
   (setq org-agenda-sorting-strategy
         '((agenda deadline-up scheduled-up habit-down time-up urgency-down category-keep)
@@ -202,9 +205,22 @@
     :hook (org-agenda-mode . org-agenda-show-deadlines-mode)
     :custom
     (org-agenda-show-deadlines-date-format  "%B %d, %Y")
+    (org-agenda-show-deadlines-column 125)
     )
   )
 
+
+;; Customize the face for org-bold using your Doom theme colors
+(after! org
+  (defface andresnav/org-bold
+    '((t (:inherit bold :foreground "#cc241d")))
+    "Bold face."
+    :group 'custom-faces)  ;; Specify the group
+
+  (add-to-list 'org-emphasis-alist
+               ;; set emphasis face
+               '("*" andresnav/org-bold))
+  )
 
 
 (map! :leader "z" #'org-agenda)

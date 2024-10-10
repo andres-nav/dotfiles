@@ -55,7 +55,7 @@
 
 (package! org-super-agenda)
 
-(package! org-agenda-show-deadlines)
+(package! org-agenda-show-deadlines :recipe (:host github :repo "legalnonsense/org-agenda-show-deadlines"))
 
 (package! consult-org-roam)
 
