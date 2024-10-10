@@ -42,15 +42,5 @@ in
       mkIf config.hardware.pulseaudio.enable "${paConfigFile}/default.pa";
 
     user.extraGroups = [ "audio" ];
-
-    systemd.services.mute-on-sleep = mkIf cfg.muteOnSleep {
-      description = "Mute audio when system goes to sleep";
-      wantedBy = [ "sleep.target" ];
-      after = [ "sound.target" ];
-      serviceConfig = {
-        Type = "oneshot";
-        ExecStart = "${pkgs.alsa-utils}/bin/amixer -q set Master mute";
-      };
-    };
   };
 }
