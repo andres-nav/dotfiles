@@ -351,9 +351,19 @@
                       (lambda (node)
                         (= (org-roam-node-level node) 0))))  ;; Filter for top-level nodes only
 
+;; open the life org roam note
+(defun andresnav/org-roam-open-life ()
+  "Open the Org-roam note titled 'Life' directly."
+  (interactive)
+  (let ((node (org-roam-node-from-title-or-alias "Life")))
+    (if node
+        (org-roam-node-visit node)
+      (message "No note with the title 'Life' found."))))
+
 (map! :after evil
       :map doom-leader-notes-map
       :desc "Org capture" "n" #'org-capture
+      :desc "Life page" "SPC" #'andresnav/org-roam-open-life
       (:prefix-map ("f" . "find")
        :desc "Find project or area" "f" #'andresnav/org-roam-find-project-or-area
        :desc "Find node" "SPC" #'andresnav/org-roam-find-all
