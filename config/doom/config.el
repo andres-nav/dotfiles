@@ -45,7 +45,6 @@
   (interactive)
   (let ((file (dired-get-file-for-visit)))
     (when (and file (file-regular-p file))
-      (select-frame-by-name "main")
       (dired--find-possibly-alternative-file file)
       )))
 
@@ -55,37 +54,6 @@
  :nv "<return>" #'open-file-in-main-frame
  :nv "l" #'open-file-in-main-frame
  )
-
-(defun find-file-at-path (path)
-  "Find a file at a specific path."
-  (interactive)
-  (let* ((default-directory path)
-         (file (read-file-name "Find file: " default-directory)))
-    (find-file file)))
-
-(defun run-command-in-scratch (func &optional arg)
-  "Run a command in the scratch buffer."
-  (interactive)
-  (select-frame-by-name "scratchpad")
-  (shell-command "emacsclient_custom scratchpad >/dev/null 2>&1")
-  (if arg
-      (funcall func arg)
-    (funcall func))
-  )
-
-;; One of my first elisp functions, there is probably a better way to do this. If you know it, please let me know :)
-(map!
- :after dired
- :leader
- (:prefix-map ("d" . "directory")
-  :desc "pwd" "d"   #'(lambda () (interactive) (run-command-in-scratch 'dired default-directory))
-  :desc "projectile" "SPC"   #'(lambda () (interactive) (run-command-in-scratch 'projectile-dired))
-  :desc "MEGA     " "m"   #'(lambda () (interactive) (run-command-in-scratch 'dired "~/MEGA/"))
-  :desc "git      " "g"   #'(lambda () (interactive) (run-command-in-scratch 'find-file-at-path "~/git/"))
-  :desc "home     " "h"   #'(lambda () (interactive) (run-command-in-scratch 'find-file-at-path "~"))
-  :desc "temp     " "t"   #'(lambda () (interactive) (run-command-in-scratch 'find-file-at-path "/tmp/"))
-  :desc "inbox    " "i"   #'(lambda () (interactive) (run-command-in-scratch 'find-file-at-path "~/MEGA/0_inbox/"))
-  ))
 
 ;; openwith
 (use-package! openwith
@@ -126,11 +94,7 @@
   :after org-roam)
 
 (use-package! org-roam-ui
-  :after org-roam ;; or :after org
-  ;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
-  ;;         a hookable mode anymore, you're advised to pick something yourself
-  ;;         if you don't care about startup time, use
-  ;;  :hook (after-init . org-roam-ui-mode)
+  :after org-roam
   :config
   (setq org-roam-ui-sync-theme t
         org-roam-ui-follow t

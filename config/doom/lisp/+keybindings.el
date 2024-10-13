@@ -1,6 +1,5 @@
 ;;; $DOOMDIR/lisp/+keybindings.el -*- lexical-binding: t; -*-
 
-
 (defun open-directory-fuzzy (directory)
   "Open the specified DIRECTORY with fuzzy search."
   (interactive "DDirectory: ")
@@ -19,11 +18,10 @@
 
   (map! :map doom-leader-file-map
         :desc "Open Inbox directory with fuzzy search" "i" (lambda () (interactive) (open-directory-fuzzy "~/MEGA/0_inbox/"))
-        :desc "Open Brain directory with fuzzy search" "b" (lambda () (interactive) (open-directory-fuzzy "~/MEGA/1_brain/"))
         :desc "Open /tmp directory with fuzzy search" "t" (lambda () (interactive) (open-directory-fuzzy "/tmp/"))
         :desc "Open Downloads directory with fuzzy search" "d" (lambda () (interactive) (open-directory-fuzzy "~/Downloads/"))
         :desc "Open Attachments directory with fuzzy search" "a" (lambda () (interactive) (open-directory-fuzzy "~/MEGA/2_attachments/"))
-        :desc "Open GitHub directory with fuzzy search" "g" (lambda () (interactive) (open-directory-fuzzy "~/git/github/")))
+        :desc "Open Git directory with fuzzy search" "g" (lambda () (interactive) (open-directory-fuzzy "~/git/")))
 
   (map! :map doom-leader-code-map
         :desc "Tmux cd here" "d" #'+tmux/cd-to-here

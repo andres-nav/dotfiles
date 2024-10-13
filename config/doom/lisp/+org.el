@@ -2,35 +2,105 @@
 
 (setq +directory (expand-file-name "~/MEGA/")
       +directory-inbox (file-name-concat +directory "0_inbox")
-      +directory-brain (file-name-concat +directory "1_brain")
-      +directory-attachments (file-name-concat +directory "2_attachments")
+      +directory-projects (file-name-concat +directory "1_projects")
+      +directory-brain (file-name-concat +directory "2_brain")
+      +directory-contacts (file-name-concat +directory "3_contacts")
+      +directory-references (file-name-concat +directory "4_references")
+      +directory-attachments (file-name-concat +directory "5_attachments")
       +directory-archive (file-name-concat +directory "z_archive")
-      +file-bibliography (file-name-concat +directory-brain "bibliography.bib")
+      +file-bibliography (file-name-concat +directory-references "bibliography.bib")
 
       org-directory +directory
+      org-roam-directory (file-truename +directory)
       org-attach-id-dir +directory-attachments
       +org-capture-todo-file (file-name-concat +directory-inbox "todo.org")
       +org-capture-notes-file (file-name-concat +directory-inbox "notes.org")
-      org-publish-project-alist '(("org"
-                                   :base-directory +directory
-                                   :publishing-directory "/tmp/org-publish/"
-                                   )) ;; TODO check if it really works
-      org-roam-directory +directory-brain
-      org-roam-db-location (file-name-concat +directory-archive ".org-roam.db")
-      org-roam-file-exclude-regexp '(".git/" "node_modules/")
-      org-roam-db-update-on-save nil
-      org-roam-completion-everywhere nil ;; disable org-roam completition everywhere
-      org-roam-verbose nil
 
       citar-bibliography +file-bibliography
-      citar-notes-paths (list +directory-brain)
-      citar-org-roam-note-title-template "${title}\n#+filetags: :literature:"
+      citar-org-roam-subdir +directory-references
       org-cite-global-bibliography (list +file-bibliography)
       citar-file-additional-files-separator "-"
       citar-indicators (list (citar-indicator-create :symbol "" :function #'citar-has-files :tag "has:files")
                              (citar-indicator-create :symbol "" :function #'citar-has-links :tag "has:links")
                              (citar-indicator-create :symbol "" :function #'citar-has-notes :tag "has:notes"))
       )
+
+(use-package! org-roam
+  :custom
+  (org-roam-directory +directory)
+  (org-roam-list-files-commands '(find fd fdfind rg))
+  (org-roam-db-gc-threshold most-positive-fixnum)
+  (org-roam-database-connector 'sqlite-builtin)
+  (org-roam-db-location (file-name-concat +directory-archive ".org-roam.db"))
+  (org-id-link-to-org-use-id t)
+  (org-roam-db-update-on-save nil)
+  (org-roam-completion-everywhere nil) ;; disable org-roam completition everywhere
+  (org-roam-verbose nil)
+  (org-roam-file-exclude-regexp '(".git/" "z_archive/" "node_modules/" "5_attachments" "0_inbox/" ".debris/"))
+  :config
+  (set-popup-rules!
+    `((,(regexp-quote org-roam-buffer) ; persistent org-roam buffer
+       :side right :width .33 :height .5 :ttl nil :modeline nil :quit nil :slot 1)
+      ("^\\*org-roam: " ; node dedicated org-roam buffer
+       :side right :width .33 :height .5 :ttl nil :modeline nil :quit nil :slot 2)))
+  (setq org-roam-capture-templates
+        '(("b" "brain" plain
+           "%?"
+           :if-new (file+head "2_brain/%<%Y%m%d%H%M%S>-${slug}.org"
+                              "#+title: ${title}\n")
+           :immediate-finish t
+           :unnarrowed t)
+          ("r" "reference" plain "%?"
+           :if-new
+           (file+head "4_references/${slug}.org" "#+title: ${title}\n")
+           :immediate-finish t
+           :unnarrowed t)
+          ("p" "project" plain "%?"
+           :if-new
+           (file+head "1_projects/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+           :immediate-finish t
+           :unnarrowed t)
+          ("c" "contact" plain "%?"
+           :if-new
+           (file+head "3_contacts/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+           :immediate-finish t
+           :unnarrowed t)
+          ))
+  (defun andresnav/tag-new-node-as-draft ()
+    (org-roam-tag-add '("draft")))
+  (add-hook 'org-roam-capture-new-node-hook #'andresnav/tag-new-node-as-draft)
+
+  (cl-defmethod org-roam-node-type ((node org-roam-node))
+    "Return the TYPE of NODE without the leading number and underscore."
+    (condition-case nil
+        (replace-regexp-in-string
+         "^[0-9]+_" ""  ;; Match a number followed by an underscore at the start
+         (file-name-nondirectory
+          (directory-file-name
+           (file-name-directory
+            (file-relative-name (org-roam-node-file node) org-roam-directory)))))
+      (error "")))
+
+  (setq org-roam-node-display-template
+        (concat "${type:15} ${title:*} " (propertize "${tags:20}" 'face 'org-tag)))
+
+  (require 'citar)
+  (defun andresnav/org-roam-node-from-cite (keys-entries)
+    (interactive (list (citar-select-ref :multiple nil :rebuild-cache t)))
+    (let ((title (citar--format-entry-no-widths (cdr keys-entries)
+                                                "${title} :: ${author editor}")))
+      (org-roam-capture- :templates
+                         '(("r" "reference" plain "%?" :if-new
+                            (file+head "4_references/${citekey}.org"
+                                       ":PROPERTIES:
+:ROAM_REFS: [cite:@${citekey}]
+:END:
+#+title: ${title}\n")
+                            :immediate-finish t
+                            :unnarrowed t))
+                         :info (list :citekey (car keys-entries))
+                         :node (org-roam-node-create :title title)
+                         :props '(:finalize find-file)))))
 
 (defun andresnav/org-roam-agenda-files ()
   "Return a list of note files containing project tag." ;
@@ -83,6 +153,7 @@
           (sequence
            "TODO(t)" ; doing later
            "NEXT(n)" ; doing now or soon
+           "FOCS(f)" ; doing now or soon
            "|"
            "DONE(d)" ; done
            )
@@ -90,6 +161,7 @@
            "WAIT(w@/!)" ; waiting
            "IDEA(i)" ; maybe someday
            "GOAL(g)" ; goal to achieve
+           "EVNT(e)" ; goal to achieve
            "|"
            "STOP(s@/!)" ; stopped waiting, decided not to work on it
            )
