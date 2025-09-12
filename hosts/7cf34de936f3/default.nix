@@ -1,9 +1,10 @@
 { lib, pkgs, ... }: {
   imports = [
     ./../../modules/darwin
+    ./../../home/znavandr
   ];
 
-  nixpkgs.config.allowUnfree = true; 
+  nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
     betterdisplay
@@ -16,8 +17,8 @@
 
     slack
     zoom-us
+    spotify
 
-    tmux
     zsh
     zsh-autocomplete
     zsh-autosuggestions
